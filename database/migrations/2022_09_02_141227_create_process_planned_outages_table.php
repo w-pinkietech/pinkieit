@@ -15,11 +15,11 @@ return new class extends Migration
     {
         Schema::create('process_planned_outages', function (Blueprint $table) {
             // 工程計画停止時間ID
-            $table->id('process_planned_outage_id')->comment(__('yokakit.target_id', ['target' => __('yokakit.process_planned_outage')]));
+            $table->id('process_planned_outage_id')->comment(__('pinkieit.target_id', ['target' => __('pinkieit.process_planned_outage')]));
             // 工程ID
-            $table->unsignedBigInteger('process_id')->comment(__('yokakit.target_id', ['target' => __('yokakit.process')]));
+            $table->unsignedBigInteger('process_id')->comment(__('pinkieit.target_id', ['target' => __('pinkieit.process')]));
             // 計画停止時間ID
-            $table->unsignedBigInteger('planned_outage_id')->comment(__('yokakit.target_id', ['target' => __('yokakit.planned_outage')]));
+            $table->unsignedBigInteger('planned_outage_id')->comment(__('pinkieit.target_id', ['target' => __('pinkieit.planned_outage')]));
             // タイムスタンプ
             $table->timestamps();
             // 複合ユニーク

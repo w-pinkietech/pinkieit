@@ -28,7 +28,7 @@ class CustomizeFormatter
                 'userId' => '%extra.userid%',
                 'userName' => '%extra.username%',
                 'memoryUsage' => '%extra.memory_usage%',
-                'version' => config('yokakit.version'),
+                'version' => config('pinkieit.version'),
             ]) . PHP_EOL;
 
         // ログのフォーマットと日付のフォーマットを指定する

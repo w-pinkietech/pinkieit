@@ -1,6 +1,6 @@
 @extends('components.header', ['breadcrumbs' => $process])
 
-@section('title', __('yokakit.display_chart'))
+@section('title', __('pinkieit.display_chart'))
 
 @section('content')
     @include('adminlte::partials.common.preloader')
@@ -31,7 +31,7 @@
                         <h5>
                             <span>
                                 <i class="fa-solid fa-fw fa-square" style="color: {{ $history->plan_color }}"></i>
-                                {{ __('yokakit.plan_count') }}：
+                                {{ __('pinkieit.plan_count') }}：
                                 <strong class="font-digit" id="production-line-plan">0</strong>
                             </span>
                         </h5>
@@ -41,7 +41,7 @@
                             <h5>
                                 <span>
                                     <i class="fa-regular fa-fw fa-square text-warning"></i>
-                                    {{ __('yokakit.goal') }}：
+                                    {{ __('pinkieit.goal') }}：
                                     <strong class="font-digit">{{ $history->goal }}</strong>
                                 </span>
                             </h5>
@@ -55,7 +55,7 @@
                         <h5>
                             <i class="fa-solid fa-fw fa-square" id="indicator-icon"></i>
                             <span>
-                                {{ __('yokakit.time_operating_rate') }}：
+                                {{ __('pinkieit.time_operating_rate') }}：
                                 <strong class="font-digit" id="time-operating-rate">&nbsp;</strong>
                                 %
                             </span>
@@ -64,7 +64,7 @@
                     <div class="col-auto mr-3">
                         <h5>
                             <span>
-                                {{ __('yokakit.performance_operating_rate') }}：
+                                {{ __('pinkieit.performance_operating_rate') }}：
                                 <strong class="font-digit" id="performance-operating-rate">&nbsp;</strong>
                                 %
                             </span>
@@ -73,7 +73,7 @@
                     <div class="col-auto mr-3">
                         <h5>
                             <span>
-                                {{ __('yokakit.achievement_rate') }}：
+                                {{ __('pinkieit.achievement_rate') }}：
                                 <strong class="font-digit" id="achievement-rate">&nbsp;</strong>
                                 %
                             </span>
@@ -82,7 +82,7 @@
                     <div class="col-auto mr-3">
                         <h5>
                             <span>
-                                {{ __('yokakit.good_rate') }}：
+                                {{ __('pinkieit.good_rate') }}：
                                 <strong class="font-digit" id="good-rate">&nbsp;</strong>
                                 %
                             </span>
@@ -91,7 +91,7 @@
                     <div class="col-auto mr-3">
                         <h5>
                             <span>
-                                {{ __('yokakit.cycle_time') }}：
+                                {{ __('pinkieit.cycle_time') }}：
                                 <strong class="font-digit" id="cycle-time">&nbsp;</strong>
                                 sec
                             </span>
@@ -100,7 +100,7 @@
                     <div class="col-auto mr-3">
                         <h5>
                             <span>
-                                {{ __('yokakit.overall_equipment_effectiveness') }}：
+                                {{ __('pinkieit.overall_equipment_effectiveness') }}：
                                 <strong class="font-digit" id="overall-equipment-effectiveness">&nbsp;</strong>
                             </span>
                             %

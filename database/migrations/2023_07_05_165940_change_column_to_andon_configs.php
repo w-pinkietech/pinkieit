@@ -14,7 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::table('andon_configs', function (Blueprint $table) {
-            $table->boolean('is_show_cycle_time')->comment(__('yokakit.is_show_cycle_time'))->change();
+            $table->boolean('is_show_cycle_time')->comment(__('pinkieit.is_show_cycle_time'))->change();
         });
     }
 

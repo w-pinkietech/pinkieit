@@ -8,16 +8,16 @@
 <table class="mt-2 table">
     <thead>
         <th class="border-top-0 border-bottom-0">
-            {{ __('yokakit.target_name', ['target' => __('yokakit.part_number')]) }}
+            {{ __('pinkieit.target_name', ['target' => __('pinkieit.part_number')]) }}
         </th>
         <th class="border-top-0 border-bottom-0">
-            {{ __('yokakit.barcode') }}
+            {{ __('pinkieit.barcode') }}
         </th>
         <th class="border-top-0 border-bottom-0">
-            {{ __('yokakit.standard_cycle_time') }}{{ __('yokakit.unit_sec') }}
+            {{ __('pinkieit.standard_cycle_time') }}{{ __('pinkieit.unit_sec') }}
         </th>
         <th class="border-top-0 border-bottom-0">
-            {{ __('yokakit.over_time') }}{{ __('yokakit.unit_sec') }}
+            {{ __('pinkieit.over_time') }}{{ __('pinkieit.unit_sec') }}
         </th>
         @can('admin')
             @if ($process->isStopped())
@@ -43,15 +43,15 @@
                         {{-- サイクルタイム削除ダイアログ --}}
                         <x-modal-delete id="cycle_time_{{ $partNumber->pivot->cycle_time_id }}"
                             action="{{ route('cycle-time.destroy', ['process' => $process, 'cycleTime' => $partNumber->pivot]) }}">
-                            <strong>{{ __('yokakit.confirm_delete', ['target' => __('yokakit.cycle_time')]) }}</strong>
+                            <strong>{{ __('pinkieit.confirm_delete', ['target' => __('pinkieit.cycle_time')]) }}</strong>
                             <x-adminlte-card class="mt-4">
-                                <strong>{{ __('yokakit.target_name', ['target' => __('yokakit.part_number')]) }}</strong>
+                                <strong>{{ __('pinkieit.target_name', ['target' => __('pinkieit.part_number')]) }}</strong>
                                 <p class="mt-1 ml-2">{{ $partNumber->part_number_name }}</p>
                                 <hr>
-                                <strong>{{ __('yokakit.standard_cycle_time') }}{{ __('yokakit.unit_sec') }}</strong>
+                                <strong>{{ __('pinkieit.standard_cycle_time') }}{{ __('pinkieit.unit_sec') }}</strong>
                                 <p class="mt-1 ml-2">{{ $partNumber->pivot->cycle_time }}</p>
                                 <hr>
-                                <strong>{{ __('yokakit.over_time') }}{{ __('yokakit.unit_sec') }}</strong>
+                                <strong>{{ __('pinkieit.over_time') }}{{ __('pinkieit.unit_sec') }}</strong>
                                 <p class="mt-1 ml-2 mb-0">{{ $partNumber->pivot->over_time }}</p>
                             </x-adminlte-card>
                         </x-modal-delete>

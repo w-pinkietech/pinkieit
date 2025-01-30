@@ -15,13 +15,13 @@ return new class extends Migration
     {
         Schema::create('barcode_histories', function (Blueprint $table) {
             // バーコード履歴ID
-            $table->id('barcode_history_id')->comment(__('yokakit.target_id', ['target' => __('yokakit.barcode')]));
+            $table->id('barcode_history_id')->comment(__('pinkieit.target_id', ['target' => __('pinkieit.barcode')]));
              // IPアドレス
-            $table->ipAddress()->comment(__('yokakit.ip_address'));
+            $table->ipAddress()->comment(__('pinkieit.ip_address'));
             // MACアドレス
-            $table->macAddress()->comment(__('yokakit.mac_address'));
+            $table->macAddress()->comment(__('pinkieit.mac_address'));
             // バーコード
-            $table->string('barcode', 64)->comment(__('yokakit.barcode'));
+            $table->string('barcode', 64)->comment(__('pinkieit.barcode'));
             // タイムスタンプ
             $table->timestamps();
         });

@@ -1,6 +1,6 @@
 @extends('adminlte::auth.auth-page', ['auth_type' => 'register'])
 
-@section('title', __('yokakit.target_register', ['target' => __('yokakit.account')]))
+@section('title', __('pinkieit.target_register', ['target' => __('pinkieit.account')]))
 
 @php($login_url = View::getSection('login_url') ?? config('adminlte.login_url', 'login'))
 @php($register_url = View::getSection('register_url') ?? config('adminlte.register_url', 'register'))

@@ -31,7 +31,7 @@ class ProcessController extends AbstractController
      */
     public function name(): string
     {
-        return __('yokakit.process');
+        return __('pinkieit.process');
     }
 
     /**

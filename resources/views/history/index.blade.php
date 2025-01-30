@@ -1,6 +1,6 @@
 @extends('components.header')
 
-@section('title', __('yokakit.history'))
+@section('title', __('pinkieit.history'))
 
 @section('content')
 @endsection

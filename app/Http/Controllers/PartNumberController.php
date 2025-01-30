@@ -31,7 +31,7 @@ class PartNumberController extends AbstractController
      */
     public function name(): string
     {
-        return __('yokakit.part_number');
+        return __('pinkieit.part_number');
     }
 
     /**

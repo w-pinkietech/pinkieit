@@ -26,7 +26,7 @@ return new class extends Migration
     public function down()
     {
         Schema::table('sensor_events', function (Blueprint $table) {
-            $table->string('device_name', 32)->after('ip_address')->comment(__('yokakit.target_name', ['target' => __('yokakit.device')]));
+            $table->string('device_name', 32)->after('ip_address')->comment(__('pinkieit.target_name', ['target' => __('pinkieit.device')]));
         });
     }
 };

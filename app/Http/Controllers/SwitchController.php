@@ -68,16 +68,16 @@ class SwitchController extends BaseController
         try {
             $result = $this->productionHistoryService->switchPartNumberFromForm($request, $process);
             if ($result) {
-                $route->with('toast_success', __('yokakit.success_toast2', ['action' => __('yokakit.switch_part_number')]));
+                $route->with('toast_success', __('pinkieit.success_toast2', ['action' => __('pinkieit.switch_part_number')]));
             } else {
-                $route->with('toast_danger', __('yokakit.failed_toast2', ['action' => __('yokakit.switch_part_number')]));
+                $route->with('toast_danger', __('pinkieit.failed_toast2', ['action' => __('pinkieit.switch_part_number')]));
             }
         } catch (NoIndicatorException $th) {
             Log::error($th->getMessage(), $th->getTrace());
             $route->with('toast_danger', __(
-                'yokakit.not_exists_toast',
+                'pinkieit.not_exists_toast',
                 [
-                    'target' => __('yokakit.indicator'),
+                    'target' => __('pinkieit.indicator'),
                 ]
             ));
         }
@@ -93,15 +93,15 @@ class SwitchController extends BaseController
     public function stop(Process $process): RedirectResponse
     {
         $route = redirect()->route('switch.index', ['process' => $process]);
-        $action = __('yokakit.stop');
-        $target = __('yokakit.production');
+        $action = __('pinkieit.stop');
+        $target = __('pinkieit.production');
         $session = ['target' => $target, 'action' => $action];
         try {
             $this->productionHistoryService->stop($process, true);
-            $route->with('toast_success', __('yokakit.success_toast', $session));
+            $route->with('toast_success', __('pinkieit.success_toast', $session));
         } catch (Exception $th) {
             Log::error($th->getMessage(), $th->getTrace());
-            $route->with('toast_danger', __('yokakit.failed_toast', $session));
+            $route->with('toast_danger', __('pinkieit.failed_toast', $session));
         }
         return $route;
     }
@@ -118,13 +118,13 @@ class SwitchController extends BaseController
         try {
             $result = $this->productionHistoryService->changeover($process);
             if ($result) {
-                $route->with('toast_success', __('yokakit.success_toast2', ['action' => __('yokakit.changeover')]));
+                $route->with('toast_success', __('pinkieit.success_toast2', ['action' => __('pinkieit.changeover')]));
             } else {
-                $route->with('toast_danger', __('yokakit.failed_toast2', ['action' => __('yokakit.changeover')]));
+                $route->with('toast_danger', __('pinkieit.failed_toast2', ['action' => __('pinkieit.changeover')]));
             }
         } catch (Exception $th) {
             Log::error($th->getMessage(), $th->getTrace());
-            $route->with('toast_danger', __('yokakit.failed_toast2', ['action' => __('yokakit.changeover')]));
+            $route->with('toast_danger', __('pinkieit.failed_toast2', ['action' => __('pinkieit.changeover')]));
         }
         return $route;
     }
@@ -141,13 +141,13 @@ class SwitchController extends BaseController
         try {
             $result = $this->productionHistoryService->changeover($process);
             if ($result) {
-                $route->with('toast_success', __('yokakit.success_toast2', ['action' => __('yokakit.start_production')]));
+                $route->with('toast_success', __('pinkieit.success_toast2', ['action' => __('pinkieit.start_production')]));
             } else {
-                $route->with('toast_danger', __('yokakit.failed_toast2', ['action' => __('yokakit.start_production')]));
+                $route->with('toast_danger', __('pinkieit.failed_toast2', ['action' => __('pinkieit.start_production')]));
             }
         } catch (Exception $th) {
             Log::error($th->getMessage(), $th->getTrace());
-            $route->with('toast_danger', __('yokakit.failed_toast2', ['action' => __('yokakit.start_production')]));
+            $route->with('toast_danger', __('pinkieit.failed_toast2', ['action' => __('pinkieit.start_production')]));
         }
         return $route;
     }
@@ -162,13 +162,13 @@ class SwitchController extends BaseController
     public function changeWorker(UpdateLineWorkerRequest $request, Process $process): RedirectResponse
     {
         $route = redirect()->route('switch.index', ['process' => $process]);
-        $action = __('yokakit.replace');
+        $action = __('pinkieit.replace');
         try {
             $this->service->updateLineWorker($request, $process);
-            $route->with('toast_success', __('yokakit.success_toast', ['target' => __('yokakit.worker'), 'action' => $action]));
+            $route->with('toast_success', __('pinkieit.success_toast', ['target' => __('pinkieit.worker'), 'action' => $action]));
         } catch (Exception $th) {
             Log::error($th->getMessage(), $th->getTrace());
-            $route->with('toast_danger', __('yokakit.failed_toast', ['target' => __('yokakit.worker'), 'action' => $action]));
+            $route->with('toast_danger', __('pinkieit.failed_toast', ['target' => __('pinkieit.worker'), 'action' => $action]));
         }
         return $route;
     }

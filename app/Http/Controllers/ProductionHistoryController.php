@@ -34,7 +34,7 @@ class ProductionHistoryController extends AbstractController
      */
     public function name(): string
     {
-        return __('yokakit.production');
+        return __('pinkieit.production');
     }
 
     /**
@@ -86,16 +86,16 @@ class ProductionHistoryController extends AbstractController
         try {
             $result = $this->service->switchPartNumberFromForm($request, $process);
             if ($result) {
-                $route->with('toast_success', __('yokakit.success_toast2', ['action' => __('yokakit.switch_part_number')]));
+                $route->with('toast_success', __('pinkieit.success_toast2', ['action' => __('pinkieit.switch_part_number')]));
             } else {
-                $route->with('toast_danger', __('yokakit.failed_toast2', ['action' => __('yokakit.switch_part_number')]));
+                $route->with('toast_danger', __('pinkieit.failed_toast2', ['action' => __('pinkieit.switch_part_number')]));
             }
         } catch (NoIndicatorException $th) {
             Log::error($th->getMessage(), $th->getTrace());
             $route->with('toast_danger', __(
-                'yokakit.not_exists_toast',
+                'pinkieit.not_exists_toast',
                 [
-                    'target' => __('yokakit.indicator'),
+                    'target' => __('pinkieit.indicator'),
                 ]
             ));
         }
@@ -111,13 +111,13 @@ class ProductionHistoryController extends AbstractController
     public function stop(Process $process): RedirectResponse
     {
         $route = redirect()->route('process.show', ['process' => $process]);
-        $action = __('yokakit.stop');
+        $action = __('pinkieit.stop');
         try {
             $this->service->stop($process, true);
-            $route->with('toast_success', __('yokakit.success_toast', ['target' => $this->name(), 'action' => $action]));
+            $route->with('toast_success', __('pinkieit.success_toast', ['target' => $this->name(), 'action' => $action]));
         } catch (Exception $th) {
             Log::error($th->getMessage(), $th->getTrace());
-            $route->with('toast_danger', __('yokakit.failed_toast', ['target' => $this->name(), 'action' => $action]));
+            $route->with('toast_danger', __('pinkieit.failed_toast', ['target' => $this->name(), 'action' => $action]));
         }
         return $route;
     }
@@ -134,13 +134,13 @@ class ProductionHistoryController extends AbstractController
         try {
             $result = $this->service->changeover($process);
             if ($result) {
-                $route->with('toast_success', __('yokakit.success_toast2', ['action' => __('yokakit.changeover')]));
+                $route->with('toast_success', __('pinkieit.success_toast2', ['action' => __('pinkieit.changeover')]));
             } else {
-                $route->with('toast_danger', __('yokakit.failed_toast2', ['action' => __('yokakit.changeover')]));
+                $route->with('toast_danger', __('pinkieit.failed_toast2', ['action' => __('pinkieit.changeover')]));
             }
         } catch (Exception $th) {
             Log::error($th->getMessage(), $th->getTrace());
-            $route->with('toast_danger', __('yokakit.failed_toast2', ['action' => __('yokakit.changeover')]));
+            $route->with('toast_danger', __('pinkieit.failed_toast2', ['action' => __('pinkieit.changeover')]));
         }
         return $route;
     }
@@ -157,13 +157,13 @@ class ProductionHistoryController extends AbstractController
         try {
             $result = $this->service->changeover($process);
             if ($result) {
-                $route->with('toast_success', __('yokakit.success_toast2', ['action' => __('yokakit.start_production')]));
+                $route->with('toast_success', __('pinkieit.success_toast2', ['action' => __('pinkieit.start_production')]));
             } else {
-                $route->with('toast_danger', __('yokakit.failed_toast2', ['action' => __('yokakit.start_production')]));
+                $route->with('toast_danger', __('pinkieit.failed_toast2', ['action' => __('pinkieit.start_production')]));
             }
         } catch (Exception $th) {
             Log::error($th->getMessage(), $th->getTrace());
-            $route->with('toast_danger', __('yokakit.failed_toast2', ['action' => __('yokakit.start_production')]));
+            $route->with('toast_danger', __('pinkieit.failed_toast2', ['action' => __('pinkieit.start_production')]));
         }
         return $route;
     }

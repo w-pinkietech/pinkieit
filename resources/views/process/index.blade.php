@@ -1,19 +1,19 @@
 @extends('components.header')
 
-@section('title', __('yokakit.target_list', ['target' => __('yokakit.process')]))
+@section('title', __('pinkieit.target_list', ['target' => __('pinkieit.process')]))
 
 @section('content')
     @include('adminlte::partials.common.preloader')
     <div class="row">
         @php
-            $heads = ['#', __('yokakit.target_name', ['target' => __('yokakit.process')]), ['label' => __('yokakit.status'), 'width' => 15], ['label' => '', 'no-export' => true, 'width' => 5]];
+            $heads = ['#', __('pinkieit.target_name', ['target' => __('pinkieit.process')]), ['label' => __('pinkieit.status'), 'width' => 15], ['label' => '', 'no-export' => true, 'width' => 5]];
             $nonsearch = ['orderable' => false, 'searchable' => false];
             $config = [
                 'columns' => [['visible' => false], [], $nonsearch, $nonsearch],
                 'language' => ['url' => route('datatables')],
             ];
         @endphp
-        <x-datatable-index href="{{ route('process.create') }}" add="{{ __('yokakit.target_add', ['target' => __('yokakit.process')]) }}" :heads="$heads"
+        <x-datatable-index href="{{ route('process.create') }}" add="{{ __('pinkieit.target_add', ['target' => __('pinkieit.process')]) }}" :heads="$heads"
             :config="$config">
             @foreach ($processes as $process)
                 <tr>
@@ -36,7 +36,7 @@
                             @case(\App\Enums\ProductionStatus::BREAKDOWN())
                                 @if ($process->productionHistory?->inPlannedOutage() ?? false)
                                     <span class="badge badge-info" style="font-size: 100%;">
-                                        {{ __('yokakit.planned_outage') }}
+                                        {{ __('pinkieit.planned_outage') }}
                                     </span>
                                 @else
                                     <span class="badge badge-danger" style="font-size: 100%;">
@@ -57,15 +57,15 @@
                     <td class="text-nowrap text-right align-middle">
                         <a class="btn btn-tool" href="{{ route('process.show', ['process' => $process]) }}">
                             <i class="fa-solid fa-lg fa-share-from-square"></i>
-                            {{ __('yokakit.detail') }}
+                            {{ __('pinkieit.detail') }}
                         </a>
                         <a class="btn btn-tool" href="{{ route('production.index', ['process' => $process]) }}">
                             <i class="fa-solid fa-lg fa-history"></i>
-                            {{ __('yokakit.history') }}
+                            {{ __('pinkieit.history') }}
                         </a>
                         <a class="btn btn-tool" href="{{ route('onoff.index', ['process' => $process]) }}">
                             <i class="fa-solid fa-lg fa-message"></i>
-                            {{ __('yokakit.notification') }}
+                            {{ __('pinkieit.notification') }}
                         </a>
                     </td>
                 </tr>

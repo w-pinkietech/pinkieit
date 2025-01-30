@@ -6,7 +6,7 @@ use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
 
 /**
- * YokaKitについてのコントローラー
+ * PinkieItについてのコントローラー
  */
 class AboutController extends BaseController
 {

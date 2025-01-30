@@ -1,6 +1,6 @@
 @extends('components.header', ['breadcrumbs' => $process])
 
-@section('title', $process->process_name . '：' . __('yokakit.notification'))
+@section('title', $process->process_name . '：' . __('pinkieit.notification'))
 
 @section('content')
     <div class="row">

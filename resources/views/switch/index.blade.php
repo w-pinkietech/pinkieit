@@ -1,6 +1,6 @@
 @extends('components.header')
 
-@section('title', __('yokakit.switch_part_number') . ' & ' . __('yokakit.switch_producer'))
+@section('title', __('pinkieit.switch_part_number') . ' & ' . __('pinkieit.switch_producer'))
 
 @section('content')
     @php
@@ -48,23 +48,23 @@
     @include('adminlte::partials.common.preloader')
     <div class="row">
         <div class="col-lg-6">
-            <x-adminlte-card title="{{ __('yokakit.process') }}" body-class="card-body-height">
+            <x-adminlte-card title="{{ __('pinkieit.process') }}" body-class="card-body-height">
                 <x-adminlte-select class="large" name="select-processes">
                     <x-adminlte-options :options="$processOptions" selected="{{ $initialId }}" />
                 </x-adminlte-select>
                 <div class="mt-4 pb-2">
                     <span class="large align-middle">
-                        {{ __('yokakit.status') }}
+                        {{ __('pinkieit.status') }}
                         <span class="badge float-right" id="production-status" style="font-size: 100%;">--</span>
                     </span>
                     <hr>
                     <span class="large align-middle">
-                        {{ __('yokakit.part_number') }}
+                        {{ __('pinkieit.part_number') }}
                         <span class="float-right" id="production-part-number">--</span>
                     </span>
                     <hr>
                     <span class="large align-middle">
-                        {{ __('yokakit.start_time') }}
+                        {{ __('pinkieit.start_time') }}
                         <span class="float-right" id="production-start">--</span>
                     </span>
                 </div>
@@ -72,44 +72,44 @@
                     <div class="col-6">
                         {{-- 開始ボタン --}}
                         <x-adminlte-button class="btn-primary large btn-block mt-2" id="btn-restart" data-toggle="modal" data-target="#modal-restart"
-                            type="button" style="display: none;" label="{{ __('yokakit.start') }}" icon="fa-solid fa-fw fa-play" />
-                        <x-adminlte-modal id="modal-restart" title="{{ __('yokakit.confirm') }}" theme="info" icon="fa-solid fa-fw fa-info" v-centered>
-                            <strong>{{ __('yokakit.confirm_production') }}</strong>
+                            type="button" style="display: none;" label="{{ __('pinkieit.start') }}" icon="fa-solid fa-fw fa-play" />
+                        <x-adminlte-modal id="modal-restart" title="{{ __('pinkieit.confirm') }}" theme="info" icon="fa-solid fa-fw fa-info" v-centered>
+                            <strong>{{ __('pinkieit.confirm_production') }}</strong>
                             <x-adminlte-card class="mt-4">
-                                <strong>{{ __('yokakit.target_name', ['target' => __('yokakit.process')]) }}</strong>
+                                <strong>{{ __('pinkieit.target_name', ['target' => __('pinkieit.process')]) }}</strong>
                                 <p class="modal-processs ml-2 mt-1"></p>
                                 <hr>
-                                <strong>{{ __('yokakit.target_name', ['target' => __('yokakit.part_number')]) }}</strong>
+                                <strong>{{ __('pinkieit.target_name', ['target' => __('pinkieit.part_number')]) }}</strong>
                                 <p class="modal-part-number ml-2 mt-1"></p>
                             </x-adminlte-card>
                             <x-slot name="footerSlot">
                                 <form id="restart-form" action="#" method="POST">
                                     @csrf
                                     @method('PUT')
-                                    <x-adminlte-button class="large" type="submit" theme="info" label="{{ __('yokakit.start_production') }}"
+                                    <x-adminlte-button class="large" type="submit" theme="info" label="{{ __('pinkieit.start_production') }}"
                                         icon="fa-solid fa-fw fa-play" />
                                 </form>
                             </x-slot>
                         </x-adminlte-modal>
                         {{-- 段取替えボタン --}}
                         <x-adminlte-button class="btn-primary large btn-block mt-2" id="btn-changeover" data-toggle="modal"
-                            data-target="#modal-changeover" type="button" type="button" style="display: none;" label="{{ __('yokakit.changeover') }}"
+                            data-target="#modal-changeover" type="button" type="button" style="display: none;" label="{{ __('pinkieit.changeover') }}"
                             icon="fa-solid fa-fw fa-pause" />
-                        <x-adminlte-modal id="modal-changeover" title="{{ __('yokakit.confirm') }}" theme="warning"
+                        <x-adminlte-modal id="modal-changeover" title="{{ __('pinkieit.confirm') }}" theme="warning"
                             icon="fa-solid fa-fw fa-triangle-exclamation" v-centered>
-                            <strong>{{ __('yokakit.confirm_changeover') }}</strong>
+                            <strong>{{ __('pinkieit.confirm_changeover') }}</strong>
                             <x-adminlte-card class="mt-4">
-                                <strong>{{ __('yokakit.target_name', ['target' => __('yokakit.process')]) }}</strong>
+                                <strong>{{ __('pinkieit.target_name', ['target' => __('pinkieit.process')]) }}</strong>
                                 <p class="modal-processs ml-2 mt-1"></p>
                                 <hr>
-                                <strong>{{ __('yokakit.target_name', ['target' => __('yokakit.part_number')]) }}</strong>
+                                <strong>{{ __('pinkieit.target_name', ['target' => __('pinkieit.part_number')]) }}</strong>
                                 <p class="modal-part-number ml-2 mt-1"></p>
                             </x-adminlte-card>
                             <x-slot name="footerSlot">
                                 <form id="changeover-form" action="#" method="POST">
                                     @csrf
                                     @method('PUT')
-                                    <x-adminlte-button class="large" type="submit" theme="warning" label="{{ __('yokakit.changeover') }}"
+                                    <x-adminlte-button class="large" type="submit" theme="warning" label="{{ __('pinkieit.changeover') }}"
                                         icon="fa-solid fa-fw fa-pause" />
                                 </form>
                             </x-slot>
@@ -118,21 +118,21 @@
                     <div class="col-6">
                         {{-- 停止ボタン --}}
                         <x-adminlte-button class="btn-primary large btn-block mt-2" id="btn-stop" data-toggle="modal" data-target="#modal-stop"
-                            type="button" style="display: none;" label="{{ __('yokakit.stop') }}" icon="fa-solid fa-fw fa-stop" />
-                        <x-adminlte-modal id="modal-stop" title="{{ __('yokakit.confirm') }}" theme="danger" icon="fa-solid fa-fw fa-ban" v-centered>
-                            <strong>{{ __('yokakit.confirm_stop') }}</strong>
+                            type="button" style="display: none;" label="{{ __('pinkieit.stop') }}" icon="fa-solid fa-fw fa-stop" />
+                        <x-adminlte-modal id="modal-stop" title="{{ __('pinkieit.confirm') }}" theme="danger" icon="fa-solid fa-fw fa-ban" v-centered>
+                            <strong>{{ __('pinkieit.confirm_stop') }}</strong>
                             <x-adminlte-card class="mt-4">
-                                <strong>{{ __('yokakit.target_name', ['target' => __('yokakit.process')]) }}</strong>
+                                <strong>{{ __('pinkieit.target_name', ['target' => __('pinkieit.process')]) }}</strong>
                                 <p class="modal-processs ml-2 mt-1"></p>
                                 <hr>
-                                <strong>{{ __('yokakit.target_name', ['target' => __('yokakit.part_number')]) }}</strong>
+                                <strong>{{ __('pinkieit.target_name', ['target' => __('pinkieit.part_number')]) }}</strong>
                                 <p class="modal-part-number ml-2 mt-1"></p>
                             </x-adminlte-card>
                             <x-slot name="footerSlot">
                                 <form id="stop-form" action="#" method="POST">
                                     @csrf
                                     @method('PUT')
-                                    <x-adminlte-button class="large" type="submit" theme="danger" label="{{ __('yokakit.stop') }}"
+                                    <x-adminlte-button class="large" type="submit" theme="danger" label="{{ __('pinkieit.stop') }}"
                                         icon="fa-solid fa-fw fa-stop" />
                                 </form>
                             </x-slot>
@@ -142,11 +142,11 @@
             </x-adminlte-card>
         </div>
         <div class="col-lg-6">
-            <x-adminlte-card title="{{ __('yokakit.part_number') }}" body-class="card-body-height">
+            <x-adminlte-card title="{{ __('pinkieit.part_number') }}" body-class="card-body-height">
                 <form id="switch-form" action="#" method="POST">
                     @csrf
                     <x-adminlte-select class="large" name="part_number_id" />
-                    <x-adminlte-input id="goal" name="goal" igroup-size="lg" label="{{ __('yokakit.goal') }}" enable-old-support>
+                    <x-adminlte-input id="goal" name="goal" igroup-size="lg" label="{{ __('pinkieit.goal') }}" enable-old-support>
                         <x-slot name="prependSlot">
                             <div class="input-group-text bg-light">
                                 <i class="fa-solid fa-fw fa-bullseye"></i>
@@ -154,21 +154,21 @@
                         </x-slot>
                     </x-adminlte-input>
                     <x-adminlte-input-switch id="changeover" name="changeover" data-on-text="YES" data-off-text="NO" data-on-color="info"
-                        igroup-size="lg" label="{{ __('yokakit.changeover') }}" checked />
+                        igroup-size="lg" label="{{ __('pinkieit.changeover') }}" checked />
                     {{-- 品番切り替えボタン --}}
                     <x-adminlte-button class="btn-primary large btn-block mt-4" id="btn-switch" data-toggle="modal" data-target="#modal-switch"
-                        type="button" label="{{ __('yokakit.switch_part_number') }}" icon="fa-solid fa-fw fa-rotate" />
-                    <x-adminlte-modal id="modal-switch" title="{{ __('yokakit.confirm') }}" theme="info" icon="fa-solid fa-fw fa-info" v-centered>
-                        <strong>{{ __('yokakit.confirm_switch') }}</strong>
+                        type="button" label="{{ __('pinkieit.switch_part_number') }}" icon="fa-solid fa-fw fa-rotate" />
+                    <x-adminlte-modal id="modal-switch" title="{{ __('pinkieit.confirm') }}" theme="info" icon="fa-solid fa-fw fa-info" v-centered>
+                        <strong>{{ __('pinkieit.confirm_switch') }}</strong>
                         <x-adminlte-card class="mt-4">
-                            <strong>{{ __('yokakit.target_name', ['target' => __('yokakit.process')]) }}</strong>
+                            <strong>{{ __('pinkieit.target_name', ['target' => __('pinkieit.process')]) }}</strong>
                             <p class="modal-processs ml-2 mt-1"></p>
                             <hr>
-                            <strong>{{ __('yokakit.target_name', ['target' => __('yokakit.part_number')]) }}</strong>
+                            <strong>{{ __('pinkieit.target_name', ['target' => __('pinkieit.part_number')]) }}</strong>
                             <p class="ml-2 mt-1" id="selected-part-number"></p>
                         </x-adminlte-card>
                         <x-slot name="footerSlot">
-                            <x-adminlte-button class="large" type="submit" theme="info" label="{{ __('yokakit.switch_part_number') }}"
+                            <x-adminlte-button class="large" type="submit" theme="info" label="{{ __('pinkieit.switch_part_number') }}"
                                 icon="fa-solid fa-fw fa-rotate" />
                         </x-slot>
                     </x-adminlte-modal>
@@ -176,7 +176,7 @@
             </x-adminlte-card>
         </div>
         <div class="col-12">
-            <x-adminlte-card title="{{ __('yokakit.line') }}" body-class="p-0">
+            <x-adminlte-card title="{{ __('pinkieit.line') }}" body-class="p-0">
                 <form id="worker-form" action="#" method="POST">
                     @csrf
                     @method('PUT')
@@ -184,10 +184,10 @@
                         <table class="table">
                             <thead>
                                 <tr>
-                                    <th class="border-top-0 border-bottom-0">{{ __('yokakit.target_name', ['target' => __('yokakit.line')]) }}</th>
-                                    <th class="border-top-0 border-bottom-0">{{ __('yokakit.color') }}</th>
-                                    <th class="border-top-0 border-bottom-0">{{ __('yokakit.worker') }} ({{ __('yokakit.current') }})</th>
-                                    <th class="border-top-0 border-bottom-0">{{ __('yokakit.worker') }} ({{ __('yokakit.new') }})</th>
+                                    <th class="border-top-0 border-bottom-0">{{ __('pinkieit.target_name', ['target' => __('pinkieit.line')]) }}</th>
+                                    <th class="border-top-0 border-bottom-0">{{ __('pinkieit.color') }}</th>
+                                    <th class="border-top-0 border-bottom-0">{{ __('pinkieit.worker') }} ({{ __('pinkieit.current') }})</th>
+                                    <th class="border-top-0 border-bottom-0">{{ __('pinkieit.worker') }} ({{ __('pinkieit.new') }})</th>
                                     <th class="border-top-0 border-bottom-0 w-1"></th>
                                     <th class="border-top-0 border-bottom-0"></th>
                                 </tr>
@@ -361,11 +361,11 @@
                 const stopButton = $('#btn-stop');
 
                 // テキスト
-                const stopText = @json(__('yokakit.stop'));
-                const runningText = @json(__('yokakit.running'));
-                const breakdownText = @json(__('yokakit.breakdown'));
-                const changeoverText = @json(__('yokakit.changeover'));
-                const plannedOutageText = @json(__('yokakit.planned_outage'));
+                const stopText = @json(__('pinkieit.stop'));
+                const runningText = @json(__('pinkieit.running'));
+                const breakdownText = @json(__('pinkieit.breakdown'));
+                const changeoverText = @json(__('pinkieit.changeover'));
+                const plannedOutageText = @json(__('pinkieit.planned_outage'));
 
                 // ステータス
                 const productionStatus = $('#production-status');
@@ -498,7 +498,7 @@
                     .attr('type', 'submit')
                     .css('height', `${length*2}em`)
                     .append($('<i>').addClass('fa-solid fa-fw fa-rotate'))
-                    .append(@json(__('yokakit.update')));
+                    .append(@json(__('pinkieit.update')));
                 const td = $('<td>').attr('rowspan', length).addClass('align-middle');
                 return td.append(button);
             }

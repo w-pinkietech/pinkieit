@@ -17,7 +17,7 @@ class RaspberryPiFactory extends Factory
     public function definition()
     {
         return [
-            'raspberry_pi_name' => __('yokakit.raspberry_pi') . ":{$this->faker->unique()->realText(10)}",
+            'raspberry_pi_name' => __('pinkieit.raspberry_pi') . ":{$this->faker->unique()->realText(10)}",
             'ip_address' => $this->faker->unique()->ipv4,
         ];
     }

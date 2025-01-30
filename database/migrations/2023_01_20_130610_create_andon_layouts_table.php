@@ -15,15 +15,15 @@ return new class extends Migration
     {
         Schema::create('andon_layouts', function (Blueprint $table) {
             // アンドンレイアウトID
-            $table->id('andon_layout_id')->comment(__('yokakit.target_id', ['target' => __('yokakit.andon_layout')]));
+            $table->id('andon_layout_id')->comment(__('pinkieit.target_id', ['target' => __('pinkieit.andon_layout')]));
             // ユーザーID
-            $table->unsignedBigInteger('user_id')->comment(__('yokakit.target_id', ['target' => __('yokakit.user')]));
+            $table->unsignedBigInteger('user_id')->comment(__('pinkieit.target_id', ['target' => __('pinkieit.user')]));
             // 工程ID
-            $table->unsignedBigInteger('process_id')->comment(__('yokakit.target_id', ['target' => __('yokakit.process')]));
+            $table->unsignedBigInteger('process_id')->comment(__('pinkieit.target_id', ['target' => __('pinkieit.process')]));
             // 表示
-            $table->boolean('is_display')->default(true)->comment(__('yokakit.display'));
+            $table->boolean('is_display')->default(true)->comment(__('pinkieit.display'));
             // 順序
-            $table->integer('order')->default(2147483647)->comment(__('yokakit.order'));
+            $table->integer('order')->default(2147483647)->comment(__('pinkieit.order'));
             // タイムスタンプ
             $table->timestamps();
             // 外部キー

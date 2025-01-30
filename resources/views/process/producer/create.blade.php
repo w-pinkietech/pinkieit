@@ -1,15 +1,15 @@
 @extends('components.header', ['breadcrumbs' => $process])
 
-@section('title', __('yokakit.switch_producer'))
+@section('title', __('pinkieit.switch_producer'))
 
 @section('content')
     <x-form-edit action="#" back="{{ route('process.show', ['process' => $process]) }}">
         <table class="table">
             <thead>
                 <tr>
-                    <th class="border-top-0 border-bottom-0">{{ __('yokakit.target_name', ['target' => __('yokakit.line')]) }}</th>
-                    <th class="border-top-0 border-bottom-0">{{ __('yokakit.color') }}</th>
-                    <th class="border-top-0 border-bottom-0">{{ __('yokakit.worker') }}</th>
+                    <th class="border-top-0 border-bottom-0">{{ __('pinkieit.target_name', ['target' => __('pinkieit.line')]) }}</th>
+                    <th class="border-top-0 border-bottom-0">{{ __('pinkieit.color') }}</th>
+                    <th class="border-top-0 border-bottom-0">{{ __('pinkieit.worker') }}</th>
                 </tr>
             </thead>
             <tbody>

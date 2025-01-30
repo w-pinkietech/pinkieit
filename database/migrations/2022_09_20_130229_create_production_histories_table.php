@@ -17,29 +17,29 @@ return new class extends Migration
     {
         Schema::create('production_histories', function (Blueprint $table) {
             // 生産履歴ID
-            $table->id('production_history_id')->comment(__('yokakit.target_id', ['target' => __('yokakit.production_history')]));
+            $table->id('production_history_id')->comment(__('pinkieit.target_id', ['target' => __('pinkieit.production_history')]));
             // 工程ID
-            $table->unsignedBigInteger('process_id')->nullable()->comment(__('yokakit.target_id', ['target' => __('yokakit.process')]));
+            $table->unsignedBigInteger('process_id')->nullable()->comment(__('pinkieit.target_id', ['target' => __('pinkieit.process')]));
             // 工程名
-            $table->string('process_name', 32)->comment(__('yokakit.target_name', ['target' => __('yokakit.process')]));
+            $table->string('process_name', 32)->comment(__('pinkieit.target_name', ['target' => __('pinkieit.process')]));
             // 品番ID
-            $table->unsignedBigInteger('part_number_id')->nullable()->comment(__('yokakit.target_id', ['target' => __('yokakit.part_number')]));
+            $table->unsignedBigInteger('part_number_id')->nullable()->comment(__('pinkieit.target_id', ['target' => __('pinkieit.part_number')]));
             // 計画値色
-            $table->char('plan_color', 7)->comment(__('yokakit.plan_color'));
+            $table->char('plan_color', 7)->comment(__('pinkieit.plan_color'));
             // 品番名
-            $table->string('part_number_name', 32)->comment(__('yokakit.target_name', ['target' => __('yokakit.part_number')]));
+            $table->string('part_number_name', 32)->comment(__('pinkieit.target_name', ['target' => __('pinkieit.part_number')]));
             // サイクルタイム
-            $table->unsignedFloat('cycle_time', 8, 3)->comment(__('yokakit.cycle_time'));
+            $table->unsignedFloat('cycle_time', 8, 3)->comment(__('pinkieit.cycle_time'));
             // オーバータイム
-            $table->unsignedFloat('over_time', 8, 3)->comment(__('yokakit.over_time'));
+            $table->unsignedFloat('over_time', 8, 3)->comment(__('pinkieit.over_time'));
             // 目標値
-            $table->integer('goal')->nullable()->comment(__('yokakit.goal'));
+            $table->integer('goal')->nullable()->comment(__('pinkieit.goal'));
             // 開始
-            $table->dateTime('start')->default(DB::raw('CURRENT_TIMESTAMP'))->comment(__('yokakit.start'));
+            $table->dateTime('start')->default(DB::raw('CURRENT_TIMESTAMP'))->comment(__('pinkieit.start'));
             // 停止
-            $table->dateTime('stop')->nullable()->comment(__('yokakit.stop'));
+            $table->dateTime('stop')->nullable()->comment(__('pinkieit.stop'));
             // ステータス
-            $table->tinyInteger('status', false, true)->comment(__('yokakit.status'));
+            $table->tinyInteger('status', false, true)->comment(__('pinkieit.status'));
             // タイムスタンプ
             $table->timestamps();
             // 外部キー

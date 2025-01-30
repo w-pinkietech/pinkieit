@@ -34,7 +34,7 @@ class UserController extends AbstractController
      */
     public function name(): string
     {
-        return __('yokakit.user');
+        return __('pinkieit.user');
     }
 
     /**
@@ -122,9 +122,9 @@ class UserController extends AbstractController
         $result = $this->service->updateProfile($request);
         $route = redirect()->route('user.show', ['user' => Auth::user()]);
         if ($result) {
-            $route->with('toast_success', __('yokakit.success_toast', ['target' => __('yokakit.profile'), 'action' => __('yokakit.update')]));
+            $route->with('toast_success', __('pinkieit.success_toast', ['target' => __('pinkieit.profile'), 'action' => __('pinkieit.update')]));
         } else {
-            $route->with('toast_danger', __('yokakit.failed_toast', ['target' => __('yokakit.profile'), 'action' => __('yokakit.update')]));
+            $route->with('toast_danger', __('pinkieit.failed_toast', ['target' => __('pinkieit.profile'), 'action' => __('pinkieit.update')]));
         }
         return $route;
     }
@@ -162,9 +162,9 @@ class UserController extends AbstractController
         $result = $this->service->updatePassword($request);
         $route = redirect()->route('user.show', ['user' => Auth::user()]);
         if ($result) {
-            $route->with('toast_success', __('yokakit.success_toast2', ['action' => __('yokakit.change_password')]));
+            $route->with('toast_success', __('pinkieit.success_toast2', ['action' => __('pinkieit.change_password')]));
         } else {
-            $route->with('toast_danger', __('yokakit.failed_toast2', ['action' => __('yokakit.change_password')]));
+            $route->with('toast_danger', __('pinkieit.failed_toast2', ['action' => __('pinkieit.change_password')]));
         }
         return $route;
     }

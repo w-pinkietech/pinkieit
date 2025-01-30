@@ -15,15 +15,15 @@ return new class extends Migration
     {
         Schema::create('production_planned_outages', function (Blueprint $table) {
             // 生産計画停止時間ID
-            $table->id('production_planned_outage_id')->comment(__('yokakit.target_id', ['target' => __('yokakit.production_planned_outage')]));
+            $table->id('production_planned_outage_id')->comment(__('pinkieit.target_id', ['target' => __('pinkieit.production_planned_outage')]));
             // 生産履歴ID
-            $table->unsignedBigInteger('production_history_id')->comment(__('yokakit.target_id', ['target' => __('yokakit.production_history')]));
+            $table->unsignedBigInteger('production_history_id')->comment(__('pinkieit.target_id', ['target' => __('pinkieit.production_history')]));
             // 計画停止時間名
-            $table->string('planned_outage_name', 32)->comment(__('yokakit.target_name', ['target' => __('yokakit.planned_outage')]));
+            $table->string('planned_outage_name', 32)->comment(__('pinkieit.target_name', ['target' => __('pinkieit.planned_outage')]));
             // 開始時間
-            $table->time('start_time')->comment(__('yokakit.start_time'));
+            $table->time('start_time')->comment(__('pinkieit.start_time'));
             // 終了時間
-            $table->time('end_time')->comment(__('yokakit.end_time'));
+            $table->time('end_time')->comment(__('pinkieit.end_time'));
             // タイムスタンプ
             $table->timestamps();
             // 外部キー

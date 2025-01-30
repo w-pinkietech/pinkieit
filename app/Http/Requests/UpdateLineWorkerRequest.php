@@ -51,9 +51,9 @@ class UpdateLineWorkerRequest extends FormRequest
         $attributes = [];
         foreach ($this->lines as $line) {
             $lineId = $line['line_id'];
-            $attributes["lines.$lineId.worker_id"] = __('yokakit.worker');
-            $attributes["lines.$lineId.line_id"] = __('yokakit.target_name', ['target' => __('yokakit.line')]);
-            $attributes["lines.$lineId.raspberry_pi_id"] = __('yokakit.raspberry_pi');
+            $attributes["lines.$lineId.worker_id"] = __('pinkieit.worker');
+            $attributes["lines.$lineId.line_id"] = __('pinkieit.target_name', ['target' => __('pinkieit.line')]);
+            $attributes["lines.$lineId.raspberry_pi_id"] = __('pinkieit.raspberry_pi');
         }
         return $attributes;
     }

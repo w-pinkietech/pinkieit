@@ -31,7 +31,7 @@ class PlannedOutageController extends AbstractController
      */
     public function name(): string
     {
-        return __('yokakit.planned_outage');
+        return __('pinkieit.planned_outage');
     }
 
     /**

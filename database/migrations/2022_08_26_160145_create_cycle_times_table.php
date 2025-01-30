@@ -15,15 +15,15 @@ return new class extends Migration
     {
         Schema::create('cycle_times', function (Blueprint $table) {
             // サイクルタイムID
-            $table->id('cycle_time_id')->comment(__('yokakit.target_id', ['target' => __('yokakit.cycle_time')]));
+            $table->id('cycle_time_id')->comment(__('pinkieit.target_id', ['target' => __('pinkieit.cycle_time')]));
             // 工程ID
-            $table->unsignedBigInteger('process_id')->comment(__('yokakit.target_id', ['target' => __('yokakit.process')]));
+            $table->unsignedBigInteger('process_id')->comment(__('pinkieit.target_id', ['target' => __('pinkieit.process')]));
             // 品番ID
-            $table->unsignedBigInteger('part_number_id')->comment(__('yokakit.target_id', ['target' => __('yokakit.part_number')]));
+            $table->unsignedBigInteger('part_number_id')->comment(__('pinkieit.target_id', ['target' => __('pinkieit.part_number')]));
             // サイクルタイム
-            $table->unsignedFloat('cycle_time', 8, 3)->comment(__('yokakit.cycle_time'));
+            $table->unsignedFloat('cycle_time', 8, 3)->comment(__('pinkieit.cycle_time'));
             // オーバータイム
-            $table->unsignedFloat('over_time', 8, 3)->comment(__('yokakit.over_time'));
+            $table->unsignedFloat('over_time', 8, 3)->comment(__('pinkieit.over_time'));
             // タイムスタンプ
             $table->timestamps();
             // 複合ユニーク

@@ -33,7 +33,7 @@ class AndonController extends AbstractController
      */
     public function name(): string
     {
-        return __('yokakit.target_config', ['target' => __('yokakit.andon')]);
+        return __('pinkieit.target_config', ['target' => __('pinkieit.andon')]);
     }
 
     /**

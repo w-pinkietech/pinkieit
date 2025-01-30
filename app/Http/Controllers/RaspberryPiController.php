@@ -31,7 +31,7 @@ class RaspberryPiController extends AbstractController
      */
     public function name(): string
     {
-        return __('yokakit.raspberry_pi');
+        return __('pinkieit.raspberry_pi');
     }
 
     /**

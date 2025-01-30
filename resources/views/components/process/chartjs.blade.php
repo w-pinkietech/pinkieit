@@ -57,7 +57,7 @@
 
         // 計画値の描画データセット
         const planDatasets = {
-            label: @json(__('yokakit.plan_count')),
+            label: @json(__('pinkieit.plan_count')),
             borderColor: process.plan_color,
             backgroundColor: process.plan_color,
             pointRadius: 0,

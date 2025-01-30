@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::table('processes', function (Blueprint $table) {
             // 生産履歴ID
-            $table->unsignedBigInteger('production_history_id')->nullable()->unique()->after('process_id')->comment(__('yokakit.target_id', ['target' => __('yokakit.production_history')]));
+            $table->unsignedBigInteger('production_history_id')->nullable()->unique()->after('process_id')->comment(__('pinkieit.target_id', ['target' => __('pinkieit.production_history')]));
             // 外部キー
             $table->foreign('production_history_id')->references('production_history_id')->on('production_histories')->nullOnDelete();
         });

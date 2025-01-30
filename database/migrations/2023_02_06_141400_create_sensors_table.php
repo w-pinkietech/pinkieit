@@ -15,19 +15,19 @@ return new class extends Migration
     {
         Schema::create('sensors', function (Blueprint $table) {
             // センサーID
-            $table->id('sensor_id')->comment(__('yokakit.target_id', ['target' => __('yokakit.sensor_type')]));
+            $table->id('sensor_id')->comment(__('pinkieit.target_id', ['target' => __('pinkieit.sensor_type')]));
             // 工程ID
-            $table->unsignedBigInteger('process_id')->comment(__('yokakit.target_id', ['target' => __('yokakit.process')]));
+            $table->unsignedBigInteger('process_id')->comment(__('pinkieit.target_id', ['target' => __('pinkieit.process')]));
             // ラズパイID
-            $table->unsignedBigInteger('raspberry_pi_id')->comment(__('yokakit.target_id', ['target' => __('yokakit.raspberry_pi')]));
+            $table->unsignedBigInteger('raspberry_pi_id')->comment(__('pinkieit.target_id', ['target' => __('pinkieit.raspberry_pi')]));
             // デバイス名
-            $table->string('device_name', 32)->comment(__('yokakit.target_name', ['target' => __('yokakit.device')]));
+            $table->string('device_name', 32)->comment(__('pinkieit.target_name', ['target' => __('pinkieit.device')]));
             // センサー種別
-            $table->smallInteger('sensor_type', false, true)->comment(__('yokakit.sensor_type'));
+            $table->smallInteger('sensor_type', false, true)->comment(__('pinkieit.sensor_type'));
             // エイリアス
-            $table->string('alias', 32)->nullable()->comment(__('yokakit.alias'));
+            $table->string('alias', 32)->nullable()->comment(__('pinkieit.alias'));
             // トリガー
-            $table->boolean('trigger')->comment(__('yokakit.trigger'));
+            $table->boolean('trigger')->comment(__('pinkieit.trigger'));
             // タイムスタンプ
             $table->timestamps();
             // 外部キー

@@ -21,10 +21,10 @@ services:
     container_name: mariadb
     restart: unless-stopped
     environment:
-      MYSQL_DATABASE: yokakit
-      MYSQL_ROOT_PASSWORD: yokakit
-      MYSQL_USER: yokakit
-      MYSQL_PASSWORD: yokakit
+      MYSQL_DATABASE: pinkieit
+      MYSQL_ROOT_PASSWORD: pinkieit
+      MYSQL_USER: pinkieit
+      MYSQL_PASSWORD: pinkieit
     volumes:
       - dbdata:/var/lib/mysql
     networks:

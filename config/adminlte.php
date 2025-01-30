@@ -45,12 +45,12 @@ return [
     |
     */
 
-    'logo' => '<b>Yoka</b>Kit',
+    'logo' => '<b>PinkieIt</b>',
     'logo_img' => 'favicons/favicon.png',
     'logo_img_class' => 'brand-image img-circle elevation-3',
     'logo_img_xl' => null,
     'logo_img_xl_class' => 'brand-image-xs',
-    'logo_img_alt' => 'YokaKit',
+    'logo_img_alt' => 'PinkieIt',
 
     /*
     |--------------------------------------------------------------------------

@@ -1,6 +1,6 @@
 @extends('components.header', ['breadcrumbs' => $process])
 
-@section('title', __('yokakit.sort'))
+@section('title', __('pinkieit.sort'))
 
 @section('content')
     <div class="row">
@@ -11,12 +11,12 @@
                     <table class="mb-1 table" id="sortable">
                         <thead>
                             <th class="border-top-0 border-bottom-0"></th>
-                            <th class="border-top-0 border-bottom-0">{{ __('yokakit.target_name', ['target' => __('yokakit.line')]) }}</th>
-                            <th class="border-top-0 border-bottom-0">{{ __('yokakit.color') }}</th>
-                            <th class="border-top-0 border-bottom-0">{{ __('yokakit.worker') }}</th>
-                            <th class="border-top-0 border-bottom-0">{{ __('yokakit.raspberry_pi') }}</th>
-                            <th class="border-top-0 border-bottom-0">{{ __('yokakit.pin_number') }}</th>
-                            <th class="border-top-0 border-bottom-0">{{ __('yokakit.failure') }}</th>
+                            <th class="border-top-0 border-bottom-0">{{ __('pinkieit.target_name', ['target' => __('pinkieit.line')]) }}</th>
+                            <th class="border-top-0 border-bottom-0">{{ __('pinkieit.color') }}</th>
+                            <th class="border-top-0 border-bottom-0">{{ __('pinkieit.worker') }}</th>
+                            <th class="border-top-0 border-bottom-0">{{ __('pinkieit.raspberry_pi') }}</th>
+                            <th class="border-top-0 border-bottom-0">{{ __('pinkieit.pin_number') }}</th>
+                            <th class="border-top-0 border-bottom-0">{{ __('pinkieit.failure') }}</th>
                         </thead>
                         <tbody>
                             @foreach ($process->raspberryPis as $raspberryPi)
@@ -49,7 +49,7 @@
                         </tbody>
                     </table>
                     <x-slot name="footerSlot">
-                        <x-adminlte-button type="submit" theme="info" label="{{ __('yokakit.sort') }}" icon="fa-solid fa-fw fa-paper-plane" />
+                        <x-adminlte-button type="submit" theme="info" label="{{ __('pinkieit.sort') }}" icon="fa-solid fa-fw fa-paper-plane" />
                         <x-button-back href="{{ route('process.show', ['process' => $process, 'tab' => 'line']) }}" />
                     </x-slot>
                 </x-adminlte-card>

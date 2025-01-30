@@ -33,7 +33,7 @@ class OnOffController extends AbstractController
      */
     public function name(): string
     {
-        return  __('yokakit.notification');
+        return  __('pinkieit.notification');
     }
 
     /**

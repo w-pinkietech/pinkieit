@@ -36,7 +36,7 @@ class LineController extends AbstractController
      */
     public function name(): string
     {
-        return __('yokakit.line');
+        return __('pinkieit.line');
     }
 
     // /**
@@ -182,10 +182,10 @@ class LineController extends AbstractController
         $route = redirect()->route('process.show', ['process' => $process, 'tab' => 'line']);
         try {
             $this->service->sort($request, $process);
-            $route->with('toast_success', __('yokakit.success_toast2', ['action' => __('yokakit.sort')]));
+            $route->with('toast_success', __('pinkieit.success_toast2', ['action' => __('pinkieit.sort')]));
         } catch (ModelNotFoundException $e) {
             Log::error($e->getMessage(), $e->getTrace());
-            $route->with('toast_danger', __('yokakit.failed_toast2', ['action' => __('yokakit.sort')]));
+            $route->with('toast_danger', __('pinkieit.failed_toast2', ['action' => __('pinkieit.sort')]));
         }
         return $route;
     }

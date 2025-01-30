@@ -26,7 +26,7 @@ return new class extends Migration
     public function down()
     {
         Schema::table('productions', function (Blueprint $table) {
-            $table->boolean('changeover')->nullable()->comment(__('yokakit.changeover'));
+            $table->boolean('changeover')->nullable()->comment(__('pinkieit.changeover'));
         });
     }
 };

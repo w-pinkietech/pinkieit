@@ -31,18 +31,18 @@
                             {{-- 生産開始ボタン --}}
                             <x-adminlte-button data-toggle="modal" data-target="#stop-changeover" theme="tool" icon="fa-solid fa-lg fa-play" />
                             {{-- 生産開始ダイアログ --}}
-                            <x-adminlte-modal id="stop-changeover" title="{{ __('yokakit.confirm') }}" theme="info" icon="fa-solid fa-fw fa-info"
+                            <x-adminlte-modal id="stop-changeover" title="{{ __('pinkieit.confirm') }}" theme="info" icon="fa-solid fa-fw fa-info"
                                 v-centered>
-                                <strong>{{ __('yokakit.confirm_production') }}</strong>
+                                <strong>{{ __('pinkieit.confirm_production') }}</strong>
                                 <x-adminlte-card class="mt-4">
-                                    <strong>{{ __('yokakit.target_name', ['target' => __('yokakit.part_number')]) }}</strong>
+                                    <strong>{{ __('pinkieit.target_name', ['target' => __('pinkieit.part_number')]) }}</strong>
                                     <p class="ml-2 mt-1">{{ $process->productionHistory->part_number_name }}</p>
                                 </x-adminlte-card>
                                 <x-slot name="footerSlot">
                                     <form action="{{ route('production.stop_changeover', ['process' => $process]) }}" method="POST">
                                         @csrf
                                         @method('PUT')
-                                        <x-adminlte-button type="submit" theme="info" label="{{ __('yokakit.start_production') }}"
+                                        <x-adminlte-button type="submit" theme="info" label="{{ __('pinkieit.start_production') }}"
                                             icon="fa-solid fa-fw fa-play" />
                                     </form>
                                 </x-slot>
@@ -51,18 +51,18 @@
                             {{-- 段取り替えボタン --}}
                             <x-adminlte-button data-toggle="modal" data-target="#start-changeover" theme="tool" icon="fa-solid fa-lg fa-pause" />
                             {{-- 段取り替えダイアログ --}}
-                            <x-adminlte-modal id="start-changeover" title="{{ __('yokakit.confirm') }}" theme="warning"
+                            <x-adminlte-modal id="start-changeover" title="{{ __('pinkieit.confirm') }}" theme="warning"
                                 icon="fa-solid fa-fw fa-triangle-exclamation" v-centered>
-                                <strong>{{ __('yokakit.confirm_changeover') }}</strong>
+                                <strong>{{ __('pinkieit.confirm_changeover') }}</strong>
                                 <x-adminlte-card class="mt-4">
-                                    <strong>{{ __('yokakit.target_name', ['target' => __('yokakit.part_number')]) }}</strong>
+                                    <strong>{{ __('pinkieit.target_name', ['target' => __('pinkieit.part_number')]) }}</strong>
                                     <p class="ml-2 mt-1">{{ $process->productionHistory->part_number_name }}</p>
                                 </x-adminlte-card>
                                 <x-slot name="footerSlot">
                                     <form action="{{ route('production.start_changeover', ['process' => $process]) }}" method="POST">
                                         @csrf
                                         @method('PUT')
-                                        <x-adminlte-button type="submit" theme="warning" label="{{ __('yokakit.changeover') }}"
+                                        <x-adminlte-button type="submit" theme="warning" label="{{ __('pinkieit.changeover') }}"
                                             icon="fa-solid fa-fw fa-pause" />
                                     </form>
                                 </x-slot>
@@ -71,17 +71,17 @@
                         {{-- 停止ボタン --}}
                         <x-adminlte-button data-toggle="modal" data-target="#stop" theme="tool" icon="fa-solid fa-lg fa-stop" />
                         {{-- 停止ダイアログ --}}
-                        <x-adminlte-modal id="stop" title="{{ __('yokakit.confirm') }}" theme="danger" icon="fa-solid fa-fw fa-ban" v-centered>
-                            <strong>{{ __('yokakit.confirm_stop') }}</strong>
+                        <x-adminlte-modal id="stop" title="{{ __('pinkieit.confirm') }}" theme="danger" icon="fa-solid fa-fw fa-ban" v-centered>
+                            <strong>{{ __('pinkieit.confirm_stop') }}</strong>
                             <x-adminlte-card class="mt-4">
-                                <strong>{{ __('yokakit.target_name', ['target' => __('yokakit.part_number')]) }}</strong>
+                                <strong>{{ __('pinkieit.target_name', ['target' => __('pinkieit.part_number')]) }}</strong>
                                 <p class="ml-2 mt-1">{{ $process->productionHistory->part_number_name }}</p>
                             </x-adminlte-card>
                             <x-slot name="footerSlot">
                                 <form action="{{ route('production.stop', ['process' => $process]) }}" method="POST">
                                     @csrf
                                     @method('PUT')
-                                    <x-adminlte-button type="submit" theme="danger" label="{{ __('yokakit.stop') }}" icon="fa-solid fa-fw fa-stop" />
+                                    <x-adminlte-button type="submit" theme="danger" label="{{ __('pinkieit.stop') }}" icon="fa-solid fa-fw fa-stop" />
                                 </form>
                             </x-slot>
                         </x-adminlte-modal>
@@ -103,7 +103,7 @@
                             <h5>
                                 <span>
                                     <i class="fa-solid fa-fw fa-square" style="color: {{ $history?->plan_color }}"></i>
-                                    {{ __('yokakit.plan_count') }}：
+                                    {{ __('pinkieit.plan_count') }}：
                                     <strong class="font-digit" id="production-line-plan">0</strong>
                                 </span>
                             </h5>
@@ -113,7 +113,7 @@
                                 <h5>
                                     <span>
                                         <i class="fa-regular fa-fw fa-square text-warning"></i>
-                                        {{ __('yokakit.goal') }}：
+                                        {{ __('pinkieit.goal') }}：
                                         <strong class="font-digit">{{ $history?->goal }}</strong>
                                     </span>
                                 </h5>
@@ -127,7 +127,7 @@
                             <h5>
                                 <i class="fa-solid fa-fw fa-square" id="indicator-icon"></i>
                                 <span>
-                                    {{ __('yokakit.time_operating_rate') }}：
+                                    {{ __('pinkieit.time_operating_rate') }}：
                                     <strong class="font-digit" id="time-operating-rate">&nbsp;</strong>
                                     %
                                 </span>
@@ -136,7 +136,7 @@
                         <div class="col-auto mr-3">
                             <h5>
                                 <span>
-                                    {{ __('yokakit.performance_operating_rate') }}：
+                                    {{ __('pinkieit.performance_operating_rate') }}：
                                     <strong class="font-digit" id="performance-operating-rate">&nbsp;</strong>
                                     %
                                 </span>
@@ -145,7 +145,7 @@
                         <div class="col-auto mr-3">
                             <h5>
                                 <span>
-                                    {{ __('yokakit.achievement_rate') }}：
+                                    {{ __('pinkieit.achievement_rate') }}：
                                     <strong class="font-digit" id="achievement-rate">&nbsp;</strong>
                                     %
                                 </span>
@@ -154,7 +154,7 @@
                         <div class="col-auto mr-3">
                             <h5>
                                 <span>
-                                    {{ __('yokakit.good_rate') }}：
+                                    {{ __('pinkieit.good_rate') }}：
                                     <strong class="font-digit" id="good-rate">&nbsp;</strong>
                                     %
                                 </span>
@@ -163,7 +163,7 @@
                         <div class="col-auto mr-3">
                             <h5>
                                 <span>
-                                    {{ __('yokakit.cycle_time') }}：
+                                    {{ __('pinkieit.cycle_time') }}：
                                     <strong class="font-digit" id="cycle-time">&nbsp;</strong>
                                     sec
                                 </span>
@@ -172,7 +172,7 @@
                         <div class="col-auto mr-3">
                             <h5>
                                 <span>
-                                    {{ __('yokakit.overall_equipment_effectiveness') }}：
+                                    {{ __('pinkieit.overall_equipment_effectiveness') }}：
                                     <strong class="font-digit" id="overall-equipment-effectiveness">&nbsp;</strong>
                                 </span>
                                 %
@@ -209,37 +209,37 @@
                         <li class="nav-item">
                             <a class="nav-link @if (!$tab) active @endif" id="process-home-tab" data-toggle="pill"
                                 href="#process-home" role="tab" aria-controls="process-home" aria-selected="false">
-                                {{ __('yokakit.process') }}
+                                {{ __('pinkieit.process') }}
                             </a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link @if ($tab == 'part-number') active @endif" id="process-part-number-tab" data-toggle="pill"
                                 href="#process-part-number" role="tab" aria-controls="process-part-number" aria-selected="false">
-                                {{ __('yokakit.part_number') }}
+                                {{ __('pinkieit.part_number') }}
                             </a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link @if ($tab === 'line') active @endif" id="process-line-tab" data-toggle="pill"
                                 href="#process-line" role="tab" aria-controls="process-line" aria-selected="false">
-                                {{ __('yokakit.line') }}
+                                {{ __('pinkieit.line') }}
                             </a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link @if ($tab === 'planned-outage') active @endif" id="process-planned-outage-tab" data-toggle="pill"
                                 href="#process-planned-outage" role="tab" aria-controls="process-planned-outage" aria-selected="false">
-                                {{ __('yokakit.planned_outage') }}
+                                {{ __('pinkieit.planned_outage') }}
                             </a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link @if ($tab === 'alarm') active @endif" id="process-alarm-tab" data-toggle="pill"
                                 href="#process-alarm" role="tab" aria-controls="process-alarm" aria-selected="false">
-                                {{ __('yokakit.alarm') }}
+                                {{ __('pinkieit.alarm') }}
                             </a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link @if ($tab === 'on-off') active @endif" id="process-on-off-tab" data-toggle="pill"
                                 href="#process-on-off" role="tab" aria-controls="process-on-off" aria-selected="false">
-                                {{ __('yokakit.notification') }}
+                                {{ __('pinkieit.notification') }}
                             </a>
                         </li>
                     </ul>

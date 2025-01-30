@@ -1,3 +1,3 @@
 @extends('adminlte::auth.login')
 
-@section('title', __('yokakit.login'))
+@section('title', __('pinkieit.login'))

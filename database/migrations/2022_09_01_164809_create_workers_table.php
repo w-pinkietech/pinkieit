@@ -15,13 +15,13 @@ return new class extends Migration
     {
         Schema::create('workers', function (Blueprint $table) {
             // 作業者ID
-            $table->id('worker_id')->comment(__('yokakit.target_id', ['target' => __('yokakit.worker')]));
+            $table->id('worker_id')->comment(__('pinkieit.target_id', ['target' => __('pinkieit.worker')]));
             // 識別番号
-            $table->string('identification_number', 32)->unique()->index()->comment(__('yokakit.identification_number'));
+            $table->string('identification_number', 32)->unique()->index()->comment(__('pinkieit.identification_number'));
             // 作業者名
-            $table->string('worker_name', 32)->comment(__('yokakit.target_name', ['target' => __('yokakit.worker')]));
+            $table->string('worker_name', 32)->comment(__('pinkieit.target_name', ['target' => __('pinkieit.worker')]));
             // MACアドレス
-            $table->macAddress()->nullable()->unique()->index()->comment(__('yokakit.mac_address'));
+            $table->macAddress()->nullable()->unique()->index()->comment(__('pinkieit.mac_address'));
             // タイムスタンプ
             $table->timestamps();
         });

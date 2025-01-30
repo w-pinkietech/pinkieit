@@ -15,13 +15,13 @@ return new class extends Migration
     {
         Schema::create('processes', function (Blueprint $table) {
             // ID
-            $table->id('process_id')->comment(__('yokakit.target_id', ['target' => __('yokakit.process')]));
+            $table->id('process_id')->comment(__('pinkieit.target_id', ['target' => __('pinkieit.process')]));
             // 工程名
-            $table->string('process_name', 32)->unique()->index()->comment(__('yokakit.target_name', ['target' => __('yokakit.process')]));
+            $table->string('process_name', 32)->unique()->index()->comment(__('pinkieit.target_name', ['target' => __('pinkieit.process')]));
             // チャートカラー
-            $table->char('plan_color', 7)->default('#FFFFFF')->comment(__('yokakit.chart_color'));
+            $table->char('plan_color', 7)->default('#FFFFFF')->comment(__('pinkieit.chart_color'));
             // 備考
-            $table->string('remark', 256)->nullable()->comment(__('yokakit.remark'));
+            $table->string('remark', 256)->nullable()->comment(__('pinkieit.remark'));
             // タイムスタンプ
             $table->timestamps();
         });

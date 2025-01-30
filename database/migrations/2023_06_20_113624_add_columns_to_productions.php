@@ -15,23 +15,23 @@ return new class extends Migration
     {
         Schema::table('productions', function (Blueprint $table) {
             // 不良品カウント
-            $table->integer('defective_count')->comment(__('yokakit.defective_count'));
+            $table->integer('defective_count')->comment(__('pinkieit.defective_count'));
             // ステータス
-            $table->tinyInteger('status', false, true)->comment(__('yokakit.status'));
+            $table->tinyInteger('status', false, true)->comment(__('pinkieit.status'));
             // 計画停止中かどうか
-            $table->boolean('in_planned_outage')->comment(__('yokakit.in_planned_outage'));
+            $table->boolean('in_planned_outage')->comment(__('pinkieit.in_planned_outage'));
             // 操業時間
-            $table->integer('working_time', false, true)->comment(__('yokakit.working_time'));
+            $table->integer('working_time', false, true)->comment(__('pinkieit.working_time'));
             // 負荷時間
-            $table->integer('loading_time', false, true)->comment(__('yokakit.loading_time'));
+            $table->integer('loading_time', false, true)->comment(__('pinkieit.loading_time'));
             // 稼働時間
-            $table->integer('operating_time', false, true)->comment(__('yokakit.operating_time'));
+            $table->integer('operating_time', false, true)->comment(__('pinkieit.operating_time'));
             // 正味稼働時間
-            $table->integer('net_time', false, true)->comment(__('yokakit.net_time'));
+            $table->integer('net_time', false, true)->comment(__('pinkieit.net_time'));
             // チョコ停回数
-            $table->integer('breakdown_count', false, true)->comment(__('yokakit.breakdown_count'));
+            $table->integer('breakdown_count', false, true)->comment(__('pinkieit.breakdown_count'));
             // 段取り替え自動復帰回数
-            $table->integer('auto_resume_count', false, true)->comment(__('yokakit.auto_resume_count'));
+            $table->integer('auto_resume_count', false, true)->comment(__('pinkieit.auto_resume_count'));
         });
     }
 

@@ -8,11 +8,11 @@
 <table class="mt-2 table">
     <thead>
         <tr>
-            <th class="border-top-0 border-bottom-0">{{ __('yokakit.target_name', ['target' => __('yokakit.event')]) }}</th>
-            <th class="border-top-0 border-bottom-0">{{ __('yokakit.target_message', ['target' => 'ON']) }}</th>
-            <th class="border-top-0 border-bottom-0">{{ __('yokakit.target_message', ['target' => 'OFF']) }}</th>
-            <th class="border-top-0 border-bottom-0">{{ __('yokakit.raspberry_pi') }}</th>
-            <th class="border-top-0 border-bottom-0">{{ __('yokakit.pin_number') }}</th>
+            <th class="border-top-0 border-bottom-0">{{ __('pinkieit.target_name', ['target' => __('pinkieit.event')]) }}</th>
+            <th class="border-top-0 border-bottom-0">{{ __('pinkieit.target_message', ['target' => 'ON']) }}</th>
+            <th class="border-top-0 border-bottom-0">{{ __('pinkieit.target_message', ['target' => 'OFF']) }}</th>
+            <th class="border-top-0 border-bottom-0">{{ __('pinkieit.raspberry_pi') }}</th>
+            <th class="border-top-0 border-bottom-0">{{ __('pinkieit.pin_number') }}</th>
             @can('admin')
                 @if ($process->isStopped())
                     <th class="border-top-0 border-bottom-0 w-1"></th>
@@ -39,21 +39,21 @@
                         {{-- ON-OFF削除ダイアログ --}}
                         <x-modal-delete id="onoff_{{ $onOff->on_off_id }}"
                             action="{{ route('onoff.destroy', ['process' => $process, 'onOff' => $onOff]) }}">
-                            <strong>{{ __('yokakit.confirm_delete', ['target' => __('yokakit.notification')]) }}</strong>
+                            <strong>{{ __('pinkieit.confirm_delete', ['target' => __('pinkieit.notification')]) }}</strong>
                             <x-adminlte-card class="mt-4">
-                                <strong>{{ __('yokakit.target_name', ['target' => __('yokakit.event')]) }}</strong>
+                                <strong>{{ __('pinkieit.target_name', ['target' => __('pinkieit.event')]) }}</strong>
                                 <p class="mt-1 ml-2">{{ $onOff->event_name }}</p>
                                 <hr>
-                                <strong>{{ __('yokakit.target_message', ['target' => 'ON']) }}</strong>
+                                <strong>{{ __('pinkieit.target_message', ['target' => 'ON']) }}</strong>
                                 <p class="mt-1 ml-2">{{ $onOff->on_message }}</p>
                                 <hr>
-                                <strong>{{ __('yokakit.target_message', ['target' => 'OFF']) }}</strong>
+                                <strong>{{ __('pinkieit.target_message', ['target' => 'OFF']) }}</strong>
                                 <p class="mt-1 ml-2">{{ $onOff->off_message }}</p>
                                 <hr>
-                                <strong>{{ __('yokakit.raspberry_pi') }}</strong>
+                                <strong>{{ __('pinkieit.raspberry_pi') }}</strong>
                                 <p class="mt-1 ml-2">{{ $onOff->raspberryPi->raspberry_pi_name }}</p>
                                 <hr>
-                                <strong>{{ __('yokakit.pin_number') }}</strong>
+                                <strong>{{ __('pinkieit.pin_number') }}</strong>
                                 <p class="mt-1 ml-2">{{ $onOff->pinNumber() }}</p>
                             </x-adminlte-card>
                         </x-modal-delete>

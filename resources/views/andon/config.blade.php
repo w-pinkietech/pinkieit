@@ -1,15 +1,15 @@
 @extends('components.header')
 
-@section('title', __('yokakit.target_config', ['target' => __('yokakit.andon')]))
+@section('title', __('pinkieit.target_config', ['target' => __('pinkieit.andon')]))
 
 @section('content')
     @include('adminlte::partials.common.preloader')
     <x-form-edit action="{{ route('andon.update') }}" back="{{ route('home') }}">
-        <x-input name="row_count" value="{!! $config->row_count !!}" label="{{ __('yokakit.row_count') }}" icon="grip-lines" required />
-        <x-select name="column_count" label="{{ __('yokakit.column_count') }}" :options="$columns" icon="grip-lines-vertical"
+        <x-input name="row_count" value="{!! $config->row_count !!}" label="{{ __('pinkieit.row_count') }}" icon="grip-lines" required />
+        <x-select name="column_count" label="{{ __('pinkieit.column_count') }}" :options="$columns" icon="grip-lines-vertical"
             selected="{{ $config->column_count }}" required />
         <div class="form-group required">
-            <label class="control-label" for="A">{{ __('yokakit.layout') }}</label>
+            <label class="control-label" for="A">{{ __('pinkieit.layout') }}</label>
             <div class="row mx-auto" id="sortable">
                 @foreach ($processes as $process)
                     <div class="col-{{ 12 / $config->column_count }} sortable-process" id="process-{{ $process->process_id }}"
@@ -31,54 +31,54 @@
                 @endforeach
             </div>
         </div>
-        <x-input name="auto_play_speed" value="{!! $config->auto_play_speed !!}" label="{{ __('yokakit.auto_play_speed') }}{{ __('yokakit.unit_millisecond') }}"
+        <x-input name="auto_play_speed" value="{!! $config->auto_play_speed !!}" label="{{ __('pinkieit.auto_play_speed') }}{{ __('pinkieit.unit_millisecond') }}"
             icon="play" required />
-        <x-input name="slide_speed" value="{!! $config->slide_speed !!}" label="{{ __('yokakit.slide_speed') }}{{ __('yokakit.unit_millisecond') }}"
+        <x-input name="slide_speed" value="{!! $config->slide_speed !!}" label="{{ __('pinkieit.slide_speed') }}{{ __('pinkieit.unit_millisecond') }}"
             icon="forward" required />
-        <x-select name="easing" label="{{ __('yokakit.easing') }}" :options="$easing" icon="ellipsis" selected="{{ $config->easing }}" required />
-        <x-select name="item_column_count" label="{{ __('yokakit.item_column_count') }}" :options="$columns" icon="grip-lines-vertical"
+        <x-select name="easing" label="{{ __('pinkieit.easing') }}" :options="$easing" icon="ellipsis" selected="{{ $config->easing }}" required />
+        <x-select name="item_column_count" label="{{ __('pinkieit.item_column_count') }}" :options="$columns" icon="grip-lines-vertical"
             selected="{{ $config->item_column_count }}" required />
         <div class="row">
             <div class="col-{{ 12 / $config->item_column_count }} d-flex justify-content display-item">
-                <x-input-switch name="is_show_part_number" label="{{ __('yokakit.part_number') }}" checked="{{ $config->is_show_part_number }}" />
+                <x-input-switch name="is_show_part_number" label="{{ __('pinkieit.part_number') }}" checked="{{ $config->is_show_part_number }}" />
             </div>
             <div class="col-{{ 12 / $config->item_column_count }} d-flex justify-content display-item">
-                <x-input-switch name="is_show_start" label="{{ __('yokakit.start_time') }}" checked="{{ $config->is_show_start }}" />
+                <x-input-switch name="is_show_start" label="{{ __('pinkieit.start_time') }}" checked="{{ $config->is_show_start }}" />
             </div>
             <div class="col-{{ 12 / $config->item_column_count }} d-flex justify-content display-item">
-                <x-input-switch name="is_show_good_count" label="{{ __('yokakit.is_show_good_count') }}" checked="{{ $config->is_show_good_count }}" />
+                <x-input-switch name="is_show_good_count" label="{{ __('pinkieit.is_show_good_count') }}" checked="{{ $config->is_show_good_count }}" />
             </div>
             <div class="col-{{ 12 / $config->item_column_count }} d-flex justify-content display-item">
-                <x-input-switch name="is_show_defective_count" label="{{ __('yokakit.is_show_defective_count') }}"
+                <x-input-switch name="is_show_defective_count" label="{{ __('pinkieit.is_show_defective_count') }}"
                     checked="{{ $config->is_show_defective_count }}" />
             </div>
             <div class="col-{{ 12 / $config->item_column_count }} d-flex justify-content display-item">
-                <x-input-switch name="is_show_good_rate" label="{{ __('yokakit.is_show_good_rate') }}" checked="{{ $config->is_show_good_rate }}" />
+                <x-input-switch name="is_show_good_rate" label="{{ __('pinkieit.is_show_good_rate') }}" checked="{{ $config->is_show_good_rate }}" />
             </div>
             <div class="col-{{ 12 / $config->item_column_count }} d-flex justify-content display-item">
-                <x-input-switch name="is_show_defective_rate" label="{{ __('yokakit.is_show_defective_rate') }}"
+                <x-input-switch name="is_show_defective_rate" label="{{ __('pinkieit.is_show_defective_rate') }}"
                     checked="{{ $config->is_show_defective_rate }}" />
             </div>
             <div class="col-{{ 12 / $config->item_column_count }} d-flex justify-content display-item">
-                <x-input-switch name="is_show_plan_count" label="{{ __('yokakit.is_show_plan_count') }}" checked="{{ $config->is_show_plan_count }}" />
+                <x-input-switch name="is_show_plan_count" label="{{ __('pinkieit.is_show_plan_count') }}" checked="{{ $config->is_show_plan_count }}" />
             </div>
             <div class="col-{{ 12 / $config->item_column_count }} d-flex justify-content display-item">
-                <x-input-switch name="is_show_achievement_rate" label="{{ __('yokakit.is_show_achievement_rate') }}"
+                <x-input-switch name="is_show_achievement_rate" label="{{ __('pinkieit.is_show_achievement_rate') }}"
                     checked="{{ $config->is_show_achievement_rate }}" />
             </div>
             <div class="col-{{ 12 / $config->item_column_count }} d-flex justify-content display-item">
-                <x-input-switch name="is_show_cycle_time" label="{{ __('yokakit.is_show_cycle_time') }}" checked="{{ $config->is_show_cycle_time }}" />
+                <x-input-switch name="is_show_cycle_time" label="{{ __('pinkieit.is_show_cycle_time') }}" checked="{{ $config->is_show_cycle_time }}" />
             </div>
             <div class="col-{{ 12 / $config->item_column_count }} d-flex justify-content display-item">
-                <x-input-switch name="is_show_time_operating_rate" label="{{ __('yokakit.is_show_time_operating_rate') }}"
+                <x-input-switch name="is_show_time_operating_rate" label="{{ __('pinkieit.is_show_time_operating_rate') }}"
                     checked="{{ $config->is_show_time_operating_rate }}" />
             </div>
             <div class="col-{{ 12 / $config->item_column_count }} d-flex justify-content display-item">
-                <x-input-switch name="is_show_performance_operating_rate" label="{{ __('yokakit.is_show_performance_operating_rate') }}"
+                <x-input-switch name="is_show_performance_operating_rate" label="{{ __('pinkieit.is_show_performance_operating_rate') }}"
                     checked="{{ $config->is_show_performance_operating_rate }}" />
             </div>
             <div class="col-{{ 12 / $config->item_column_count }} d-flex justify-content display-item">
-                <x-input-switch name="is_show_overall_equipment_effectiveness" label="{{ __('yokakit.is_show_overall_equipment_effectiveness') }}"
+                <x-input-switch name="is_show_overall_equipment_effectiveness" label="{{ __('pinkieit.is_show_overall_equipment_effectiveness') }}"
                     checked="{{ $config->is_show_overall_equipment_effectiveness }}" />
             </div>
         </div>

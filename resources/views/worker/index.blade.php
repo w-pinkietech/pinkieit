@@ -1,12 +1,12 @@
 @extends('components.header')
 
-@section('title', __('yokakit.target_list', ['target' => __('yokakit.worker')]))
+@section('title', __('pinkieit.target_list', ['target' => __('pinkieit.worker')]))
 
 @section('content')
     @include('adminlte::partials.common.preloader')
     <div class="row">
         @php
-            $heads = ['#', __('yokakit.identification_number'), __('yokakit.target_name', ['target' => __('yokakit.worker')]), __('yokakit.mac_address')];
+            $heads = ['#', __('pinkieit.identification_number'), __('pinkieit.target_name', ['target' => __('pinkieit.worker')]), __('pinkieit.mac_address')];
             $colmns = [['visible' => false], null, null, null];
             if (Gate::allows('admin')) {
                 array_push($heads, ['label' => '', 'no-export' => true, 'width' => 5]);
@@ -17,7 +17,7 @@
                 'language' => ['url' => route('datatables')],
             ];
         @endphp
-        <x-datatable-index href="{{ route('worker.create') }}" add="{{ __('yokakit.target_add', ['target' => __('yokakit.worker')]) }}" :heads="$heads"
+        <x-datatable-index href="{{ route('worker.create') }}" add="{{ __('pinkieit.target_add', ['target' => __('pinkieit.worker')]) }}" :heads="$heads"
             :config="$config">
             @foreach ($workers as $worker)
                 <tr>
@@ -32,12 +32,12 @@
                         </td>
                         {{-- 削除ダイアログ --}}
                         <x-modal-delete id="worker_{{ $worker->worker_id }}" action="{{ route('worker.destroy', ['worker' => $worker]) }}">
-                            <strong>{{ __('yokakit.confirm_delete', ['target' => __('yokakit.worker')]) }}</strong>
+                            <strong>{{ __('pinkieit.confirm_delete', ['target' => __('pinkieit.worker')]) }}</strong>
                             <x-adminlte-card class="mt-4">
-                                <strong>{{ __('yokakit.identification_number') }}</strong>
+                                <strong>{{ __('pinkieit.identification_number') }}</strong>
                                 <p class="mt-1 ml-2">{{ $worker->identification_number }}</p>
                                 <hr>
-                                <strong>{{ __('yokakit.target_name', ['target' => __('yokakit.worker')]) }}</strong>
+                                <strong>{{ __('pinkieit.target_name', ['target' => __('pinkieit.worker')]) }}</strong>
                                 <p class="mt-1 ml-2 mb-0">{{ $worker->worker_name }}</p>
                             </x-adminlte-card>
                         </x-modal-delete>

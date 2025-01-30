@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::table('lines', function (Blueprint $table) {
             // 不良品ラインが関連するラインID
-            $table->unsignedBigInteger('parent_id')->nullable()->after('worker_id')->comment(__('yokakit.target_id', ['target' => __('yokakit.target_line')]));
+            $table->unsignedBigInteger('parent_id')->nullable()->after('worker_id')->comment(__('pinkieit.target_id', ['target' => __('pinkieit.target_line')]));
             // 外部キーは自身のテーブル
             $table->foreign('parent_id')->references('line_id')->on('lines')->cascadeOnDelete();
         });

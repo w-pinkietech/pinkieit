@@ -8,11 +8,11 @@
 <table class="mt-2 table">
     <thead>
         <tr>
-            <th class="border-top-0 border-bottom-0">{{ __('yokakit.alarm_text') }}</th>
-            <th class="border-top-0 border-bottom-0">{{ __('yokakit.identification_number') }}</th>
-            <th class="border-top-0 border-bottom-0">{{ __('yokakit.sensor_type') }}</th>
-            <th class="border-top-0 border-bottom-0">{{ __('yokakit.raspberry_pi') }}</th>
-            <th class="border-top-0 border-bottom-0">{{ __('yokakit.trigger') }}</th>
+            <th class="border-top-0 border-bottom-0">{{ __('pinkieit.alarm_text') }}</th>
+            <th class="border-top-0 border-bottom-0">{{ __('pinkieit.identification_number') }}</th>
+            <th class="border-top-0 border-bottom-0">{{ __('pinkieit.sensor_type') }}</th>
+            <th class="border-top-0 border-bottom-0">{{ __('pinkieit.raspberry_pi') }}</th>
+            <th class="border-top-0 border-bottom-0">{{ __('pinkieit.trigger') }}</th>
             @can('admin')
                 @if ($process->isStopped())
                     <th class="border-top-0 border-bottom-0 w-1"></th>
@@ -39,22 +39,22 @@
                         {{-- アラーム削除ダイアログ --}}
                         <x-modal-delete id="alarm_{{ $sensor->sensor_id }}"
                             action="{{ route('alarm.destroy', ['process' => $process, 'sensor' => $sensor]) }}">
-                            <strong>{{ __('yokakit.confirm_delete', ['target' => __('yokakit.alarm')]) }}</strong>
+                            <strong>{{ __('pinkieit.confirm_delete', ['target' => __('pinkieit.alarm')]) }}</strong>
                             <x-adminlte-card class="mt-4">
-                                <strong>{{ __('yokakit.target_name', ['target' => __('yokakit.alarm')]) }}</strong>
+                                <strong>{{ __('pinkieit.target_name', ['target' => __('pinkieit.alarm')]) }}</strong>
                                 <p class="mt-1 ml-2">{{ $sensor->device_name }}</p>
                                 <hr>
-                                <strong>{{ __('yokakit.target_name', ['target' => __('yokakit.device')]) }} -
-                                    {{ __('yokakit.alias') }}</strong>
+                                <strong>{{ __('pinkieit.target_name', ['target' => __('pinkieit.device')]) }} -
+                                    {{ __('pinkieit.alias') }}</strong>
                                 <p class="mt-1 ml-2">{{ $sensor->alias }}</p>
                                 <hr>
-                                <strong>{{ __('yokakit.sensor_type') }}</strong>
+                                <strong>{{ __('pinkieit.sensor_type') }}</strong>
                                 <p class="mt-1 ml-2">{{ $sensor->sensor_type->description }}</p>
                                 <hr>
-                                <strong>{{ __('yokakit.raspberry_pi') }}</strong>
+                                <strong>{{ __('pinkieit.raspberry_pi') }}</strong>
                                 <p class="mt-1 ml-2">{{ $sensor->raspberryPi->raspberry_pi_name }}</p>
                                 <hr>
-                                <strong>{{ __('yokakit.trigger') }}</strong>
+                                <strong>{{ __('pinkieit.trigger') }}</strong>
                                 <p class="mt-1 ml-2 mb-0">{{ $sensor->trigger ? 'HIGH' : 'LOW' }}</p>
                             </x-adminlte-card>
                         </x-modal-delete>

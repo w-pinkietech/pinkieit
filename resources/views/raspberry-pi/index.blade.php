@@ -1,12 +1,12 @@
 @extends('components.header')
 
-@section('title', __('yokakit.target_list', ['target' => __('yokakit.raspberry_pi')]))
+@section('title', __('pinkieit.target_list', ['target' => __('pinkieit.raspberry_pi')]))
 
 @section('content')
     @include('adminlte::partials.common.preloader')
     <div class="row">
         @php
-            $heads = ['#', __('yokakit.target_name', ['target' => __('yokakit.raspberry_pi')]), __('yokakit.ip_address'), __('yokakit.cpu_temperature') . __('yokakit.unit_temperature'), __('yokakit.cpu_utilization') . __('yokakit.unit_rate'), __('yokakit.update_date')];
+            $heads = ['#', __('pinkieit.target_name', ['target' => __('pinkieit.raspberry_pi')]), __('pinkieit.ip_address'), __('pinkieit.cpu_temperature') . __('pinkieit.unit_temperature'), __('pinkieit.cpu_utilization') . __('pinkieit.unit_rate'), __('pinkieit.update_date')];
             $colmns = [['visible' => false], null, null, null, null, null];
             if (Gate::allows('admin')) {
                 array_push($heads, ['label' => '', 'no-export' => true, 'width' => 5]);
@@ -17,7 +17,7 @@
                 'language' => ['url' => route('datatables')],
             ];
         @endphp
-        <x-datatable-index href="{{ route('raspberry-pi.create') }}" add="{{ __('yokakit.target_add', ['target' => __('yokakit.raspberry_pi')]) }}"
+        <x-datatable-index href="{{ route('raspberry-pi.create') }}" add="{{ __('pinkieit.target_add', ['target' => __('pinkieit.raspberry_pi')]) }}"
             :heads="$heads" :config="$config">
             @foreach ($raspberryPis as $raspberryPi)
                 <tr>
@@ -35,9 +35,9 @@
                         {{-- 削除ダイアログ --}}
                         <x-modal-delete id="raspberry_pi_{{ $raspberryPi->raspberry_pi_id }}"
                             action="{{ route('raspberry-pi.destroy', ['raspberryPi' => $raspberryPi]) }}">
-                            <strong>{{ __('yokakit.confirm_delete', ['target' => __('yokakit.raspberry_pi')]) }}</strong>
+                            <strong>{{ __('pinkieit.confirm_delete', ['target' => __('pinkieit.raspberry_pi')]) }}</strong>
                             <x-adminlte-card class="mt-4">
-                                <strong>{{ __('yokakit.ip_address') }}</strong>
+                                <strong>{{ __('pinkieit.ip_address') }}</strong>
                                 <p class="mt-1 ml-2 mb-0">{{ $raspberryPi->ip_address }}</p>
                             </x-adminlte-card>
                         </x-modal-delete>

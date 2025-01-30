@@ -15,15 +15,15 @@ return new class extends Migration
     {
         Schema::create('raspberry_pis', function (Blueprint $table) {
             // ラズパイID
-            $table->id('raspberry_pi_id')->comment(__('yokakit.target_id', ['target' => __('yokakit.raspberry_pi')]));
+            $table->id('raspberry_pi_id')->comment(__('pinkieit.target_id', ['target' => __('pinkieit.raspberry_pi')]));
             // ラズパイ名
-            $table->string('raspberry_pi_name', 32)->unique()->index()->comment(__('yokakit.target_name', ['target' => __('yokakit.raspberry_pi')]));
+            $table->string('raspberry_pi_name', 32)->unique()->index()->comment(__('pinkieit.target_name', ['target' => __('pinkieit.raspberry_pi')]));
             // IPアドレス
-            $table->ipAddress()->unique()->index()->comment(__('yokakit.ip_address'));
+            $table->ipAddress()->unique()->index()->comment(__('pinkieit.ip_address'));
             // CPU温度
-            $table->double('cpu_temperature', 6, 1)->nullable()->comment(__('yokakit.cpu_temperature'));
+            $table->double('cpu_temperature', 6, 1)->nullable()->comment(__('pinkieit.cpu_temperature'));
             // CPU使用率
-            $table->unsignedFloat('cpu_utilization', 5, 1)->nullable()->comment(__('yokakit.cpu_utilization'));
+            $table->unsignedFloat('cpu_utilization', 5, 1)->nullable()->comment(__('pinkieit.cpu_utilization'));
             // タイムスタンプ
             $table->timestamps();
         });

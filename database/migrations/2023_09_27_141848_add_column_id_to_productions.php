@@ -14,7 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::table('productions', function (Blueprint $table) {
-            $table->id('production_id')->first()->comment(__('yokakit.target_id', ['target' => __('yokakit.production')]));
+            $table->id('production_id')->first()->comment(__('pinkieit.target_id', ['target' => __('pinkieit.production')]));
         });
     }
 

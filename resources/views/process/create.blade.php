@@ -1,11 +1,11 @@
 @extends('components.header')
 
-@section('title', __('yokakit.target_add', ['target' => __('yokakit.process')]))
+@section('title', __('pinkieit.target_add', ['target' => __('pinkieit.process')]))
 
 @section('content')
     <x-form-create action="{{ route('process.store') }}" back="{{ route('process.index') }}">
-        <x-input name="process_name" label="{{ __('yokakit.target_name', ['target' => __('yokakit.process')]) }}" icon="industry" required />
-        <x-input-color name="plan_color" label="{{ __('yokakit.plan_color') }}" init="#FFFFFF" required />
-        <x-textarea name="remark" label="{{ __('yokakit.remark') }}" />
+        <x-input name="process_name" label="{{ __('pinkieit.target_name', ['target' => __('pinkieit.process')]) }}" icon="industry" required />
+        <x-input-color name="plan_color" label="{{ __('pinkieit.plan_color') }}" init="#FFFFFF" required />
+        <x-textarea name="remark" label="{{ __('pinkieit.remark') }}" />
     </x-form-create>
 @endsection

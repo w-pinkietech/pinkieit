@@ -17,7 +17,7 @@ class PartNumberFactory extends Factory
     public function definition()
     {
         return [
-            'part_number_name' => __('yokakit.part_number') . "： {$this->faker->unique()->realText(10)}",
+            'part_number_name' => __('pinkieit.part_number') . "： {$this->faker->unique()->realText(10)}",
             'remark' => $this->faker->realText(256),
         ];
     }

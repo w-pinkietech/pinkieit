@@ -15,11 +15,11 @@ return new class extends Migration
     {
         Schema::table('production_lines', function (Blueprint $table) {
             // 不良品ラインが関連するラインID
-            $table->unsignedBigInteger('parent_id')->nullable()->after('line_id')->comment(__('yokakit.target_id', ['target' => __('yokakit.target_line')]));
+            $table->unsignedBigInteger('parent_id')->nullable()->after('line_id')->comment(__('pinkieit.target_id', ['target' => __('pinkieit.target_line')]));
             // 順序
-            $table->integer('order')->after('defective')->comment(__('yokakit.order'));
+            $table->integer('order')->after('defective')->comment(__('pinkieit.order'));
             // オフセットミリ秒
-            $table->integer('offset_millisecond')->default(0)->after('count')->comment(__('yokakit.offset') . 'ms');
+            $table->integer('offset_millisecond')->default(0)->after('count')->comment(__('pinkieit.offset') . 'ms');
             // オフセット秒の削除
             $table->dropColumn('offset_second');
             // 外部キーは自身のテーブル
@@ -36,7 +36,7 @@ return new class extends Migration
     {
         Schema::table('production_lines', function (Blueprint $table) {
             $table->dropForeign('production_lines_parent_id_foreign');
-            $table->integer('offset_second')->default(0)->after('count')->comment(__('yokakit.offset') . 'sec');
+            $table->integer('offset_second')->default(0)->after('count')->comment(__('pinkieit.offset') . 'sec');
             $table->dropColumn('offset_millisecond');
             $table->dropColumn('order');
             $table->dropColumn('parent_id');

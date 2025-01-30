@@ -17,7 +17,7 @@ class LineFactory extends Factory
     public function definition()
     {
         return [
-            'line_name' => __('yokakit.line') . "：{$this->faker->unique()->realText(10)}",
+            'line_name' => __('pinkieit.line') . "：{$this->faker->unique()->realText(10)}",
             'chart_color' => $this->faker->hexColor,
             'pin_number' => $this->faker->numberBetween(2, 27),
             'worker_id' => 1,

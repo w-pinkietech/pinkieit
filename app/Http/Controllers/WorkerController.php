@@ -31,7 +31,7 @@ class WorkerController extends AbstractController
      */
     public function name(): string
     {
-        return __('yokakit.worker');
+        return __('pinkieit.worker');
     }
 
     /**

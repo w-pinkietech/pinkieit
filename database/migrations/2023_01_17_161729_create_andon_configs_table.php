@@ -15,23 +15,23 @@ return new class extends Migration
     {
         Schema::create('andon_configs', function (Blueprint $table) {
             // アンドン設定ID
-            $table->id('andon_config_id')->comment(__('yokakit.target_id', ['target' => __('yokakit.target_config', ['target' => __('yokakit.andon')])]));
+            $table->id('andon_config_id')->comment(__('pinkieit.target_id', ['target' => __('pinkieit.target_config', ['target' => __('pinkieit.andon')])]));
             // ユーザーID
-            $table->unsignedBigInteger('user_id')->unique()->comment(__('yokakit.target_id', ['target' => __('yokakit.user')]));
+            $table->unsignedBigInteger('user_id')->unique()->comment(__('pinkieit.target_id', ['target' => __('pinkieit.user')]));
             // 行数
-            $table->integer('row_count')->comment(__('yokakit.row_count'));
+            $table->integer('row_count')->comment(__('pinkieit.row_count'));
             // 列数
-            $table->integer('column_count')->comment(__('yokakit.column_count'));
+            $table->integer('column_count')->comment(__('pinkieit.column_count'));
             // 自動再生
-            $table->boolean('auto_play')->comment(__('yokakit.auto_play'));
+            $table->boolean('auto_play')->comment(__('pinkieit.auto_play'));
             // 自動再生速度
-            $table->integer('auto_play_speed')->comment(__('yokakit.auto_play_speed'));
+            $table->integer('auto_play_speed')->comment(__('pinkieit.auto_play_speed'));
             // スライド速度
-            $table->integer('slide_speed')->comment(__('yokakit.slide_speed'));
+            $table->integer('slide_speed')->comment(__('pinkieit.slide_speed'));
             // 緩急
-            $table->string('easing', 16)->comment(__('yokakit.easing'));
+            $table->string('easing', 16)->comment(__('pinkieit.easing'));
             // フェード
-            $table->boolean('fade')->comment(__('yokakit.fade'));
+            $table->boolean('fade')->comment(__('pinkieit.fade'));
             // タイムスタンプ
             $table->timestamps();
             // 外部キー設定

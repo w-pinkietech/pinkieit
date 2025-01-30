@@ -15,11 +15,11 @@ return new class extends Migration
     {
         Schema::create('payloads', function (Blueprint $table) {
             // ペイロードID
-            $table->id('payload_id')->comment(__('yokakit.target_id', ['target' => __('yokakit.payload')]));
+            $table->id('payload_id')->comment(__('pinkieit.target_id', ['target' => __('pinkieit.payload')]));
             // 生産ラインID
-            $table->unsignedBigInteger('production_line_id')->unique()->comment(__('yokakit.target_id', ['target' => __('yokakit.production_line')]));
+            $table->unsignedBigInteger('production_line_id')->unique()->comment(__('pinkieit.target_id', ['target' => __('pinkieit.production_line')]));
             // ペイロード
-            $table->json('payload')->comment(__('yokakit.payload'));
+            $table->json('payload')->comment(__('pinkieit.payload'));
             // タイムスタンプ
             $table->timestamps();
             // 外部キー

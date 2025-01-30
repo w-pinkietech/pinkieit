@@ -2,7 +2,7 @@
 
 @php( $password_reset_url = View::getSection('password_reset_url') ?? config('adminlte.password_reset_url', 'password/reset') )
 
-@section('title', __('yokakit.password_reset'))
+@section('title', __('pinkieit.password_reset'))
 
 @if (config('adminlte.use_route_url', false))
     @php( $password_reset_url = $password_reset_url ? route($password_reset_url) : '' )

@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
-            $table->tinyInteger('role')->default(10)->index()->comment(__('yokakit.role'));
+            $table->tinyInteger('role')->default(10)->index()->comment(__('pinkieit.role'));
             $table->rememberToken();
             $table->timestamps();
         });

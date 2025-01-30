@@ -32,7 +32,7 @@ class SensorController extends AbstractController
      */
     public function name(): string
     {
-        return __('yokakit.alarm');
+        return __('pinkieit.alarm');
     }
 
     // /**

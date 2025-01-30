@@ -26,7 +26,7 @@ abstract class AbstractController extends BaseController
      */
     protected function redirectWithStore(bool $result, string $path, array $parameters = []): RedirectResponse
     {
-        return $this->redirect($result, __('yokakit.register'), $path, $parameters);
+        return $this->redirect($result, __('pinkieit.register'), $path, $parameters);
     }
 
     /**
@@ -39,7 +39,7 @@ abstract class AbstractController extends BaseController
      */
     protected function redirectWithUpdate(bool $result, string $path, array $parameters = []): RedirectResponse
     {
-        return $this->redirect($result, __('yokakit.update'), $path, $parameters);
+        return $this->redirect($result, __('pinkieit.update'), $path, $parameters);
     }
 
     /**
@@ -52,7 +52,7 @@ abstract class AbstractController extends BaseController
      */
     protected function redirectWithDestroy(bool $result, string $path, array $parameters = []): RedirectResponse
     {
-        return $this->redirect($result, __('yokakit.delete'), $path, $parameters);
+        return $this->redirect($result, __('pinkieit.delete'), $path, $parameters);
     }
 
     /**
@@ -68,9 +68,9 @@ abstract class AbstractController extends BaseController
     {
         $route = redirect()->route($path, $parameters);
         if ($result) {
-            $route->with('toast_success', __('yokakit.success_toast', ['target' => $this->name(), 'action' => $action]));
+            $route->with('toast_success', __('pinkieit.success_toast', ['target' => $this->name(), 'action' => $action]));
         } else {
-            $route->with('toast_danger', __('yokakit.failed_toast', ['target' => $this->name(), 'action' => $action]));
+            $route->with('toast_danger', __('pinkieit.failed_toast', ['target' => $this->name(), 'action' => $action]));
         }
         return $route;
     }

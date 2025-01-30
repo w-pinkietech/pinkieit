@@ -32,7 +32,7 @@ class CycleTimeController extends AbstractController
      */
     public function name(): string
     {
-        return __('yokakit.cycle_time');
+        return __('pinkieit.cycle_time');
     }
 
     // /**

@@ -49,10 +49,10 @@ class SwitchPartNumberController extends BaseController
         } catch (NoIndicatorException $th) {
             Log::error($th->getMessage(), $th->getTrace());
             $response = response()->json(['errors' => [__(
-                'yokakit.not_exists_toast',
+                'pinkieit.not_exists_toast',
                 [
-                    'target' => __('yokakit.indicator'),
-                    'action' => __('yokakit.reset'),
+                    'target' => __('pinkieit.indicator'),
+                    'action' => __('pinkieit.reset'),
                 ]
             )]], 500);
             throw new HttpResponseException($response);

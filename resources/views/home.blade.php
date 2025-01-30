@@ -1,12 +1,12 @@
 @extends('components.header')
 
-@section('title', __('yokakit.home'))
+@section('title', __('pinkieit.home'))
 
 @section('content')
     @include('adminlte::partials.common.preloader')
     <div class="row">
         <div class="col-md-12">
-            <x-adminlte-card title="{{ __('yokakit.andon') }}" icon="fa-solid fa-fw fa-tower-observation" maximizable="true">
+            <x-adminlte-card title="{{ __('pinkieit.andon') }}" icon="fa-solid fa-fw fa-tower-observation" maximizable="true">
                 <div id="andon-slider">
                     @foreach ($processes->filter(fn($x) => $x->andonLayout->is_display)->chunk($config->chunkLength()) as $chunk)
                         <div>
@@ -15,11 +15,11 @@
                                     @php
                                         $id = "process-{$process->process_id}";
                                         $url = route('process.show', ['process' => $process]);
-                                        $urlText = __('yokakit.detail');
+                                        $urlText = __('pinkieit.detail');
                                         $summary = $process->productionHistory?->summary();
                                         $inPlannedOutage = $process->productionHistory?->inPlannedOutage() ?? false;
                                         if ($process->isStopped()) {
-                                            $title = __('yokakit.stop');
+                                            $title = __('pinkieit.stop');
                                             $icon = '';
                                             $theme = '';
                                         } elseif ($process->sensorEvents->count() === 0) {
@@ -31,7 +31,7 @@
                                                     break;
                                                 case \App\Enums\ProductionStatus::BREAKDOWN():
                                                     if ($inPlannedOutage) {
-                                                        $title = __('yokakit.planned_outage');
+                                                        $title = __('pinkieit.planned_outage');
                                                         $icon = 'fas fa-info';
                                                         $theme = 'info';
                                                     } else {
@@ -60,64 +60,64 @@
                                             theme="{{ $theme }}">
                                             @if ($config->is_show_part_number)
                                                 <x-adminlte-profile-col-item id="part-number-{{ $process->process_id }}"
-                                                    title="{{ __('yokakit.part_number') }}"
+                                                    title="{{ __('pinkieit.part_number') }}"
                                                     text="{{ $process->productionHistory?->part_number_name ?? '--' }}"
                                                     size="{{ 12 / $config->item_column_count }}" />
                                             @endif
                                             @if ($config->is_show_start)
                                                 <x-adminlte-profile-col-item id="start-{{ $process->process_id }}"
-                                                    title="{{ __('yokakit.start_time') }}" text="{{ $process->productionHistory?->start ?? '--' }}"
+                                                    title="{{ __('pinkieit.start_time') }}" text="{{ $process->productionHistory?->start ?? '--' }}"
                                                     size="{{ 12 / $config->item_column_count }}" />
                                             @endif
                                             @if ($config->is_show_good_count)
                                                 <x-adminlte-profile-col-item id="good-count-{{ $process->process_id }}"
-                                                    title="{{ __('yokakit.good_count') }}" text="{{ $summary['goodCount'] ?? '--' }}"
+                                                    title="{{ __('pinkieit.good_count') }}" text="{{ $summary['goodCount'] ?? '--' }}"
                                                     size="{{ 12 / $config->item_column_count }}" />
                                             @endif
                                             @if ($config->is_show_defective_count)
                                                 <x-adminlte-profile-col-item id="defective-count-{{ $process->process_id }}"
-                                                    title="{{ __('yokakit.defective_count') }}" text="{{ $summary['defectiveCount'] ?? '--' }}"
+                                                    title="{{ __('pinkieit.defective_count') }}" text="{{ $summary['defectiveCount'] ?? '--' }}"
                                                     size="{{ 12 / $config->item_column_count }}" />
                                             @endif
                                             @if ($config->is_show_good_rate)
                                                 <x-adminlte-profile-col-item id="good-rate-{{ $process->process_id }}"
-                                                    title="{{ __('yokakit.good_rate') }}" text="{{ $summary['goodRate'] ?? '--' }}"
+                                                    title="{{ __('pinkieit.good_rate') }}" text="{{ $summary['goodRate'] ?? '--' }}"
                                                     size="{{ 12 / $config->item_column_count }}" />
                                             @endif
                                             @if ($config->is_show_defective_rate)
                                                 <x-adminlte-profile-col-item id="defective-rate-{{ $process->process_id }}"
-                                                    title="{{ __('yokakit.defective_rate') }}" text="{{ $summary['defectiveRate'] ?? '--' }}"
+                                                    title="{{ __('pinkieit.defective_rate') }}" text="{{ $summary['defectiveRate'] ?? '--' }}"
                                                     size="{{ 12 / $config->item_column_count }}" />
                                             @endif
                                             @if ($config->is_show_plan_count)
                                                 <x-adminlte-profile-col-item id="plan-count-{{ $process->process_id }}"
-                                                    title="{{ __('yokakit.plan_count') }}" text="{{ $summary['planCount'] ?? '--' }}"
+                                                    title="{{ __('pinkieit.plan_count') }}" text="{{ $summary['planCount'] ?? '--' }}"
                                                     size="{{ 12 / $config->item_column_count }}" />
                                             @endif
                                             @if ($config->is_show_achievement_rate)
                                                 <x-adminlte-profile-col-item id="achievement-rate-{{ $process->process_id }}"
-                                                    title="{{ __('yokakit.achievement_rate') }}" text="{{ $summary['achievementRate'] ?? '--' }}"
+                                                    title="{{ __('pinkieit.achievement_rate') }}" text="{{ $summary['achievementRate'] ?? '--' }}"
                                                     size="{{ 12 / $config->item_column_count }}" />
                                             @endif
                                             @if ($config->is_show_cycle_time)
                                                 <x-adminlte-profile-col-item id="cycle-time-{{ $process->process_id }}"
-                                                    title="{{ __('yokakit.cycle_time') }}" text="{{ $summary['cycleTime'] ?? '--' }}"
+                                                    title="{{ __('pinkieit.cycle_time') }}" text="{{ $summary['cycleTime'] ?? '--' }}"
                                                     size="{{ 12 / $config->item_column_count }}" />
                                             @endif
                                             @if ($config->is_show_time_operating_rate)
                                                 <x-adminlte-profile-col-item id="time-operating-rate-{{ $process->process_id }}"
-                                                    title="{{ __('yokakit.time_operating_rate') }}" text="{{ $summary['timeOperatingRate'] ?? '--' }}"
+                                                    title="{{ __('pinkieit.time_operating_rate') }}" text="{{ $summary['timeOperatingRate'] ?? '--' }}"
                                                     size="{{ 12 / $config->item_column_count }}" />
                                             @endif
                                             @if ($config->is_show_performance_operating_rate)
                                                 <x-adminlte-profile-col-item id="performance-operating-rate-{{ $process->process_id }}"
-                                                    title="{{ __('yokakit.performance_operating_rate') }}"
+                                                    title="{{ __('pinkieit.performance_operating_rate') }}"
                                                     text="{{ $summary['performanceOperatingRate'] ?? '--' }}"
                                                     size="{{ 12 / $config->item_column_count }}" />
                                             @endif
                                             @if ($config->is_show_overall_equipment_effectiveness)
                                                 <x-adminlte-profile-col-item id="oee-{{ $process->process_id }}"
-                                                    title="{{ __('yokakit.overall_equipment_effectiveness') }}"
+                                                    title="{{ __('pinkieit.overall_equipment_effectiveness') }}"
                                                     text="{{ $summary['overallEquipmentEffectiveness'] ?? '--' }}"
                                                     size="{{ 12 / $config->item_column_count }}" />
                                             @endif
@@ -285,7 +285,7 @@
             }
 
             function updateAndonAsRunning(smallBox, payload) {
-                const title = @json(__('yokakit.running'));
+                const title = @json(__('pinkieit.running'));
                 smallBox.update({
                     title,
                     icon: 'fas fa-info',
@@ -296,7 +296,7 @@
 
             function updateAndonAsChangeover(smallBox, payload) {
                 smallBox.update({
-                    title: @json(__('yokakit.changeover')),
+                    title: @json(__('pinkieit.changeover')),
                     icon: 'fas fa-triangle-exclamation',
                     theme: 'warning',
                 });
@@ -306,13 +306,13 @@
             function updateAndonAsBreakdown(smallBox, payload) {
                 if (payload.inPlannedOutage) {
                     smallBox.update({
-                        title: @json(__('yokakit.planned_outage')),
+                        title: @json(__('pinkieit.planned_outage')),
                         icon: 'fas fa-info',
                         theme: 'info',
                     });
                 } else {
                     smallBox.update({
-                        title: @json(__('yokakit.breakdown')),
+                        title: @json(__('pinkieit.breakdown')),
                         icon: 'fas fa-ban',
                         theme: 'danger',
                     });
@@ -322,7 +322,7 @@
 
             function updateAndonAsComplete(smallBox, payload) {
                 smallBox.update({
-                    title: @json(__('yokakit.stop')),
+                    title: @json(__('pinkieit.stop')),
                 });
                 smallBox.remove('icon', 'theme');
                 updateDisplayItem(payload);

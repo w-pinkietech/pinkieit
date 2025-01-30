@@ -16,11 +16,11 @@ return new class extends Migration
     {
         Schema::create('defective_productions', function (Blueprint $table) {
             // 生産ラインID (主キーではない)
-            $table->unsignedBigInteger('production_line_id')->comment(__('yokakit.target_id', ['target' => __('yokakit.production_line')]));
+            $table->unsignedBigInteger('production_line_id')->comment(__('pinkieit.target_id', ['target' => __('pinkieit.production_line')]));
             // 作成日時
-            $table->dateTime('at', 3)->index()->default(DB::raw('CURRENT_TIMESTAMP'))->comment(__('yokakit.created_at'));
+            $table->dateTime('at', 3)->index()->default(DB::raw('CURRENT_TIMESTAMP'))->comment(__('pinkieit.created_at'));
             // 不良品カウント
-            $table->integer('count')->comment(__('yokakit.defective_count'));
+            $table->integer('count')->comment(__('pinkieit.defective_count'));
             // 外部キー
             $table->foreign('production_line_id')->references('production_line_id')->on('production_lines')->cascadeOnDelete();
         });

@@ -1,19 +1,19 @@
 @extends('components.header')
 
-@section('title', __('yokakit.target_list', ['target' => __('yokakit.user')]))
+@section('title', __('pinkieit.target_list', ['target' => __('pinkieit.user')]))
 
 @section('content')
     @include('adminlte::partials.common.preloader')
     <div class="row">
         @php
-            $heads = ['#', __('yokakit.name'), __('yokakit.email'), __('yokakit.role'), ['label' => '', 'no-export' => true, 'width' => 5]];
+            $heads = ['#', __('pinkieit.name'), __('pinkieit.email'), __('pinkieit.role'), ['label' => '', 'no-export' => true, 'width' => 5]];
             $colmns = [['visible' => false], null, null, null, ['orderable' => false, 'searchable' => false]];
             $config = [
                 'columns' => $colmns,
                 'language' => ['url' => route('datatables')],
             ];
         @endphp
-        <x-datatable-index href="{{ route('user.create') }}" add="{{ __('yokakit.target_add', ['target' => __('yokakit.user')]) }}" :heads="$heads"
+        <x-datatable-index href="{{ route('user.create') }}" add="{{ __('pinkieit.target_add', ['target' => __('pinkieit.user')]) }}" :heads="$heads"
             :config="$config">
             @foreach ($users as $user)
                 <tr>
@@ -26,15 +26,15 @@
                     </td>
                     {{-- 削除ダイアログ --}}
                     <x-modal-delete id="user_{{ $user->id }}" action="{{ route('user.destroy', ['user' => $user]) }}">
-                        <strong>{{ __('yokakit.confirm_delete', ['target' => __('yokakit.user')]) }}</strong>
+                        <strong>{{ __('pinkieit.confirm_delete', ['target' => __('pinkieit.user')]) }}</strong>
                         <x-adminlte-card class="mt-4">
-                            <strong>{{ __('yokakit.name') }}</strong>
+                            <strong>{{ __('pinkieit.name') }}</strong>
                             <p class="mt-1 ml-2">{{ $user->name }}</p>
                             <hr>
-                            <strong>{{ __('yokakit.email') }}</strong>
+                            <strong>{{ __('pinkieit.email') }}</strong>
                             <p class="mt-1 ml-2 mb-0">{{ $user->email }}</p>
                             <hr>
-                            <strong>{{ __('yokakit.role') }}</strong>
+                            <strong>{{ __('pinkieit.role') }}</strong>
                             <p class="mt-1 ml-2 mb-0">{{ $user->role->description }}</p>
                         </x-adminlte-card>
                     </x-modal-delete>

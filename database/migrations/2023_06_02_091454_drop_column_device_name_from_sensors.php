@@ -31,7 +31,7 @@ return new class extends Migration
     {
         Schema::table('sensors', function (Blueprint $table) {
             $table->dropForeign('sensors_raspberry_pi_id_foreign');
-            $table->string('device_name', 32)->after('raspberry_pi_id')->comment(__('yokakit.target_name', ['target' => __('yokakit.device')]));
+            $table->string('device_name', 32)->after('raspberry_pi_id')->comment(__('pinkieit.target_name', ['target' => __('pinkieit.device')]));
             $table->unique(['raspberry_pi_id', 'device_name']);
             $table->index(['raspberry_pi_id', 'device_name']);
             $table->foreign('raspberry_pi_id')->references('raspberry_pi_id')->on('raspberry_pis')->cascadeOnDelete();

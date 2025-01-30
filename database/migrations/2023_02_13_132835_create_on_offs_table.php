@@ -15,19 +15,19 @@ return new class extends Migration
     {
         Schema::create('on_offs', function (Blueprint $table) {
             // ID
-            $table->id('on_off_id')->comment(__('yokakit.target_id', ['target' => 'ON-OFF']));
+            $table->id('on_off_id')->comment(__('pinkieit.target_id', ['target' => 'ON-OFF']));
             // 工程ID
-            $table->unsignedBigInteger('process_id')->comment(__('yokakit.target_id', ['target' => __('yokakit.process')]));
+            $table->unsignedBigInteger('process_id')->comment(__('pinkieit.target_id', ['target' => __('pinkieit.process')]));
             // ラズパイID
-            $table->unsignedBigInteger('raspberry_pi_id')->comment(__('yokakit.target_id', ['target' => __('yokakit.raspberry_pi')]));
+            $table->unsignedBigInteger('raspberry_pi_id')->comment(__('pinkieit.target_id', ['target' => __('pinkieit.raspberry_pi')]));
             // イベント名
-            $table->string('event_name', 64)->comment(__('yokakit.target_name', ['target' => __('yokakit.event')]));
+            $table->string('event_name', 64)->comment(__('pinkieit.target_name', ['target' => __('pinkieit.event')]));
             // ONメッセージ
-            $table->string('on_message', 64)->comment(__('yokakit.target_message', ['target' => 'ON']));
+            $table->string('on_message', 64)->comment(__('pinkieit.target_message', ['target' => 'ON']));
             // OFFメッセージ
-            $table->string('off_message', 64)->nullable()->comment(__('yokakit.target_message', ['target' => 'OFF']));
+            $table->string('off_message', 64)->nullable()->comment(__('pinkieit.target_message', ['target' => 'OFF']));
             // ピン番号
-            $table->tinyInteger('pin_number', false, true)->comment(__('yokakit.pin_number'));
+            $table->tinyInteger('pin_number', false, true)->comment(__('pinkieit.pin_number'));
             // タイムスタンプ
             $table->timestamps();
             // 外部キー

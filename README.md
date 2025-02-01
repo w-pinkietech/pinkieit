@@ -1,64 +1,135 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400"></a></p>
+# PinkieIt
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+PinkieItは、Laravelを使用したWebアプリケーションです。このREADMEでは、プロジェクトのセットアップと実行方法について説明します。
 
-## About Laravel
+## 必要条件
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+- Docker
+- Docker Compose
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Dockerのインストール
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+Dockerがインストールされていない場合は、以下の手順でインストールしてください：
 
-## Learning Laravel
+1. Dockerをインストールします：
+   ```
+   curl -fsSL https://get.docker.com | sudo sh
+   ```
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+2. 現在のユーザーをdockerグループに追加します：
+   ```
+   sudo usermod -aG docker $USER
+   ```
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 2000 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+3. 変更を適用するために、ログアウトして再度ログインするか、システムを再起動してください。
 
-## Laravel Sponsors
+4. インストールを確認します：
+   ```
+   docker --version
+   ```
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+注意: Docker Composeは通常、上記の手順でDockerと一緒にインストールされます。インストールされていない場合は、`sudo apt-get install -y docker-compose-plugin` を実行してインストールしてください。
 
-### Premium Partners
+## セットアップ手順
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
-- **[Lendio](https://lendio.com)**
+1. リポジトリをクローンします：
+   ```
+   git clone <repository-url>
+   ```
 
-## Contributing
+2. プロジェクトディレクトリに移動します：
+   ```
+   cd pinkieit
+   ```
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+3. セットアップスクリプトに実行権限を付与します：
+   ```
+   chmod +x setup.sh
+   ```
 
-## Code of Conduct
+4. セットアップスクリプトを実行し、プロンプトに従って必要な情報を入力します：
+   ```
+   ./setup.sh
+   ```
+   注: データベースのユーザー名とパスワード、Pusher関連の設定を入力するよう求められます。
+   DBのパスワードは必須項目です。その他の項目については、デフォルト値を使用する場合は、そのままEnterキーを押してください。
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+5. Dockerコンテナを起動します：
+   ```
+   docker compose up -d --build
+   ```
+   注: 初回実行時や、Dockerfileやdocker-compose.ymlを変更した場合は、必ず`--build`オプションを付けてください。それ以外の場合は、単に`docker compose up -d`で十分です。
 
-## Security Vulnerabilities
+6. （オプション）シードデータを投入したい場合：
+   ```
+   docker compose exec web-app composer install
+   docker compose exec web-app php artisan db:seed
+   ```
+   まず、composer installを実施し、devに必要なパッケージをインストールします。 その後、db:seedを実行します。
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+7. （オプション）管理者ユーザーを作成します：
+   ```
+   docker compose exec web-app php artisan make:user <userrole> <email> <password>
+   ```
+   例：
+   ```
+   docker compose exec web-app php artisan make:user admin admin@example.com your_secure_password
+   ```
+   注意: 実際の使用時は、強力で一意のパスワードを使用してください。上記の例は説明のためのものです。
 
-## License
+## 使用方法
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+セットアップが完了したら、ブラウザで http://localhost:18080、またはhttp://Dockerコンテナが動いてるマシンのIP:18080 にアクセスしてアプリケーションを使用できます。
+
+## 開発
+
+### 環境変数
+
+このプロジェクトは独自のWebSocketサーバーを使用しています。
+PUSHER_*の設定は外部のPusherサービスではなく、
+このアプリケーション内のWebSocketサーバーの設定に使用されます。
+
+### コマンド
+
+- アプリケーションログの確認：
+  ```
+  docker compose logs -f web-app
+  ```
+
+- mqtt brokerの確認：
+  ```
+  docker compose exec mqtt mosquitto_sub -h localhost -p 1883 -t production
+  ```
+   注意: mqttのtopicがproductionの場合。
+
+
+- Artisanコマンドの実行：
+  ```
+  docker compose exec web-app php artisan <command>
+  ```
+
+## トラブルシューティング
+
+問題が発生した場合は、以下の手順を試してください：
+
+1. Dockerコンテナを再起動する：
+   ```
+   docker compose restart
+   ```
+
+2. キャッシュをクリアする：
+   ```
+   docker compose exec web-app php artisan cache:clear
+   docker compose exec web-app php artisan config:clear
+   ```
+
+3. コンポーザーの依存関係を更新する：
+   ```
+   docker compose exec web-app composer update
+   ```
+
+それでも問題が解決しない場合は、イシューを作成してください。
+
+## ライセンス
+
+[Apache License 2.0](LICENSE)

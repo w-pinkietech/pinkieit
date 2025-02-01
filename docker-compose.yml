@@ -13,7 +13,7 @@ services:
       db:
         condition: service_healthy
     volumes:
-      - .:/var/www/html
+      # - .app/laravel:/var/www/html # for development only
       - ./docker/php/local.ini:/usr/local/etc/php/conf.d/local.ini
     ports:
       - 18080:80

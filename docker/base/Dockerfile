@@ -1,4 +1,4 @@
-FROM php:8.2.11-apache
+FROM php:8.2.27-apache
 
 RUN apt-get update && apt-get install -y \
     build-essential \
@@ -20,7 +20,34 @@ RUN apt-get update && apt-get install -y \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
-RUN docker-php-ext-install pdo_mysql mysqli mbstring exif pcntl bcmath gd zip
+# PHP拡張を個別にインストール
+RUN docker-php-ext-install pdo_mysql
+RUN docker-php-ext-install exif
+RUN docker-php-ext-install pcntl
+RUN docker-php-ext-install bcmath
+
+RUN CFLAGS="-O0" docker-php-ext-configure mbstring
+RUN CFLAGS="-O0" docker-php-ext-install -j1 mbstring
+
+# GD拡張の設定とインストール（特に問題が起きやすい）
+# GD関連の依存関係インストール
+RUN apt-get update && apt-get install -y \
+    libfreetype6-dev \
+    libjpeg62-turbo-dev \
+    libpng-dev \
+    libwebp-dev \
+    && rm -rf /var/lib/apt/lists/*
+
+# GDのインストール（メモリ制限緩和とコンパイルオプション調整）
+RUN CFLAGS="$CFLAGS -O1" docker-php-ext-configure gd \
+    --with-freetype \
+    --with-jpeg \
+    --with-webp
+
+RUN CFLAGS="$CFLAGS -O1" docker-php-ext-install -j1 gd
+
+# ZIP拡張のインストール
+RUN docker-php-ext-install zip
 
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 

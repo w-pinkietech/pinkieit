@@ -54,7 +54,7 @@ COPY ../../app/laravel/composer.* ../../app/laravel/package*.json ./
 ENV COMPOSER_ALLOW_SUPERUSER=1
 RUN set -ex \
     && composer install --no-dev --optimize-autoloader --no-scripts --no-autoloader --no-cache \
-    && npm ci --only=production \
+    && npm install \
     && composer dump-autoload --optimize --no-scripts
 
 # アプリケーションコードのコピー（依存関係インストール後に実行）

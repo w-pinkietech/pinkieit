@@ -1,64 +1,129 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400"></a></p>
+# PinkieIt
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+PinkieItは、Laravelを使用したWebアプリケーションです。このREADMEでは、プロジェクトのセットアップと実行方法について説明します。
 
-## About Laravel
+## 必要条件
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+- Docker 20.10.13以上
+- Docker Compose v2.17.2以上
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Dockerのインストール
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+Dockerがインストールされていない場合は、以下の手順でインストールしてください：
 
-## Learning Laravel
+1. Dockerをインストールします：
+   ```bash
+   curl -fsSL https://get.docker.com | sudo sh
+   ```
+   ※ 環境に応じて公式ドキュメントの最新手順を確認してください
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+2. 現在のユーザーをdockerグループに追加します：
+   ```bash
+   sudo usermod -aG docker $USER
+   newgrp docker  # グループ変更を即時反映
+   ```
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 2000 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+3. インストールを確認します：
+   ```bash
+   docker --version
+   docker compose version  # Compose v2を確認
+   ```
 
-## Laravel Sponsors
+## セットアップ手順
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+1. リポジトリをクローンします：
+   ```bash
+   git clone git@github.com:w-pinkietech/pinkieit.git
+   cd pinkieit
+   ```
 
-### Premium Partners
+2. セットアップスクリプトを実行：
+   ```bash
+   chmod +x setup.sh
+   ./setup.sh  # .envファイル生成と設定確認
+   ```
+   ※ DBパスワードは12文字以上の英数字記号を推奨
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
-- **[Lendio](https://lendio.com)**
+3. Dockerコンテナをビルド＆起動：
+   - 初回またはDockerfile変更時
+   ```bash
+   docker compose up -d --build
+   ```
+   - 通常起動時（2回目以降）
+   ```bash
+   docker compose up -d
+   ```
 
-## Contributing
+4. 依存関係インストールとデータベース移行：
+   ```bash
+   docker compose exec web-app composer install
+   docker compose exec web-app php artisan migrate
+   ```
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+5. （オプション）テストデータ投入：
+   ```bash
+   docker compose exec web-app php artisan db:seed
+   ```
 
-## Code of Conduct
+6. （オプション）管理者ユーザー作成：
+   ```bash
+   docker compose exec web-app php artisan make:user admin \
+     admin@example.com 'StrongP@ssw0rd!'
+   ```
+   ※ パスワードはシングルクォートで囲んでください
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+## 使用方法
 
-## Security Vulnerabilities
+- ローカルアクセス：http://localhost:18080
+- リモートアクセス：http://<サーバーIP>:18080
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+※ ファイアウォール設定でポート18080と6001（WebSocket）を開放してください
 
-## License
+## 開発
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+### 環境変数
+`.env`ファイルの主な設定項目：
+```ini
+# 内部WebSocketサーバー設定（外部Pusherサービス不要）
+BROADCAST_DRIVER=pusher
+PUSHER_APP_ID=local_pinkieit
+PUSHER_APP_KEY=local_key
+PUSHER_APP_SECRET=local_secret
+PUSHER_HOST=websocket
+PUSHER_PORT=6001
+```
+
+### 常用コマンド
+アプリケーションログ監視：
+```bash
+docker compose logs -f web-app  # 複数サービス指定可能
+```
+
+MQTTメッセージ監視：
+```bash
+docker compose exec mqtt mosquitto_sub -h mqtt -p 1883 -t 'production/#'
+```
+
+リアルタイムリソース監視：
+```bash
+docker compose stats  # 全コンテナのCPU/Memory使用量表示
+```
+
+## トラブルシューティング
+
+キャッシュ問題が疑われる場合：
+```bash
+docker compose exec web-app php artisan optimize:clear
+docker compose exec web-app php artisan route:cache
+docker compose exec web-app php artisan config:cache
+```
+
+コンテナ再構築（根本解決が必要な場合）：
+```bash
+docker compose down -v --remove-orphans
+docker compose up -d --build
+```
+
+## ライセンス
+
+[Apache License 2.0](LICENSE)

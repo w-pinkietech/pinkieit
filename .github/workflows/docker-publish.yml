@@ -1,0 +1,37 @@
+   name: Docker Publish
+
+   on:
+     push:
+       branches: [ main ]
+     pull_request:
+       branches: [ main ]
+
+   env:
+     REGISTRY: ghcr.io
+     ORGANIZATION: w-pinkietech
+     BASE_IMAGE_NAME: ${{ github.repository }}/base-image
+
+   jobs:
+     build-and-push:
+       runs-on: ubuntu-latest
+       permissions:
+         contents: read
+         packages: write
+
+       steps:
+       - uses: actions/checkout@v4
+
+       - name: Log in to the Container registry
+         uses: docker/login-action@v1
+         with:
+           registry: ${{ env.REGISTRY }}
+           username: ${{ github.actor }}
+           password: ${{ secrets.GITHUB_PAT }}
+
+       - name: Build and push base image
+         uses: docker/build-push-action@v2
+         with:
+           context: .
+           file: docker/base/Dockerfile
+           push: true
+           tags: ${{ env.REGISTRY }}/${{ env.ORGANIZATION }}/${{ env.BASE_IMAGE_NAME }}:latest

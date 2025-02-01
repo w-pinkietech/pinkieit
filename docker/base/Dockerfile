@@ -33,11 +33,8 @@ RUN a2enmod rewrite
 
 WORKDIR /var/www/html
 
-# Copy the rest of the application code
-COPY ./app/laravel .
-
 # Copy composer files
-# COPY ./app/laravel/composer.json ./app/laravel/composer.lock ./
+COPY ../../app/laravel/composer.json ../../app/laravel/composer.lock ./
 
 # Composerにroot権限での実行を許可
 ENV COMPOSER_ALLOW_SUPERUSER=1
@@ -46,39 +43,16 @@ ENV COMPOSER_ALLOW_SUPERUSER=1
 RUN composer install --no-dev --optimize-autoloader --no-scripts --no-autoloader
 
 # Copy package.json and package-lock.json
-# COPY ./app/laravel/package.json ./app/laravel/package-lock.json ./
+COPY ../../app/laravel/package.json ../../app/laravel/package-lock.json ./
 
 # Install npm dependencies
 #RUN npm ci --only=production
 RUN npm install
 
+# Copy the rest of the application code
+COPY ../../app/laravel .
+
 # Generate autoloader
 RUN composer dump-autoload --optimize
 
 EXPOSE 80
-
-# Copy Apache configuration file
-COPY ./docker/app/apache/sites-available/000-default.conf /etc/apache2/sites-available/000-default.conf
-
-# Copy .env file
-COPY .env /var/www/html/.env
-
-# Run npm production
-RUN npm run production
-
-# Set permissions for storage and bootstrap/cache directories
-RUN chmod -R 775 /var/www/html/storage /var/www/html/bootstrap/cache \
-    && chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache
-
-# Generate application key
-RUN php artisan key:generate --force
-
-# Start Apache server
-CMD ["apache2-foreground"]
-
-# Add startup script
-# COPY app/laravel/app-entrypoint.sh /usr/local/bin/
-# RUN chmod +x /usr/local/bin/app-entrypoint.sh
-
-# Change CMD to use the startup script
-# CMD ["/usr/local/bin/docker-entrypoint.sh"]

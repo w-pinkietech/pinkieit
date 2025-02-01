@@ -34,7 +34,7 @@ RUN a2enmod rewrite
 WORKDIR /var/www/html
 
 # Copy composer files
-COPY ./composer.json ./composer.lock ./
+COPY ./app/laravel/composer.json ./app/laravel/composer.lock ./
 
 # Composerにroot権限での実行を許可
 ENV COMPOSER_ALLOW_SUPERUSER=1
@@ -43,14 +43,14 @@ ENV COMPOSER_ALLOW_SUPERUSER=1
 RUN composer install --no-dev --optimize-autoloader --no-scripts --no-autoloader
 
 # Copy package.json and package-lock.json
-COPY ./package.json ./package-lock.json ./
+COPY ./app/laravel/package.json ./app/laravel/package-lock.json ./
 
 # Install npm dependencies
 #RUN npm ci --only=production
 RUN npm install
 
 # Copy the rest of the application code
-COPY ./ .
+COPY ./app/laravel .
 
 # Generate autoloader
 RUN composer dump-autoload --optimize
@@ -58,7 +58,7 @@ RUN composer dump-autoload --optimize
 EXPOSE 80
 
 # Copy Apache configuration file
-COPY docker/apache/sites-available/000-default.conf /etc/apache2/sites-available/000-default.conf
+COPY ./docker/app/apache/sites-available/000-default.conf /etc/apache2/sites-available/000-default.conf
 
 # Copy .env file
 COPY .env /var/www/html/.env

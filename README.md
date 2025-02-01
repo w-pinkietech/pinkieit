@@ -45,10 +45,11 @@ Dockerがインストールされていない場合は、以下の手順でイ�
    ※ DBパスワードは12文字以上の英数字記号を推奨
 
 3. Dockerコンテナをビルド＆起動：
+   - 初回またはDockerfile変更時
    ```bash
-   docker compose up -d --build  # 初回またはDockerfile変更時
+   docker compose up -d --build
    ```
-   通常起動時（2回目以降）：
+   - 通常起動時（2回目以降）
    ```bash
    docker compose up -d
    ```

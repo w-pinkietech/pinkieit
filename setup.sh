@@ -11,7 +11,11 @@ cp .env.example .env
 
 # ユーザーに入力を促す
 read -p "Enter the database username (default: pinkieit): " db_username
-read -p "Enter the database password: " db_password
+read -p "Enter the database password (minimum 8 characters): " db_password
+while [[ ${#db_password} -lt 8 ]]; do
+    echo "Password must be at least 8 characters long."
+    read -p "Enter the database password (minimum 8 characters): " db_password
+done
 read -p "Enter the Pusher app ID (default: app-id): " pusher_app_id
 read -p "Enter the Pusher app key (default: app-key): " pusher_app_key
 read -p "Enter the Pusher app secret (default: app-secret): " pusher_app_secret
@@ -26,4 +30,4 @@ sed -i "s/DB_PASSWORD=.*/DB_PASSWORD=$db_password/" .env
 [ -n "$pusher_app_secret" ] && sed -i "s/PUSHER_APP_SECRET=.*/PUSHER_APP_SECRET=$pusher_app_secret/" .env
 
 echo "Environment file has been set up in .env"
-echo "Please run 'docker compose up -d' to start the containers."
+echo "Please run 'docker compose up -d --build' to start the containers."

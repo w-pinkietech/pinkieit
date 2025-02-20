@@ -14,10 +14,22 @@
                 "amiralizadeh9480.laravel-extra-intellisense",
                 "mikestead.dotenv",
                 "editorconfig.editorconfig",
-                "esbenp.prettier-vscode"
+                "esbenp.prettier-vscode",
+                "GitHub.codespaces",
+                "GitHub.vscode-pull-request-github"
             ],
             "settings": {
                 "php.validate.executablePath": "/usr/local/bin/php"
+            }
+        },
+        "codespaces": {
+            "repositories": {
+                "w-pinkietech/pinkieit": {
+                    "permissions": {
+                        "contents": "read",
+                        "metadata": "read"
+                    }
+                }
             }
         }
     },
@@ -26,5 +38,8 @@
         6001
     ],
     "postCreateCommand": "composer install && php artisan key:generate && php artisan migrate",
-    "remoteUser": "www-data"
+    "remoteUser": "www-data",
+    "features": {
+        "ghcr.io/devcontainers/features/github-cli:1": {}
+    }
 }

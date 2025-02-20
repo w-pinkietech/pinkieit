@@ -16,7 +16,8 @@
                 "editorconfig.editorconfig",
                 "esbenp.prettier-vscode",
                 "GitHub.codespaces",
-                "GitHub.vscode-pull-request-github"
+                "GitHub.vscode-pull-request-github",
+                "ms-azuretools.vscode-docker"
             ],
             "settings": {
                 "php.validate.executablePath": "/usr/local/bin/php"
@@ -40,6 +41,12 @@
     "postCreateCommand": "composer install && php artisan key:generate && php artisan migrate",
     "remoteUser": "www-data",
     "features": {
-        "ghcr.io/devcontainers/features/github-cli:1": {}
+        "ghcr.io/devcontainers/features/github-cli:1": {},
+        "ghcr.io/devcontainers/features/docker-outside-of-docker:1": {
+            "moby": true,
+            "installDockerBuildx": true,
+            "version": "latest",
+            "dockerDashComposeVersion": "v2"
+        }
     }
 }

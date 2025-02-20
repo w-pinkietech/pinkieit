@@ -1,0 +1,9 @@
+version: '3.8'
+services:
+  web-app:
+    volumes:
+      - ..:/var/www/html:cached
+      - ~/.ssh:/home/www-data/.ssh:ro
+    command: sleep infinity
+    environment:
+      - SHELL=/bin/bash

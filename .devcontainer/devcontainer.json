@@ -1,0 +1,30 @@
+{
+    "name": "PinkieIt Development",
+    "dockerComposeFile": [
+        "../docker-compose.yml",
+        "docker-compose.extend.yml"
+    ],
+    "service": "web-app",
+    "workspaceFolder": "/var/www/html",
+    "customizations": {
+        "vscode": {
+            "extensions": [
+                "bmewburn.vscode-intelephense-client",
+                "onecentlin.laravel-blade",
+                "amiralizadeh9480.laravel-extra-intellisense",
+                "mikestead.dotenv",
+                "editorconfig.editorconfig",
+                "esbenp.prettier-vscode"
+            ],
+            "settings": {
+                "php.validate.executablePath": "/usr/local/bin/php"
+            }
+        }
+    },
+    "forwardPorts": [
+        18080,
+        6001
+    ],
+    "postCreateCommand": "composer install && php artisan key:generate && php artisan migrate",
+    "remoteUser": "www-data"
+}

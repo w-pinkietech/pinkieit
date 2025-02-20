@@ -26,8 +26,11 @@ jobs:
       run: php -r "file_exists('.env') || copy('.env.example', '.env');"
       
     - name: Install Dependencies
+      env:
+        COMPOSER_STABILITY: stable
       run: |
-        composer update -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
+        composer config minimum-stability stable
+        composer update -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist --prefer-stable
         composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
       
     - name: Generate key

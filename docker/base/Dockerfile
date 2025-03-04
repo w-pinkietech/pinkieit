@@ -3,22 +3,25 @@ FROM php:8.2.27-apache
 # パッケージインストールを1つのレイヤーに統合
 RUN apt-get update && apt-get install -y \
     build-essential \
-    libpng-dev \
-    libjpeg62-turbo-dev \
-    libfreetype6-dev \
-    locales \
-    zip \
-    jpegoptim optipng pngquant gifsicle \
-    vim \
-    unzip \
-    git \
     curl \
-    libonig-dev \
-    libmariadb-dev-compat \
+    gifsicle \
+    git \
+    jpegoptim \
+    libfreetype6-dev \
+    libjpeg62-turbo-dev \
     libmariadb-dev \
-    libzip-dev \
-    pkg-config \
+    libmariadb-dev-compat \
+    libonig-dev \
+    libpng-dev \
     libwebp-dev \
+    libzip-dev \
+    locales \
+    optipng \
+    pkg-config \
+    pngquant \
+    unzip \
+    vim \
+    zip \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
@@ -29,9 +32,9 @@ RUN set -ex; \
     docker-php-ext-install -j1 mbstring; \
     # gd拡張
     CFLAGS="-O1" docker-php-ext-configure gd \
-        --with-freetype \
-        --with-jpeg \
-        --with-webp; \
+    --with-freetype \
+    --with-jpeg \
+    --with-webp; \
     docker-php-ext-install -j1 gd; \
     # その他の拡張
     docker-php-ext-install pdo_mysql exif pcntl bcmath zip;

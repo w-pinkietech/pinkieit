@@ -1,9 +1,27 @@
-version: '3.8'
 services:
-  web-app:
-    volumes:
-      - ..:/var/www/html:cached
-      - ~/.ssh:/home/www-data/.ssh:ro
-    command: sleep infinity
+  dev:
+    build:
+      context: .
+      dockerfile: docker/app/Dockerfile
+    image: pinkieit-web-app
+    container_name: pinkieit-dev
+    working_dir: /var/www/html
     environment:
-      - SHELL=/bin/bash
+      APACHE_LOG_DIR: /var/log/apache2
+    depends_on:
+      db:
+        condition: service_healthy
+      mqtt:
+        condition: service_started
+    command: sleep infinity
+    volumes:
+      - .:/workspace
+      - ./app/laravel:/var/www/html # for development only
+      - ./docker/php/local.ini:/usr/local/etc/php/conf.d/local.ini
+    ports:
+      - 18081:80
+      - 6002:6001
+    extra_hosts:
+      - host.docker.internal:host-gateway
+    networks:
+      - pinkieit

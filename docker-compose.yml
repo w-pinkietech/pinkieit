@@ -16,7 +16,7 @@ services:
         condition: service_started
     command: ["/usr/local/bin/app-entrypoint.sh"]
     volumes:
-      # - .app/laravel:/var/www/html # for development only
+      # - ./app/laravel:/var/www/html # for development only
       - ./docker/php/local.ini:/usr/local/etc/php/conf.d/local.ini
     ports:
       - 18080:80
@@ -31,14 +31,14 @@ services:
     container_name: pinkieit-db
     restart: unless-stopped
     healthcheck:
-      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-p${DB_PASSWORD}" ]
       interval: 10s
       timeout: 5s
       retries: 5
     environment:
-      MARIADB_DATABASE: ${DB_DATABASE}
+      MARIADB_DATABASE: ${DB_DATABASE:-pinkieit}
       MARIADB_ROOT_PASSWORD: ${DB_PASSWORD}
-      MARIADB_USER: ${DB_USERNAME}
+      MARIADB_USER: ${DB_USERNAME:-pinkieit}
       MARIADB_PASSWORD: ${DB_PASSWORD}
     volumes:
       - dbdata:/var/lib/mysql
@@ -56,7 +56,7 @@ services:
     volumes:
       - ./mqtt/mosquitto/config:/mosquitto/config
       - ./mqtt/mosquitto/data:/mosquitto/data
-      - ./mqtt/mosquitto/log:/mosquitto/log      
+      - ./mqtt/mosquitto/log:/mosquitto/log
     restart: unless-stopped
 
 networks:

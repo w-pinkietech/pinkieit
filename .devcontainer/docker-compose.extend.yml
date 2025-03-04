@@ -13,10 +13,10 @@ services:
         condition: service_healthy
       mqtt:
         condition: service_started
-    command: sleep infinity
+    command: apachectl -D FOREGROUND
     volumes:
       - .:/workspace
-      - ./app/laravel:/var/www/html # for development only
+      - ./app/laravel:/var/www/html
       - ./docker/php/local.ini:/usr/local/etc/php/conf.d/local.ini
     ports:
       - 18081:80

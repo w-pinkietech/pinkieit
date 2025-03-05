@@ -11,7 +11,7 @@ RUN npm run production
 
 # Set permissions for storage and bootstrap/cache directories
 RUN chmod -R 775 /var/www/html/storage /var/www/html/bootstrap/cache \
-    && chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache
+    && chown -R www-data:www-data /var/www/html
 
 # Generate application key
 RUN php artisan key:generate --force

@@ -24,7 +24,8 @@
                 "onecentlin.laravel-blade",
                 "SonarSource.sonarlint-vscode",
                 "streetsidesoftware.code-spell-checker",
-                "saoudrizwan.claude-dev"
+                "saoudrizwan.claude-dev",
+                "cognition.devin"
             ],
             "settings": {
                 "php.validate.executablePath": "/usr/local/bin/php",

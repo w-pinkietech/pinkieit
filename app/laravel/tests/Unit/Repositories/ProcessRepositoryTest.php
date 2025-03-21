@@ -32,8 +32,8 @@ class ProcessRepositoryTest extends RepositoryTestCase
         $this->repository->storeModel($process);
 
         $this->assertInstanceOf(Process::class, $process);
-        $this->assertEquals($data['line_id'], $process->line_id);
-        $this->assertEquals($data['name'], $process->name);
+        $this->assertEquals($data['production_history_id'], $process->production_history_id);
+        $this->assertEquals($data['process_name'], $process->process_name);
         $this->assertEquals($data['order'], $process->order);
     }
 

@@ -2,14 +2,14 @@
 
 namespace Tests\TestCase;
 
-use Tests\TestCase as BaseTestCase;
+use Tests\TestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 
 abstract class RepositoryTestCase extends TestCase
 {
-    use RefreshDatabase, DatabaseMigrations, DatabaseTransactions;
+    use RefreshDatabase;
 
     protected function setUp(): void
     {

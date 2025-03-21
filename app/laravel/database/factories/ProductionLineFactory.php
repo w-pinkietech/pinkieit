@@ -18,7 +18,7 @@ class ProductionLineFactory extends Factory
     {
         return [
             'line_id' => 1,
-            'production_id' => 1,
+
             'order' => $this->faker->numberBetween(1, 10),
             'status' => 'active',
         ];

@@ -66,9 +66,10 @@ class CycleTimeRepositoryTest extends RepositoryTestCase
             'cycle_time' => 100
         ]);
 
-        $updated = $this->repository->update($cycleTime->id, [
+        $request = new TestFormRequest([
             'cycle_time' => 120
         ]);
+        $updated = $this->repository->update($request, $cycleTime);
 
         $this->assertEquals(120, $updated->cycle_time);
     }

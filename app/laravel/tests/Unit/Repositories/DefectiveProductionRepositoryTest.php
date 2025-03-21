@@ -54,7 +54,7 @@ class DefectiveProductionRepositoryTest extends RepositoryTestCase
     {
         $productionId = 1;
         $defectiveProductions = DefectiveProduction::factory()->count(3)->create([
-            'production_id' => $productionId
+            'production_line_id' => $productionId
         ]);
         DefectiveProduction::factory()->create(['production_id' => 2]); // Different production
 

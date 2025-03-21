@@ -9,7 +9,7 @@ use Illuminate\Foundation\Testing\DatabaseTransactions;
 
 abstract class RepositoryTestCase extends TestCase
 {
-    use RefreshDatabase;
+    use DatabaseTransactions;
 
     protected function setUp(): void
     {
@@ -22,5 +22,8 @@ abstract class RepositoryTestCase extends TestCase
             );
             return new \Illuminate\Translation\Translator($loader, 'en');
         });
+        
+        // Run migrations before each test
+        $this->artisan('migrate:fresh');
     }
 }

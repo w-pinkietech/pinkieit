@@ -28,7 +28,8 @@ class CycleTimeRepositoryTest extends RepositoryTestCase
             'target_seconds' => 100,
         ];
 
-        $cycleTime = $this->repository->create($data);
+        $cycleTime = new CycleTime($data);
+        $this->repository->storeModel($cycleTime);
 
         $this->assertInstanceOf(CycleTime::class, $cycleTime);
         $this->assertEquals($data['process_id'], $cycleTime->process_id);

@@ -29,7 +29,8 @@ class DefectiveProductionRepositoryTest extends RepositoryTestCase
             'recorded_at' => now(),
         ];
 
-        $defectiveProduction = $this->repository->create($data);
+        $defectiveProduction = new DefectiveProduction($data);
+        $this->repository->storeModel($defectiveProduction);
 
         $this->assertInstanceOf(DefectiveProduction::class, $defectiveProduction);
         $this->assertEquals($data['production_id'], $defectiveProduction->production_id);

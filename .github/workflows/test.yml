@@ -39,12 +39,11 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Copy .env
+      - name: Setup .env
         run: |
-          yes | ./setup.sh
-          cp .env app/laravel/.env
-        shell: sh # これをしないと -o pipefail がついて yes が sigpipe で落ちる
-        working-directory: .
+          cp .env.example .env
+          php artisan config:clear
+          php artisan config:cache
 
       - name: Setup cache environment
         id: ext-cache
@@ -93,12 +92,20 @@ jobs:
 
       - name: Configure MySQL Connection
         run: |
-          sed -i 's/DB_CONNECTION=.*/DB_CONNECTION=mysql/' .env
-          sed -i 's/DB_HOST=.*/DB_HOST=127.0.0.1/' .env
-          sed -i 's/DB_PORT=.*/DB_PORT=3306/' .env
-          sed -i 's/DB_DATABASE=.*/DB_DATABASE=pinkieittest/' .env
-          sed -i 's/DB_USERNAME=.*/DB_USERNAME=pinkieit/' .env
-          sed -i 's/DB_PASSWORD=.*/DB_PASSWORD=pinkieit123/' .env
+          cat > .env << 'EOL'
+          APP_NAME=Laravel
+          APP_ENV=testing
+          APP_KEY=
+          APP_DEBUG=true
+          APP_URL=http://localhost
+
+          DB_CONNECTION=mysql
+          DB_HOST=127.0.0.1
+          DB_PORT=3306
+          DB_DATABASE=pinkieittest
+          DB_USERNAME=pinkieit
+          DB_PASSWORD=pinkieit123
+          EOL
         working-directory: app/laravel
 
       - name: Run Migrations

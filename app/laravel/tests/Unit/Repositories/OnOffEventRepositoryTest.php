@@ -35,11 +35,16 @@ class OnOffEventRepositoryTest extends RepositoryTestCase
         $request = new TestFormRequest($data);
         $result = $this->repository->store($request);
 
+        $this->assertTrue($result);
+        $event = OnOffEvent::where('on_off_id', $data['on_off_id'])->first();
         $this->assertInstanceOf(OnOffEvent::class, $event);
+        $this->assertEquals($data['process_id'], $event->process_id);
         $this->assertEquals($data['on_off_id'], $event->on_off_id);
-        $this->assertEquals($data['event_type'], $event->event_type);
-        $this->assertEquals($data['reason'], $event->reason);
-        $this->assertEquals($data['occurred_at']->timestamp, $event->occurred_at->timestamp);
+        $this->assertEquals($data['event_name'], $event->event_name);
+        $this->assertEquals($data['message'], $event->message);
+        $this->assertEquals($data['on_off'], $event->on_off);
+        $this->assertEquals($data['pin_number'], $event->pin_number);
+        $this->assertEquals($data['at']->timestamp, $event->at->timestamp);
     }
 
     public function test_can_find_on_off_event_by_id()
@@ -72,18 +77,18 @@ class OnOffEventRepositoryTest extends RepositoryTestCase
         $endDate = now();
 
         OnOffEvent::factory()->create([
-            'occurred_at' => now()->subDays(2)
+            'at' => now()->subDays(2)
         ]); // Outside range
         OnOffEvent::factory()->count(2)->create([
-            'occurred_at' => now()->subHours(12)
+            'at' => now()->subHours(12)
         ]); // Inside range
 
         $found = $this->repository->getByDateRange($startDate, $endDate);
 
         $this->assertCount(2, $found);
         $this->assertTrue($found->every(fn($event) => 
-            $event->occurred_at->greaterThanOrEqualTo($startDate) &&
-            $event->occurred_at->lessThanOrEqualTo($endDate)
+            $event->at->greaterThanOrEqualTo($startDate) &&
+            $event->at->lessThanOrEqualTo($endDate)
         ));
     }
 }

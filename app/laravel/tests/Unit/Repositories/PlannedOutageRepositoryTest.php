@@ -28,13 +28,15 @@ class PlannedOutageRepositoryTest extends RepositoryTestCase
             'end_time' => '10:00',
         ];
 
-        $model = new $this->model($data);
-        $this->repository->storeModel($model);
+        $request = new TestFormRequest($data);
+        $result = $this->repository->store($request);
 
-        $this->assertInstanceOf(PlannedOutage::class, $model);
-        $this->assertEquals($data['planned_outage_name'], $model->planned_outage_name);
-        $this->assertEquals($data['start_time'], $model->start_time);
-        $this->assertEquals($data['end_time'], $model->end_time);
+        $this->assertTrue($result);
+        $plannedOutage = PlannedOutage::where('planned_outage_name', $data['planned_outage_name'])->first();
+        $this->assertInstanceOf(PlannedOutage::class, $plannedOutage);
+        $this->assertEquals($data['planned_outage_name'], $plannedOutage->planned_outage_name);
+        $this->assertEquals($data['start_time'], $plannedOutage->start_time);
+        $this->assertEquals($data['end_time'], $plannedOutage->end_time);
     }
 
     public function test_can_find_planned_outage_by_id()
@@ -53,9 +55,10 @@ class PlannedOutageRepositoryTest extends RepositoryTestCase
             'planned_outage_name' => 'Old Name'
         ]);
 
-        $updated = $this->repository->update($plannedOutage->id, [
+        $request = new TestFormRequest([
             'planned_outage_name' => 'New Name'
         ]);
+        $result = $this->repository->update($request, $plannedOutage);
 
         $this->assertEquals('New Name', $updated->planned_outage_name);
     }

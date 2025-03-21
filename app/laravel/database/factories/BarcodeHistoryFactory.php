@@ -12,11 +12,11 @@ class BarcodeHistoryFactory extends Factory
     public function definition()
     {
         return [
-            'process_id' => 1,
+
             'barcode' => $this->faker->ean13,
             'ip_address' => $this->faker->ipv4,
             'mac_address' => $this->faker->macAddress,
-            'scanned_at' => now(),
+
         ];
     }
 }

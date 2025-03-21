@@ -23,18 +23,21 @@ class BarcodeHistoryRepositoryTest extends RepositoryTestCase
     public function test_can_create_barcode_history()
     {
         $data = [
-            'process_id' => 1,
+
             'barcode' => 'ABC123XYZ',
-            'scanned_at' => now(),
+            'ip_address' => '192.168.1.1',
+            'mac_address' => '00:11:22:33:44:55',
         ];
 
-        $history = new $this->model($data);
-        $this->repository->storeModel($history);
+        $request = new TestFormRequest($data);
+        $result = $this->repository->store($request);
 
+        $this->assertTrue($result);
+        $history = BarcodeHistory::where('barcode', $data['barcode'])->first();
         $this->assertInstanceOf(BarcodeHistory::class, $history);
-        $this->assertEquals($data['process_id'], $history->process_id);
         $this->assertEquals($data['barcode'], $history->barcode);
-        $this->assertEquals($data['scanned_at']->timestamp, $history->scanned_at->timestamp);
+        $this->assertEquals($data['ip_address'], $history->ip_address);
+        $this->assertEquals($data['mac_address'], $history->mac_address);
     }
 
     public function test_can_find_barcode_history_by_id()
@@ -47,35 +50,18 @@ class BarcodeHistoryRepositoryTest extends RepositoryTestCase
         $this->assertEquals($history->id, $found->id);
     }
 
-    public function test_can_get_history_by_process()
+    public function test_can_get_latest_barcode()
     {
-        $processId = 1;
-        $histories = BarcodeHistory::factory()->count(3)->create([
-            'process_id' => $processId
-        ]);
-        BarcodeHistory::factory()->create(['process_id' => 2]); // Different process
-
-        $foundHistories = $this->repository->getByProcessId($processId);
-
-        $this->assertCount(3, $foundHistories);
-        $this->assertTrue($foundHistories->every(fn($history) => $history->process_id === $processId));
-    }
-
-    public function test_can_get_latest_barcode_for_process()
-    {
-        $processId = 1;
         BarcodeHistory::factory()->create([
-            'process_id' => $processId,
-            'scanned_at' => now()->subHour(),
-            'barcode' => 'OLD123'
+            'barcode' => 'OLD123',
+            'created_at' => now()->subHour()
         ]);
         $latest = BarcodeHistory::factory()->create([
-            'process_id' => $processId,
-            'scanned_at' => now(),
-            'barcode' => 'NEW456'
+            'barcode' => 'NEW456',
+            'created_at' => now()
         ]);
 
-        $foundLatest = $this->repository->getLatestByProcessId($processId);
+        $foundLatest = $this->repository->getLatest();
 
         $this->assertEquals($latest->barcode, $foundLatest->barcode);
     }

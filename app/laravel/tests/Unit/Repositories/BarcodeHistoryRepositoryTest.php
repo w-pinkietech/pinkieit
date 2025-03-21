@@ -12,6 +12,7 @@ class BarcodeHistoryRepositoryTest extends RepositoryTestCase
     use WithFaker;
 
     private BarcodeHistoryRepository $repository;
+    private $model = BarcodeHistory::class;
 
     protected function setUp(): void
     {
@@ -27,7 +28,8 @@ class BarcodeHistoryRepositoryTest extends RepositoryTestCase
             'scanned_at' => now(),
         ];
 
-        $history = $this->repository->create($data);
+        $history = new $this->model($data);
+        $this->repository->storeModel($history);
 
         $this->assertInstanceOf(BarcodeHistory::class, $history);
         $this->assertEquals($data['process_id'], $history->process_id);

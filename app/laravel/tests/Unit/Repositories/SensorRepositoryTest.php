@@ -13,6 +13,7 @@ class SensorRepositoryTest extends RepositoryTestCase
     use WithFaker;
 
     private SensorRepository $repository;
+    protected $model = Sensor::class;
 
     protected function setUp(): void
     {
@@ -29,7 +30,8 @@ class SensorRepositoryTest extends RepositoryTestCase
             'name' => 'Test Sensor',
         ];
 
-        $sensor = $this->repository->create($data);
+        $sensor = new $this->model($data);
+        $this->repository->storeModel($sensor);
 
         $this->assertInstanceOf(Sensor::class, $sensor);
         $this->assertEquals($data['process_id'], $sensor->process_id);

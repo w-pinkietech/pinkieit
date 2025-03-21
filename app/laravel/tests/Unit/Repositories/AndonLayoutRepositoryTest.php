@@ -12,6 +12,7 @@ class AndonLayoutRepositoryTest extends RepositoryTestCase
     use WithFaker;
 
     private AndonLayoutRepository $repository;
+    private $model = AndonLayout::class;
 
     protected function setUp(): void
     {
@@ -34,7 +35,8 @@ class AndonLayoutRepositoryTest extends RepositoryTestCase
             'active' => true,
         ];
 
-        $layout = $this->repository->create($data);
+        $layout = new $this->model($data);
+        $this->repository->storeModel($layout);
 
         $this->assertInstanceOf(AndonLayout::class, $layout);
         $this->assertEquals($data['process_id'], $layout->process_id);

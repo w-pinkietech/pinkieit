@@ -22,14 +22,19 @@ class LineRepositoryTest extends RepositoryTestCase
     public function test_can_create_line()
     {
         $data = [
-            'name' => 'Production Line A',
-            'order' => 1,
+            'line_name' => 'Production Line A',
+            'process_id' => 1,
+            'raspberry_pi_id' => 1,
+            'worker_id' => 1,
+            'chart_color' => '#FF0000',
+            'pin_number' => 1,
         ];
 
-        $line = $this->repository->create($data);
+        $line = new Line($data);
+        $this->repository->storeModel($line);
 
         $this->assertInstanceOf(Line::class, $line);
-        $this->assertEquals($data['name'], $line->name);
+        $this->assertEquals($data['line_name'], $line->line_name);
         $this->assertEquals($data['order'], $line->order);
     }
 
@@ -46,11 +51,11 @@ class LineRepositoryTest extends RepositoryTestCase
     public function test_can_update_line()
     {
         $line = Line::factory()->create([
-            'name' => 'Old Line Name'
+            'line_name' => 'Old Line Name'
         ]);
 
         $updated = $this->repository->update($line->id, [
-            'name' => 'New Line Name'
+            'line_name' => 'New Line Name'
         ]);
 
         $this->assertEquals('New Line Name', $updated->name);
@@ -58,12 +63,12 @@ class LineRepositoryTest extends RepositoryTestCase
 
     public function test_can_get_ordered_lines()
     {
-        Line::factory()->create(['order' => 3, 'name' => 'Line C']);
-        Line::factory()->create(['order' => 1, 'name' => 'Line A']);
-        Line::factory()->create(['order' => 2, 'name' => 'Line B']);
+        Line::factory()->create(['order' => 3, 'line_name' => 'Line C']);
+        Line::factory()->create(['order' => 1, 'line_name' => 'Line A']);
+        Line::factory()->create(['order' => 2, 'line_name' => 'Line B']);
 
         $lines = $this->repository->getOrdered();
 
-        $this->assertEquals(['Line A', 'Line B', 'Line C'], $lines->pluck('name')->toArray());
+        $this->assertEquals(['Line A', 'Line B', 'Line C'], $lines->pluck('line_name')->toArray());
     }
 }

@@ -12,6 +12,7 @@ class PartNumberRepositoryTest extends RepositoryTestCase
     use WithFaker;
 
     private PartNumberRepository $repository;
+    private $model = PartNumber::class;
 
     protected function setUp(): void
     {
@@ -23,11 +24,12 @@ class PartNumberRepositoryTest extends RepositoryTestCase
     {
         $data = [
             'name' => 'PART-001',
-            'description' => 'Test Part',
-            'cycle_time' => 60,
+            'part_number_name' => 'Test Part',
+            'remark' => 'Test remark',
         ];
 
-        $partNumber = $this->repository->create($data);
+        $partNumber = new $this->model($data);
+        $this->repository->storeModel($partNumber);
 
         $this->assertInstanceOf(PartNumber::class, $partNumber);
         $this->assertEquals($data['name'], $partNumber->name);

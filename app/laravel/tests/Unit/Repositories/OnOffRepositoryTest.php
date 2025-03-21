@@ -12,6 +12,7 @@ class OnOffRepositoryTest extends RepositoryTestCase
     use WithFaker;
 
     private OnOffRepository $repository;
+    private $model = OnOff::class;
 
     protected function setUp(): void
     {
@@ -27,7 +28,8 @@ class OnOffRepositoryTest extends RepositoryTestCase
             'started_at' => now(),
         ];
 
-        $onOff = $this->repository->create($data);
+        $model = new $this->model($data);
+        $onOff = $this->repository->storeModel($model);
 
         $this->assertInstanceOf(OnOff::class, $onOff);
         $this->assertEquals($data['process_id'], $onOff->process_id);

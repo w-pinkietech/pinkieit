@@ -12,6 +12,7 @@ class OnOffEventRepositoryTest extends RepositoryTestCase
     use WithFaker;
 
     private OnOffEventRepository $repository;
+    private $model = OnOffEvent::class;
 
     protected function setUp(): void
     {
@@ -28,7 +29,8 @@ class OnOffEventRepositoryTest extends RepositoryTestCase
             'occurred_at' => now(),
         ];
 
-        $event = $this->repository->create($data);
+        $event = new $this->model($data);
+        $this->repository->storeModel($event);
 
         $this->assertInstanceOf(OnOffEvent::class, $event);
         $this->assertEquals($data['on_off_id'], $event->on_off_id);

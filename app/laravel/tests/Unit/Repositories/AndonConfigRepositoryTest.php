@@ -13,6 +13,7 @@ class AndonConfigRepositoryTest extends RepositoryTestCase
     use WithFaker;
 
     private AndonConfigRepository $repository;
+    private $model = AndonConfig::class;
 
     protected function setUp(): void
     {
@@ -24,12 +25,13 @@ class AndonConfigRepositoryTest extends RepositoryTestCase
     {
         $data = [
             'process_id' => 1,
-            'column_size' => AndonColumnSize::Small,
+            'column_size' => AndonColumnSize::ONE,
             'indicator_id' => 'indicator-1',
             'easing_type' => 'linear',
         ];
 
-        $config = $this->repository->create($data);
+        $config = new $this->model($data);
+        $this->repository->storeModel($config);
 
         $this->assertInstanceOf(AndonConfig::class, $config);
         $this->assertEquals($data['process_id'], $config->process_id);

@@ -21,20 +21,16 @@ class PayloadRepositoryTest extends RepositoryTestCase
 
     public function test_can_create_payload()
     {
-        $data = [
-            'process_id' => 1,
-            'topic' => 'production/process/1/count',
-            'message' => json_encode(['count' => 10]),
-            'received_at' => now(),
-        ];
+        $productionLineId = 1;
+        $topic = 'production/process/1/count';
+        $message = json_encode(['count' => 10]);
 
-        $payload = $this->repository->create($data);
+        $payload = $this->repository->create($productionLineId, $topic, $message);
 
         $this->assertInstanceOf(Payload::class, $payload);
-        $this->assertEquals($data['process_id'], $payload->process_id);
-        $this->assertEquals($data['topic'], $payload->topic);
-        $this->assertEquals($data['message'], $payload->message);
-        $this->assertEquals($data['received_at']->timestamp, $payload->received_at->timestamp);
+        $this->assertEquals($productionLineId, $payload->production_line_id);
+        $this->assertEquals($topic, $payload->topic);
+        $this->assertEquals($message, $payload->message);
     }
 
     public function test_can_find_payload_by_id()

@@ -13,6 +13,7 @@ class SensorEventRepositoryTest extends RepositoryTestCase
     use WithFaker;
 
     private SensorEventRepository $repository;
+    protected $model = SensorEvent::class;
 
     protected function setUp(): void
     {
@@ -24,13 +25,14 @@ class SensorEventRepositoryTest extends RepositoryTestCase
     {
         $data = [
             'sensor_id' => 1,
-            'type' => SensorType::Count,
+            'type' => SensorType::GPIO_INPUT,
             'value' => '10',
             'identification_number' => 'SENSOR-001',
             'recorded_at' => now(),
         ];
 
-        $event = $this->repository->create($data);
+        $event = new $this->model($data);
+        $this->repository->storeModel($event);
 
         $this->assertInstanceOf(SensorEvent::class, $event);
         $this->assertEquals($data['sensor_id'], $event->sensor_id);

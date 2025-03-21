@@ -13,6 +13,7 @@ class ProductionRepositoryTest extends RepositoryTestCase
     use WithFaker;
 
     private ProductionRepository $repository;
+    protected $model = Production::class;
 
     protected function setUp(): void
     {
@@ -29,7 +30,8 @@ class ProductionRepositoryTest extends RepositoryTestCase
             'started_at' => now(),
         ];
 
-        $production = $this->repository->create($data);
+        $production = new $this->model($data);
+        $this->repository->storeModel($production);
 
         $this->assertInstanceOf(Production::class, $production);
         $this->assertEquals($data['line_id'], $production->line_id);
@@ -50,11 +52,11 @@ class ProductionRepositoryTest extends RepositoryTestCase
     public function test_can_update_production_status()
     {
         $production = Production::factory()->create([
-            'status' => ProductionStatus::Running
+            'status' => ProductionStatus::RUNNING
         ]);
 
         $updated = $this->repository->update($production->id, [
-            'status' => ProductionStatus::Stopped
+            'status' => ProductionStatus::COMPLETE
         ]);
 
         $this->assertEquals(ProductionStatus::Stopped, $updated->status);

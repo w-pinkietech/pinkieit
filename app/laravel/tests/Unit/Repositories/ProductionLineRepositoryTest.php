@@ -28,7 +28,8 @@ class ProductionLineRepositoryTest extends RepositoryTestCase
             'status' => 'active',
         ];
 
-        $productionLine = $this->repository->create($data);
+        $productionLine = new ProductionLine($data);
+        $this->repository->storeModel($productionLine);
 
         $this->assertInstanceOf(ProductionLine::class, $productionLine);
         $this->assertEquals($data['line_id'], $productionLine->line_id);

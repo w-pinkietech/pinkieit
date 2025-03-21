@@ -51,14 +51,14 @@ class ProcessRepositoryTest extends RepositoryTestCase
     public function test_can_update_process()
     {
         $process = Process::factory()->create([
-            'name' => 'Old Process Name'
+            'process_name' => 'Old Process Name'
         ]);
 
         $updated = $this->repository->update($process->id, [
-            'name' => 'New Process Name'
+            'process_name' => 'New Process Name'
         ]);
 
-        $this->assertEquals('New Process Name', $updated->name);
+        $this->assertEquals('New Process Name', $updated->process_name);
     }
 
     public function test_can_get_processes_by_line_id()

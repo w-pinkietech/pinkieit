@@ -12,6 +12,7 @@ class PlannedOutageRepositoryTest extends RepositoryTestCase
     use WithFaker;
 
     private PlannedOutageRepository $repository;
+    private $model = PlannedOutage::class;
 
     protected function setUp(): void
     {
@@ -28,7 +29,8 @@ class PlannedOutageRepositoryTest extends RepositoryTestCase
             'end_time' => '10:00',
         ];
 
-        $plannedOutage = $this->repository->create($data);
+        $model = new $this->model($data);
+        $this->repository->storeModel($model);
 
         $this->assertInstanceOf(PlannedOutage::class, $plannedOutage);
         $this->assertEquals($data['name'], $plannedOutage->name);

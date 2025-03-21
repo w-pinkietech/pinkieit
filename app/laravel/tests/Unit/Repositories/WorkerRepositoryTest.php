@@ -12,6 +12,7 @@ class WorkerRepositoryTest extends RepositoryTestCase
     use WithFaker;
 
     private WorkerRepository $repository;
+    private $model = Worker::class;
 
     protected function setUp(): void
     {
@@ -27,7 +28,8 @@ class WorkerRepositoryTest extends RepositoryTestCase
             'line_id' => 1,
         ];
 
-        $worker = $this->repository->create($data);
+        $worker = new $this->model($data);
+        $this->repository->storeModel($worker);
 
         $this->assertInstanceOf(Worker::class, $worker);
         $this->assertEquals($data['name'], $worker->name);

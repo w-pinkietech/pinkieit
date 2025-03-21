@@ -17,6 +17,9 @@ jobs:
         working-directory: app/laravel
     name: PHP ${{ matrix.php }} - Laravel Tests
 
+    env:
+      php-extensions: mbstring, xml, ctype, iconv, intl, pdo_sqlite, dom, filter, gd, iconv, json, mbstring, pdo
+
     steps:
       - uses: actions/checkout@v4
 
@@ -27,11 +30,26 @@ jobs:
         shell: sh # これをしないと -o pipefail がついて yes が sigpipe で落ちる
         working-directory: .
 
+      - name: Setup cache environment
+        id: ext-cache
+        uses: shivammathur/cache-extensions@v1
+        with:
+          php-version: ${{ matrix.php }}
+          extensions: ${{ env.php-extensions }}
+          key: php-ext-cache
+
+      - name: Cache extensions
+        uses: actions/cache@v4
+        with:
+          path: ${{ steps.ext-cache.outputs.dir }}
+          key: ${{ steps.ext-cache.outputs.key }}
+          restore-keys: ${{ steps.ext-cache.outputs.key }}
+
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
           php-version: ${{ matrix.php }}
-          extensions: mbstring, xml, ctype, iconv, intl, pdo_sqlite, dom, filter, gd, iconv, json, mbstring, pdo
+          extensions: ${{ env.php-extensions }}
 
       - name: Get composer cache directory
         id: composer-cache

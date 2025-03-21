@@ -28,7 +28,8 @@ class ProducerRepositoryTest extends RepositoryTestCase
             'capacity' => 100,
         ];
 
-        $producer = $this->repository->create($data);
+        $producer = new Producer($data);
+        $this->repository->storeModel($producer);
 
         $this->assertInstanceOf(Producer::class, $producer);
         $this->assertEquals($data['process_id'], $producer->process_id);

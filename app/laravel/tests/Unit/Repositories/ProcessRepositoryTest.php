@@ -22,7 +22,7 @@ class ProcessRepositoryTest extends RepositoryTestCase
     public function test_can_create_process()
     {
         $data = [
-            'line_id' => 1,
+            'production_history_id' => null,
             'name' => 'Assembly Process',
             'order' => 1,
             'production_history_id' => 1,

@@ -18,7 +18,23 @@ jobs:
     name: PHP ${{ matrix.php }} - Laravel Tests
 
     env:
-      php-extensions: mbstring, xml, ctype, iconv, intl, pdo_sqlite, dom, filter, gd, iconv, json, mbstring, pdo
+      php-extensions: mbstring, xml, ctype, iconv, intl, pdo_mysql, dom, filter, gd, iconv, json, mbstring, pdo
+
+    services:
+      mysql:
+        image: mysql:8.0
+        env:
+          MYSQL_DATABASE: pinkieittest
+          MYSQL_USER: pinkieit
+          MYSQL_PASSWORD: pinkieit123
+          MYSQL_ROOT_PASSWORD: pinkieit123
+        ports:
+          - 3306:3306
+        options: >-
+          --health-cmd="mysqladmin ping"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=3
 
     steps:
       - uses: actions/checkout@v4
@@ -75,15 +91,20 @@ jobs:
         run: chmod -R 777 storage bootstrap/cache
         working-directory: app/laravel
 
-      - name: Create Database
+      - name: Configure MySQL Connection
         run: |
-          mkdir -p database
-          touch database/database.sqlite
+          sed -i 's/DB_CONNECTION=.*/DB_CONNECTION=mysql/' .env
+          sed -i 's/DB_HOST=.*/DB_HOST=127.0.0.1/' .env
+          sed -i 's/DB_PORT=.*/DB_PORT=3306/' .env
+          sed -i 's/DB_DATABASE=.*/DB_DATABASE=pinkieittest/' .env
+          sed -i 's/DB_USERNAME=.*/DB_USERNAME=pinkieit/' .env
+          sed -i 's/DB_PASSWORD=.*/DB_PASSWORD=pinkieit123/' .env
+        working-directory: app/laravel
+
+      - name: Run Migrations
+        run: php artisan migrate:fresh
         working-directory: app/laravel
 
       - name: Execute tests (Unit and Feature tests) via PHPUnit
-        env:
-          DB_CONNECTION: sqlite
-          DB_DATABASE: database/database.sqlite
         run: php artisan test
         working-directory: app/laravel

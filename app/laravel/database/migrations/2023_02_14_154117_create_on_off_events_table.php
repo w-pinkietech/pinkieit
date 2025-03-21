@@ -30,7 +30,7 @@ return new class extends Migration
             // ピン番号
             $table->tinyInteger('pin_number', false, true)->comment(__('pinkieit.pin_number'));
             // タイムスタンプ
-            $table->timestamp('at', 3)->index()->default(DB::raw('CURRENT_TIMESTAMP'));
+            $table->timestamp('at', 3)->index()->default(DB::raw('CURRENT_TIMESTAMP(3)'));
             // 外部キー
             $table->foreign('process_id')->references('process_id')->on('processes')->cascadeOnDelete();
             $table->foreign('on_off_id')->references('on_off_id')->on('on_offs')->cascadeOnDelete();

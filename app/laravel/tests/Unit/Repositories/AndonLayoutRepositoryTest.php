@@ -24,7 +24,7 @@ class AndonLayoutRepositoryTest extends RepositoryTestCase
     {
         $data = [
             'process_id' => 1,
-            'layout_data' => json_encode([
+            'layout' => json_encode([
                 'columns' => 3,
                 'rows' => 2,
                 'elements' => [
@@ -35,12 +35,14 @@ class AndonLayoutRepositoryTest extends RepositoryTestCase
             'active' => true,
         ];
 
-        $layout = new $this->model($data);
-        $this->repository->storeModel($layout);
+        $request = new TestFormRequest($data);
+        $result = $this->repository->store($request);
 
+        $this->assertTrue($result);
+        $layout = AndonLayout::where('process_id', $data['process_id'])->first();
         $this->assertInstanceOf(AndonLayout::class, $layout);
         $this->assertEquals($data['process_id'], $layout->process_id);
-        $this->assertEquals($data['layout_data'], $layout->layout_data);
+        $this->assertEquals($data['layout'], $layout->layout);
         $this->assertEquals($data['active'], $layout->active);
     }
 
@@ -60,11 +62,13 @@ class AndonLayoutRepositoryTest extends RepositoryTestCase
             'active' => false
         ]);
 
-        $updated = $this->repository->update($layout->id, [
+        $request = new TestFormRequest([
             'active' => true
         ]);
+        $result = $this->repository->update($request, $layout);
 
-        $this->assertTrue($updated->active);
+        $this->assertTrue($result);
+        $this->assertTrue($layout->fresh()->active);
     }
 
     public function test_can_get_active_layouts_by_process()

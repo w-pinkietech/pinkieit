@@ -81,6 +81,25 @@ Dockerがインストールされていない場合は、以下の手順でイ�
 
 ## 開発
 
+### VS Code Devcontainer / GitHub Codespaces
+
+本プロジェクトはVS Code DevcontainerとGitHub Codespaces対応しています。以下の機能が利用可能です：
+
+1. VS Code Devcontainerでの開発:
+   - VS Codeで「Dev Containersで再度開く」を選択
+   - 必要な拡張機能が自動的にインストール
+   - Laravel開発用の設定が自動的に適用
+
+2. GitHub Codespaces対応:
+   - GitHubウェブサイトから「Code」→「Codespaces」→「新しいcodespace」
+   - ブラウザ上でVS Code環境が利用可能
+   - 自動的に開発環境が構築
+
+3. Docker開発サポート:
+   - コンテナ内でのDocker操作が可能
+   - VS Code Docker拡張機能によるコンテナ管理
+   - Docker Buildxとcompose v2対応
+
 ### 環境変数
 `.env`ファイルの主な設定項目：
 ```ini

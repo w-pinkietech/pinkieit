@@ -1,0 +1,60 @@
+{
+    "name": "PinkieIt Development",
+    "dockerComposeFile": [
+        "../docker-compose.yml",
+        "docker-compose.extend.yml"
+    ],
+    "service": "dev",
+    "remoteUser": "root",
+    "workspaceFolder": "/workspace",
+    "customizations": {
+        "vscode": {
+            "extensions": [
+                "amiralizadeh9480.laravel-extra-intellisense",
+                "bmewburn.vscode-intelephense-client",
+                "dbaeumer.vscode-eslint",
+                "eamodio.gitlens",
+                "editorconfig.editorconfig",
+                "esbenp.prettier-vscode",
+                "GitHub.codespaces",
+                "github.vscode-github-actions",
+                "GitHub.vscode-pull-request-github",
+                "mikestead.dotenv",
+                "ms-azuretools.vscode-docker",
+                "onecentlin.laravel-blade",
+                "SonarSource.sonarlint-vscode",
+                "streetsidesoftware.code-spell-checker",
+                "saoudrizwan.claude-dev",
+                "cognition.devin"
+            ],
+            "settings": {
+                "php.validate.executablePath": "/usr/local/bin/php",
+                "terminal.integrated.defaultProfile.linux": "zsh"
+            }
+        },
+        "codespaces": {
+            "repositories": {
+                "w-pinkietech/pinkieit": {
+                    "permissions": {
+                        "contents": "read",
+                        "metadata": "read"
+                    }
+                }
+            }
+        }
+    },
+    "forwardPorts": [
+        80,
+        6002
+    ],
+    "initializeCommand": "yes | ./setup.sh",
+    "postCreateCommand": "bash -c ./.devcontainer/post-create.sh",
+    "features": {
+        "ghcr.io/devcontainers/features/github-cli:1": {},
+        "ghcr.io/devcontainers/features/docker-outside-of-docker:1": {},
+        "ghcr.io/devcontainers/features/common-utils:2": {
+            "nonFreePackages": true,
+            "configureZshAsDefaultShell": true
+        }
+    }
+}

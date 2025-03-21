@@ -27,8 +27,8 @@ class ProductionHistoryRepositoryTest extends RepositoryTestCase
             'line_id' => 1,
             'target_count' => 100,
             'actual_count' => 95,
-            'started_at' => now()->subHours(8),
-            'finished_at' => now(),
+            'start' => now()->subHours(8),
+            'finish' => now(),
         ];
 
         $history = new ProductionHistory($data);
@@ -74,8 +74,8 @@ class ProductionHistoryRepositoryTest extends RepositoryTestCase
         $endDate = now();
 
         ProductionHistory::factory()->create([
-            'started_at' => now()->subDays(10),
-            'finished_at' => now()->subDays(9)
+            'start' => now()->subDays(10),
+            'finish' => now()->subDays(9)
         ]); // Outside range
         ProductionHistory::factory()->count(2)->create([
             'start' => now()->subDays(5),
@@ -86,8 +86,8 @@ class ProductionHistoryRepositoryTest extends RepositoryTestCase
 
         $this->assertCount(2, $found);
         $this->assertTrue($found->every(fn($h) => 
-            $h->started_at->greaterThanOrEqualTo($startDate) &&
-            $h->finished_at->lessThanOrEqualTo($endDate)
+            $h->start->greaterThanOrEqualTo($startDate) &&
+            $h->finish->lessThanOrEqualTo($endDate)
         ));
     }
 }

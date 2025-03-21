@@ -58,11 +58,12 @@ class ProcessPlannedOutageRepositoryTest extends RepositoryTestCase
             'end_time' => now(),
         ]);
 
+        $newEndTime = now()->addHours(2);
         $updated = $this->repository->update($outage->id, [
-            'active' => true
+            'end_time' => $newEndTime
         ]);
 
-        $this->assertTrue($updated->active);
+        $this->assertEquals($newEndTime->timestamp, $updated->end_time->timestamp);
     }
 
     public function test_can_get_active_outages_by_process()
@@ -70,11 +71,13 @@ class ProcessPlannedOutageRepositoryTest extends RepositoryTestCase
         $processId = 1;
         ProcessPlannedOutage::factory()->count(2)->create([
             'process_id' => $processId,
-            'active' => true
+            'start_time' => now()->subHour(),
+            'end_time' => now()->addHour()
         ]);
         ProcessPlannedOutage::factory()->create([
             'process_id' => $processId,
-            'active' => false
+            'start_time' => now()->addDays(2),
+            'end_time' => now()->addDays(3)
         ]);
 
         $currentOutages = $this->repository->getCurrentOutagesByProcessId($processId);

@@ -53,14 +53,14 @@ class AndonConfigRepositoryTest extends RepositoryTestCase
     public function test_can_update_andon_config()
     {
         $config = AndonConfig::factory()->create([
-            'column_size' => AndonColumnSize::Small
+            'column_size' => AndonColumnSize::ONE
         ]);
 
         $updated = $this->repository->update($config->id, [
-            'column_size' => AndonColumnSize::Large
+            'column_size' => AndonColumnSize::TWO
         ]);
 
-        $this->assertEquals(AndonColumnSize::Large, $updated->column_size);
+        $this->assertEquals(AndonColumnSize::TWO, $updated->column_size);
     }
 
     public function test_can_get_configs_by_process()

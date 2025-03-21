@@ -23,7 +23,6 @@ class PartNumberRepositoryTest extends RepositoryTestCase
     public function test_can_create_part_number()
     {
         $data = [
-            'name' => 'PART-001',
             'part_number_name' => 'Test Part',
             'remark' => 'Test remark',
         ];
@@ -32,9 +31,8 @@ class PartNumberRepositoryTest extends RepositoryTestCase
         $this->repository->storeModel($partNumber);
 
         $this->assertInstanceOf(PartNumber::class, $partNumber);
-        $this->assertEquals($data['name'], $partNumber->name);
-        $this->assertEquals($data['description'], $partNumber->description);
-        $this->assertEquals($data['cycle_time'], $partNumber->cycle_time);
+        $this->assertEquals($data['part_number_name'], $partNumber->part_number_name);
+        $this->assertEquals($data['remark'], $partNumber->remark);
     }
 
     public function test_can_find_part_number_by_id()

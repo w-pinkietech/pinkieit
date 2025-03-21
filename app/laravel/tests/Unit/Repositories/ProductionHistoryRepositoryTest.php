@@ -22,6 +22,7 @@ class ProductionHistoryRepositoryTest extends RepositoryTestCase
     public function test_can_create_production_history()
     {
         $data = [
+            'process_name' => 'Test Process',
             'production_id' => 1,
             'part_number_id' => 1,
             'line_id' => 1,

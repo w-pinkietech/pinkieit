@@ -28,7 +28,8 @@ class ProcessRepositoryTest extends RepositoryTestCase
             'remark' => 'Test process'
         ];
 
-        $process = $this->repository->create($data);
+        $process = new Process($data);
+        $this->repository->storeModel($process);
 
         $this->assertInstanceOf(Process::class, $process);
         $this->assertEquals($data['line_id'], $process->line_id);

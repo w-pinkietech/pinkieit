@@ -22,12 +22,12 @@ jobs:
 
     services:
       mysql:
-        image: mysql:8.0
+        image: mariadb:10.11.4
         env:
-          MYSQL_DATABASE: pinkieittest
-          MYSQL_USER: pinkieit
-          MYSQL_PASSWORD: pinkieit123
-          MYSQL_ROOT_PASSWORD: pinkieit123
+          MARIADB_DATABASE: pinkieittest
+          MARIADB_USER: pinkieit
+          MARIADB_PASSWORD: pinkieit123
+          MARIADB_ROOT_PASSWORD: pinkieit123
         ports:
           - 3306:3306
         options: >-
@@ -38,10 +38,6 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
-
-      - name: Setup environment file
-        run: cp .env.ci .env
-        working-directory: app/laravel
 
       - name: Setup cache environment
         id: ext-cache
@@ -81,7 +77,7 @@ jobs:
         working-directory: app/laravel
 
       - name: Generate key
-        run: php artisan key:generate
+        run: php artisan key:generate --env=testing
         working-directory: app/laravel
 
       - name: Directory Permissions
@@ -96,10 +92,10 @@ jobs:
 
       - name: Run Migrations
         run: |
-          php artisan migrate:fresh --seed
-          php artisan db:seed
+          php artisan migrate:fresh --seed --env=testing
+          php artisan db:seed --env=testing
         working-directory: app/laravel
 
       - name: Execute tests (Unit and Feature tests) via PHPUnit
-        run: php artisan test
+        run: php artisan test --env=testing
         working-directory: app/laravel

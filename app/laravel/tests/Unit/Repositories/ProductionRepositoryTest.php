@@ -3,9 +3,13 @@
 namespace Tests\Unit\Repositories;
 
 use Tests\TestCase\RepositoryTestCase;
+use Tests\TestCase\TestFormRequest;
 use App\Models\Production;
+use App\Models\ProductionLine;
 use App\Repositories\ProductionRepository;
 use App\Enums\ProductionStatus;
+use App\Data\PayloadData;
+use Carbon\Carbon;
 use Illuminate\Foundation\Testing\WithFaker;
 
 class ProductionRepositoryTest extends RepositoryTestCase
@@ -21,22 +25,33 @@ class ProductionRepositoryTest extends RepositoryTestCase
         $this->repository = new ProductionRepository();
     }
 
-    public function test_can_create_production()
+    public function test_can_save_production()
     {
-        $data = [
-            'line_id' => 1,
-            'part_number_id' => 1,
+        $productionLine = ProductionLine::factory()->create();
+        $now = Carbon::now();
+        
+        $payloadData = new PayloadData([
+            'at' => $now,
+            'count' => 10,
+            'defectiveCount' => 0,
             'status' => ProductionStatus::RUNNING,
-            'started_at' => now(),
-        ];
+            'inPlannedOutage' => false,
+            'workingTime' => 3600,
+            'loadingTime' => 3600,
+            'operatingTime' => 3600,
+            'netTime' => 3600,
+            'breakdowns' => [],
+            'autoResumeCount' => 0,
+        ]);
 
-        $production = new $this->model($data);
-        $this->repository->storeModel($production);
+        $production = $this->repository->save($productionLine->production_line_id, $payloadData);
 
         $this->assertInstanceOf(Production::class, $production);
-        $this->assertEquals($data['line_id'], $production->line_id);
-        $this->assertEquals($data['part_number_id'], $production->part_number_id);
-        $this->assertEquals($data['status'], $production->status);
+        $this->assertEquals($productionLine->production_line_id, $production->production_line_id);
+        $this->assertEquals($payloadData->count, $production->count);
+        $this->assertEquals($payloadData->defectiveCount(), $production->defective_count);
+        $this->assertEquals($payloadData->status(), $production->status);
+        $this->assertEquals($payloadData->inPlannedOutage(), $production->in_planned_outage);
     }
 
     public function test_can_find_production_by_id()
@@ -49,16 +64,28 @@ class ProductionRepositoryTest extends RepositoryTestCase
         $this->assertEquals($production->id, $found->id);
     }
 
-    public function test_can_update_production_status()
+    public function test_can_judge_breakdown()
     {
         $production = Production::factory()->create([
+            'production_line_id' => 1,
+            'count' => 10,
             'status' => ProductionStatus::RUNNING
         ]);
 
-        $updated = $this->repository->update($production->id, [
-            'status' => ProductionStatus::COMPLETE
+        $breakdownTime = now()->addMinutes(5);
+        
+        // No subsequent production with higher count or different status
+        $result = $this->repository->judgeBreakdown($production, $breakdownTime);
+        $this->assertTrue($result);
+
+        // Create subsequent production with higher count
+        Production::factory()->create([
+            'production_line_id' => $production->production_line_id,
+            'count' => 11,
+            'at' => $breakdownTime->subMinute()
         ]);
 
-        $this->assertEquals(ProductionStatus::Stopped, $updated->status);
+        $result = $this->repository->judgeBreakdown($production, $breakdownTime);
+        $this->assertFalse($result);
     }
 }

@@ -23,8 +23,7 @@ class PlannedOutageRepositoryTest extends RepositoryTestCase
     public function test_can_create_planned_outage()
     {
         $data = [
-            'name' => 'Maintenance Break',
-            'description' => 'Regular maintenance',
+            'planned_outage_name' => 'Maintenance Break',
             'start_time' => '09:00',
             'end_time' => '10:00',
         ];
@@ -32,11 +31,10 @@ class PlannedOutageRepositoryTest extends RepositoryTestCase
         $model = new $this->model($data);
         $this->repository->storeModel($model);
 
-        $this->assertInstanceOf(PlannedOutage::class, $plannedOutage);
-        $this->assertEquals($data['name'], $plannedOutage->name);
-        $this->assertEquals($data['description'], $plannedOutage->description);
-        $this->assertEquals($data['start_time'], $plannedOutage->start_time);
-        $this->assertEquals($data['end_time'], $plannedOutage->end_time);
+        $this->assertInstanceOf(PlannedOutage::class, $model);
+        $this->assertEquals($data['planned_outage_name'], $model->planned_outage_name);
+        $this->assertEquals($data['start_time'], $model->start_time);
+        $this->assertEquals($data['end_time'], $model->end_time);
     }
 
     public function test_can_find_planned_outage_by_id()
@@ -52,25 +50,34 @@ class PlannedOutageRepositoryTest extends RepositoryTestCase
     public function test_can_update_planned_outage()
     {
         $plannedOutage = PlannedOutage::factory()->create([
-            'name' => 'Old Name'
+            'planned_outage_name' => 'Old Name'
         ]);
 
         $updated = $this->repository->update($plannedOutage->id, [
-            'name' => 'New Name'
+            'planned_outage_name' => 'New Name'
         ]);
 
-        $this->assertEquals('New Name', $updated->name);
+        $this->assertEquals('New Name', $updated->planned_outage_name);
     }
 
-    public function test_can_get_active_planned_outages()
+    public function test_can_get_current_planned_outages()
     {
-        PlannedOutage::factory()->create(['active' => true]);
-        PlannedOutage::factory()->create(['active' => true]);
-        PlannedOutage::factory()->create(['active' => false]);
+        $now = now();
+        PlannedOutage::factory()->create([
+            'start_time' => '08:00',
+            'end_time' => '10:00'
+        ]);
+        PlannedOutage::factory()->create([
+            'start_time' => '09:00',
+            'end_time' => '11:00'
+        ]);
+        PlannedOutage::factory()->create([
+            'start_time' => '14:00',
+            'end_time' => '16:00'
+        ]);
 
-        $activeOutages = $this->repository->getActive();
+        $currentOutages = $this->repository->getCurrentOutages();
 
-        $this->assertCount(2, $activeOutages);
-        $this->assertTrue($activeOutages->every(fn($outage) => $outage->active));
+        $this->assertCount(2, $currentOutages);
     }
 }

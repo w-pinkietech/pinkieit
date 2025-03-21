@@ -3,6 +3,7 @@
 namespace Tests\Unit\Repositories;
 
 use Tests\TestCase\RepositoryTestCase;
+use Tests\TestCase\TestFormRequest;
 use App\Models\ProductionPlannedOutage;
 use App\Models\ProductionHistory;
 use App\Repositories\ProductionPlannedOutageRepository;
@@ -31,12 +32,14 @@ class ProductionPlannedOutageRepositoryTest extends RepositoryTestCase
             'end_time' => '10:00:00',
         ];
 
-        $outage = new ProductionPlannedOutage($data);
-        $this->repository->storeModel($outage);
+        $request = new TestFormRequest($data);
+        $result = $this->repository->store($request);
 
-        $this->assertInstanceOf(ProductionPlannedOutage::class, $outage);
-        $this->assertEquals($data['production_history_id'], $outage->production_history_id);
-        $this->assertEquals($data['planned_outage_name'], $outage->planned_outage_name);
+        $this->assertTrue($result);
+        $outage = ProductionPlannedOutage::where('production_history_id', $data['production_history_id'])
+            ->where('planned_outage_name', $data['planned_outage_name'])
+            ->first();
+        $this->assertNotNull($outage);
         $this->assertEquals($data['start_time'], $outage->start_time);
         $this->assertEquals($data['end_time'], $outage->end_time);
     }

@@ -4,6 +4,7 @@ namespace Tests\Unit\Repositories;
 
 use Tests\TestCase\RepositoryTestCase;
 use App\Models\ProductionPlannedOutage;
+use App\Models\ProductionHistory;
 use App\Repositories\ProductionPlannedOutageRepository;
 use Illuminate\Foundation\Testing\WithFaker;
 
@@ -21,23 +22,23 @@ class ProductionPlannedOutageRepositoryTest extends RepositoryTestCase
 
     public function test_can_create_production_planned_outage()
     {
+        $productionHistory = ProductionHistory::factory()->create();
+        
         $data = [
-            'production_id' => 1,
-            'planned_outage_id' => 1,
-            'start_time' => '09:00',
-            'end_time' => '10:00',
-            'active' => true,
+            'production_history_id' => $productionHistory->production_history_id,
+            'planned_outage_name' => 'Maintenance Break',
+            'start_time' => '09:00:00',
+            'end_time' => '10:00:00',
         ];
 
         $outage = new ProductionPlannedOutage($data);
         $this->repository->storeModel($outage);
 
         $this->assertInstanceOf(ProductionPlannedOutage::class, $outage);
-        $this->assertEquals($data['production_id'], $outage->production_id);
-        $this->assertEquals($data['planned_outage_id'], $outage->planned_outage_id);
+        $this->assertEquals($data['production_history_id'], $outage->production_history_id);
+        $this->assertEquals($data['planned_outage_name'], $outage->planned_outage_name);
         $this->assertEquals($data['start_time'], $outage->start_time);
         $this->assertEquals($data['end_time'], $outage->end_time);
-        $this->assertEquals($data['active'], $outage->active);
     }
 
     public function test_can_find_production_planned_outage_by_id()
@@ -53,33 +54,36 @@ class ProductionPlannedOutageRepositoryTest extends RepositoryTestCase
     public function test_can_update_production_planned_outage()
     {
         $outage = ProductionPlannedOutage::factory()->create([
-            'active' => false
+            'start_time' => '09:00:00'
         ]);
 
         $updated = $this->repository->update($outage->id, [
-            'active' => true
+            'start_time' => '10:00:00'
         ]);
 
-        $this->assertTrue($updated->active);
+        $this->assertEquals('10:00:00', $updated->start_time);
     }
 
-    public function test_can_get_active_outages_by_production()
+    public function test_can_get_outages_by_production_history()
     {
-        $productionId = 1;
+        $productionHistory = ProductionHistory::factory()->create();
+        $productionHistoryId = $productionHistory->production_history_id;
         ProductionPlannedOutage::factory()->count(2)->create([
-            'production_id' => $productionId,
-            'active' => true
+            'production_history_id' => $productionHistoryId,
+            'start_time' => '09:00:00',
+            'end_time' => '10:00:00'
         ]);
         ProductionPlannedOutage::factory()->create([
-            'production_id' => $productionId,
-            'active' => false
+            'production_history_id' => 2,
+            'start_time' => '11:00:00',
+            'end_time' => '12:00:00'
         ]);
 
-        $activeOutages = $this->repository->getActiveByProductionId($productionId);
+        $outages = $this->repository->getByProductionHistoryId($productionHistoryId);
 
-        $this->assertCount(2, $activeOutages);
-        $this->assertTrue($activeOutages->every(fn($outage) => 
-            $outage->production_id === $productionId && $outage->active
+        $this->assertCount(2, $outages);
+        $this->assertTrue($outages->every(fn($outage) => 
+            $outage->production_history_id === $productionHistoryId
         ));
     }
 }

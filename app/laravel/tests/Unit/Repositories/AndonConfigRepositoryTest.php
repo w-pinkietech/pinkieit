@@ -26,7 +26,7 @@ class AndonConfigRepositoryTest extends RepositoryTestCase
         $data = [
             'user_id' => 1,
             'row_count' => 2,
-            'column_count' => AndonColumnSize::ONE,
+            'column_count' => 1,
             'auto_play' => true,
             'auto_play_speed' => 3000,
             'slide_speed' => 500,
@@ -61,27 +61,27 @@ class AndonConfigRepositoryTest extends RepositoryTestCase
     public function test_can_update_andon_config()
     {
         $config = AndonConfig::factory()->create([
-            'column_size' => AndonColumnSize::ONE
+            'column_count' => 1
         ]);
 
         $updated = $this->repository->update($config->id, [
-            'column_size' => AndonColumnSize::TWO
+            'column_count' => 2
         ]);
 
-        $this->assertEquals(AndonColumnSize::TWO, $updated->column_size);
+        $this->assertEquals(2, $updated->column_count);
     }
 
-    public function test_can_get_configs_by_process()
+    public function test_can_get_configs_by_user()
     {
-        $processId = 1;
+        $userId = 1;
         $configs = AndonConfig::factory()->count(3)->create([
-            'process_id' => $processId
+            'user_id' => $userId
         ]);
-        AndonConfig::factory()->create(['process_id' => 2]); // Different process
+        AndonConfig::factory()->create(['user_id' => 2]); // Different user
 
-        $foundConfigs = $this->repository->getByProcessId($processId);
+        $foundConfigs = $this->repository->getByUserId($userId);
 
         $this->assertCount(3, $foundConfigs);
-        $this->assertTrue($foundConfigs->every(fn($config) => $config->process_id === $processId));
+        $this->assertTrue($foundConfigs->every(fn($config) => $config->user_id === $userId));
     }
 }

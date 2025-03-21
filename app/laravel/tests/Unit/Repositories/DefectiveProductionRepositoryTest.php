@@ -4,6 +4,7 @@ namespace Tests\Unit\Repositories;
 
 use Tests\TestCase\RepositoryTestCase;
 use App\Models\DefectiveProduction;
+use App\Models\ProductionLine;
 use App\Repositories\DefectiveProductionRepository;
 use Illuminate\Foundation\Testing\WithFaker;
 

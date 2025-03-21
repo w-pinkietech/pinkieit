@@ -4,6 +4,8 @@ namespace Tests\Unit\Repositories;
 
 use Tests\TestCase\RepositoryTestCase;
 use App\Models\CycleTime;
+use App\Models\Process;
+use App\Models\PartNumber;
 use App\Repositories\CycleTimeRepository;
 use Illuminate\Foundation\Testing\WithFaker;
 
@@ -55,37 +57,42 @@ class CycleTimeRepositoryTest extends RepositoryTestCase
 
     public function test_can_update_cycle_time()
     {
+        $process = Process::factory()->create();
+        $partNumber = PartNumber::factory()->create();
+        
         $cycleTime = CycleTime::factory()->create([
-            'seconds' => 100
+            'process_id' => $process->process_id,
+            'part_number_id' => $partNumber->part_number_id,
+            'cycle_time' => 100
         ]);
 
         $updated = $this->repository->update($cycleTime->id, [
-            'seconds' => 120
+            'cycle_time' => 120
         ]);
 
-        $this->assertEquals(120, $updated->seconds);
+        $this->assertEquals(120, $updated->cycle_time);
     }
 
     public function test_can_get_cycle_times_by_process_and_part()
     {
-        $processId = 1;
-        $partNumberId = 1;
+        $process = Process::factory()->create();
+        $partNumber = PartNumber::factory()->create();
         
         CycleTime::factory()->count(3)->create([
-            'process_id' => $processId,
-            'part_number_id' => $partNumberId
+            'process_id' => $process->process_id,
+            'part_number_id' => $partNumber->part_number_id
         ]);
         CycleTime::factory()->create([
-            'process_id' => 2,
-            'part_number_id' => $partNumberId
+            'process_id' => Process::factory()->create()->process_id,
+            'part_number_id' => $partNumber->part_number_id
         ]);
 
-        $cycleTimes = $this->repository->getByProcessAndPart($processId, $partNumberId);
+        $cycleTimes = $this->repository->getByProcessAndPart($process->process_id, $partNumber->part_number_id);
 
         $this->assertCount(3, $cycleTimes);
         $this->assertTrue($cycleTimes->every(fn($ct) => 
-            $ct->process_id === $processId && 
-            $ct->part_number_id === $partNumberId
+            $ct->process_id === $process->process_id && 
+            $ct->part_number_id === $partNumber->part_number_id
         ));
     }
 }

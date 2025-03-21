@@ -50,18 +50,18 @@ class DefectiveProductionRepositoryTest extends RepositoryTestCase
         $this->assertEquals($defectiveProduction->id, $found->id);
     }
 
-    public function test_can_get_defective_productions_by_production()
+    public function test_can_get_defective_productions_by_production_line()
     {
-        $productionId = 1;
+        $productionLineId = 1;
         $defectiveProductions = DefectiveProduction::factory()->count(3)->create([
-            'production_line_id' => $productionId
+            'production_line_id' => $productionLineId
         ]);
-        DefectiveProduction::factory()->create(['production_id' => 2]); // Different production
+        DefectiveProduction::factory()->create(['production_line_id' => 2]); // Different production line
 
-        $found = $this->repository->getByProductionId($productionId);
+        $found = $this->repository->getByProductionLineId($productionLineId);
 
         $this->assertCount(3, $found);
-        $this->assertTrue($found->every(fn($dp) => $dp->production_id === $productionId));
+        $this->assertTrue($found->every(fn($dp) => $dp->production_line_id === $productionLineId));
     }
 
     public function test_can_get_defective_productions_by_date_range()

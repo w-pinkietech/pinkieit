@@ -13,10 +13,14 @@ class AndonConfigFactory extends Factory
     public function definition()
     {
         return [
-            'process_id' => 1,
-            'column_size' => AndonColumnSize::ONE,
-            'indicator_id' => $this->faker->uuid,
-            'active' => true,
+            'user_id' => 1,
+            'row_count' => $this->faker->numberBetween(1, 5),
+            'column_count' => $this->faker->numberBetween(1, 12),
+            'auto_play' => $this->faker->boolean,
+            'auto_play_speed' => $this->faker->numberBetween(1000, 5000),
+            'slide_speed' => $this->faker->numberBetween(100, 1000),
+            'easing' => 'linear',
+            'fade' => $this->faker->boolean,
         ];
     }
 }

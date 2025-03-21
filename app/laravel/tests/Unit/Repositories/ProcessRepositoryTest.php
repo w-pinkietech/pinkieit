@@ -22,10 +22,10 @@ class ProcessRepositoryTest extends RepositoryTestCase
     public function test_can_create_process()
     {
         $data = [
-            'production_history_id' => null,
-            'name' => 'Assembly Process',
-            'order' => 1,
             'production_history_id' => 1,
+            'process_name' => 'Assembly Process',
+            'plan_color' => '#FFFFFF',
+            'remark' => 'Test process'
         ];
 
         $process = $this->repository->create($data);

@@ -22,15 +22,23 @@ class PayloadRepositoryTest extends RepositoryTestCase
     public function test_can_create_payload()
     {
         $productionLineId = 1;
-        $topic = 'production/process/1/count';
-        $message = json_encode(['count' => 10]);
+        $payloadData = [
+            'production_line_id' => $productionLineId,
+            'payload' => json_encode([
+                'topic' => 'production/process/1/count',
+                'count' => 10
+            ])
+        ];
 
-        $payload = $this->repository->create($productionLineId, $topic, $message);
+        $request = new TestFormRequest($payloadData);
+        $result = $this->repository->store($request);
 
         $this->assertInstanceOf(Payload::class, $payload);
+        $this->assertTrue($result);
+        $payload = Payload::where('production_line_id', $productionLineId)->first();
+        $this->assertInstanceOf(Payload::class, $payload);
         $this->assertEquals($productionLineId, $payload->production_line_id);
-        $this->assertEquals($topic, $payload->topic);
-        $this->assertEquals($message, $payload->message);
+        $this->assertEquals($payloadData['payload'], $payload->payload);
     }
 
     public function test_can_find_payload_by_id()

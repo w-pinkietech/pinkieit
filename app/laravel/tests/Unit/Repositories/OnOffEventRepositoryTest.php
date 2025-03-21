@@ -23,14 +23,17 @@ class OnOffEventRepositoryTest extends RepositoryTestCase
     public function test_can_create_on_off_event()
     {
         $data = [
+            'process_id' => 1,
             'on_off_id' => 1,
-            'event_type' => 'power_off',
-            'reason' => 'Scheduled maintenance',
-            'occurred_at' => now(),
+            'event_name' => 'power_off',
+            'message' => 'Scheduled maintenance',
+            'on_off' => false,
+            'pin_number' => 1,
+            'at' => now(),
         ];
 
-        $event = new $this->model($data);
-        $this->repository->storeModel($event);
+        $request = new TestFormRequest($data);
+        $result = $this->repository->store($request);
 
         $this->assertInstanceOf(OnOffEvent::class, $event);
         $this->assertEquals($data['on_off_id'], $event->on_off_id);

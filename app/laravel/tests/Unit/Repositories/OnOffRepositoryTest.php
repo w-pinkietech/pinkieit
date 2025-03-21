@@ -24,17 +24,22 @@ class OnOffRepositoryTest extends RepositoryTestCase
     {
         $data = [
             'process_id' => 1,
-            'is_on' => true,
-            'started_at' => now(),
+            'raspberry_pi_id' => 1,
+            'event_name' => 'power',
+            'on_message' => 'Power On',
+            'off_message' => 'Power Off',
+            'pin_number' => 1,
         ];
 
-        $model = new $this->model($data);
-        $onOff = $this->repository->storeModel($model);
+        $request = new TestFormRequest($data);
+        $result = $this->repository->store($request);
 
+        $this->assertTrue($result);
+        $onOff = OnOff::where('process_id', $data['process_id'])->first();
         $this->assertInstanceOf(OnOff::class, $onOff);
         $this->assertEquals($data['process_id'], $onOff->process_id);
-        $this->assertEquals($data['is_on'], $onOff->is_on);
-        $this->assertEquals($data['started_at']->timestamp, $onOff->started_at->timestamp);
+        $this->assertEquals($data['event_name'], $onOff->event_name);
+        $this->assertEquals($data['pin_number'], $onOff->pin_number);
     }
 
     public function test_can_find_on_off_by_id()

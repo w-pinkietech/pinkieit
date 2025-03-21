@@ -14,7 +14,7 @@ class AndonLayoutFactory extends Factory
         return [
             'user_id' => 1,
             'process_id' => 1,
-            'layout_data' => json_encode([
+            'layout' => json_encode([
                 'position' => ['x' => 0, 'y' => 0],
                 'size' => ['width' => 100, 'height' => 100]
             ]),

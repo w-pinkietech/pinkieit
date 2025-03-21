@@ -2,7 +2,7 @@
 
 namespace Tests\TestCase;
 
-use PHPUnit\Framework\TestCase;
+use Tests\TestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 abstract class RepositoryTestCase extends TestCase

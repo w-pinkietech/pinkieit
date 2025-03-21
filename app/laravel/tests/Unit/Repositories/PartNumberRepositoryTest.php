@@ -48,25 +48,23 @@ class PartNumberRepositoryTest extends RepositoryTestCase
     public function test_can_update_part_number()
     {
         $partNumber = PartNumber::factory()->create([
-            'description' => 'Old Description'
+            'part_number_name' => 'Old Name'
         ]);
 
         $updated = $this->repository->update($partNumber->id, [
-            'description' => 'New Description'
+            'part_number_name' => 'New Name'
         ]);
 
-        $this->assertEquals('New Description', $updated->description);
+        $this->assertEquals('New Name', $updated->part_number_name);
     }
 
-    public function test_can_get_active_part_numbers()
+    public function test_can_get_all_part_numbers()
     {
-        PartNumber::factory()->create(['active' => true]);
-        PartNumber::factory()->create(['active' => true]);
-        PartNumber::factory()->create(['active' => false]);
+        PartNumber::factory()->count(3)->create();
 
-        $activePartNumbers = $this->repository->getActive();
+        $partNumbers = $this->repository->all();
 
-        $this->assertCount(2, $activePartNumbers);
-        $this->assertTrue($activePartNumbers->every(fn($part) => $part->active));
+        $this->assertCount(3, $partNumbers);
+        $this->assertTrue($partNumbers->every(fn($part) => $part instanceof PartNumber));
     }
 }

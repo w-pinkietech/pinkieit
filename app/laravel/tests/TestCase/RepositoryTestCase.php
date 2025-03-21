@@ -4,14 +4,23 @@ namespace Tests\TestCase;
 
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Foundation\Testing\DatabaseMigrations;
+use Illuminate\Foundation\Testing\DatabaseTransactions;
 
 abstract class RepositoryTestCase extends TestCase
 {
-    use RefreshDatabase;
+    use RefreshDatabase, DatabaseMigrations, DatabaseTransactions;
 
     protected function setUp(): void
     {
         parent::setUp();
-        // Add common repository test setup here
+        $this->app->setLocale('en');
+        $this->app->singleton('translator', function ($app) {
+            $loader = new \Illuminate\Translation\FileLoader(
+                new \Illuminate\Filesystem\Filesystem(),
+                $app->basePath().'/lang'
+            );
+            return new \Illuminate\Translation\Translator($loader, 'en');
+        });
     }
 }

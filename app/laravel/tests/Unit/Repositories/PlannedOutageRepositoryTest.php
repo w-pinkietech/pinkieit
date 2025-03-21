@@ -60,27 +60,31 @@ class PlannedOutageRepositoryTest extends RepositoryTestCase
         ]);
         $result = $this->repository->update($request, $plannedOutage);
 
+        $this->assertTrue($result);
+        $updated = PlannedOutage::find($plannedOutage->id);
         $this->assertEquals('New Name', $updated->planned_outage_name);
     }
 
     public function test_can_get_current_planned_outages()
     {
         $now = now();
+        $currentTime = $now->format('H:i:s');
+
         PlannedOutage::factory()->create([
-            'start_time' => '08:00',
-            'end_time' => '10:00'
+            'planned_outage_name' => 'Morning Break',
+            'start_time' => $now->copy()->subHour()->format('H:i:s'),
+            'end_time' => $now->copy()->addHour()->format('H:i:s')
         ]);
+
         PlannedOutage::factory()->create([
-            'start_time' => '09:00',
-            'end_time' => '11:00'
-        ]);
-        PlannedOutage::factory()->create([
-            'start_time' => '14:00',
-            'end_time' => '16:00'
+            'planned_outage_name' => 'Afternoon Break',
+            'start_time' => $now->copy()->addHours(2)->format('H:i:s'),
+            'end_time' => $now->copy()->addHours(4)->format('H:i:s')
         ]);
 
         $currentOutages = $this->repository->getCurrentOutages();
 
-        $this->assertCount(2, $currentOutages);
+        $this->assertCount(1, $currentOutages);
+        $this->assertEquals('Morning Break', $currentOutages->first()->planned_outage_name);
     }
 }

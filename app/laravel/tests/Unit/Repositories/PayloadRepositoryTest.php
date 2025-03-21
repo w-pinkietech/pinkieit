@@ -34,7 +34,7 @@ class PayloadRepositoryTest extends RepositoryTestCase
         $result = $this->repository->store($request);
 
         $this->assertTrue($result);
-        $payload = Payload::where('production_line_id', $data['production_line_id'])->first();
+        $payload = Payload::where('production_line_id', $payloadData['production_line_id'])->first();
         $this->assertInstanceOf(Payload::class, $payload);
         $this->assertEquals($data['production_line_id'], $payload->production_line_id);
         $this->assertEquals($data['payload'], $payload->payload);

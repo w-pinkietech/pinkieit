@@ -25,7 +25,7 @@ class ProductionRepositoryTest extends RepositoryTestCase
         $data = [
             'line_id' => 1,
             'part_number_id' => 1,
-            'status' => ProductionStatus::Running,
+            'status' => ProductionStatus::RUNNING,
             'started_at' => now(),
         ];
 

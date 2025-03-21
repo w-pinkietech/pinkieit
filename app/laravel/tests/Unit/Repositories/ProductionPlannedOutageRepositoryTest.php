@@ -29,7 +29,8 @@ class ProductionPlannedOutageRepositoryTest extends RepositoryTestCase
             'active' => true,
         ];
 
-        $outage = $this->repository->create($data);
+        $outage = new ProductionPlannedOutage($data);
+        $this->repository->storeModel($outage);
 
         $this->assertInstanceOf(ProductionPlannedOutage::class, $outage);
         $this->assertEquals($data['production_id'], $outage->production_id);

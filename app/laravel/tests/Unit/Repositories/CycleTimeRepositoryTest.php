@@ -21,11 +21,15 @@ class CycleTimeRepositoryTest extends RepositoryTestCase
 
     public function test_can_create_cycle_time()
     {
+        $process = Process::factory()->create();
+        $partNumber = PartNumber::factory()->create();
+        
         $data = [
-            'process_id' => 1,
-            'part_number_id' => 1,
-            'seconds' => 120,
-            'target_seconds' => 100,
+            'process_id' => $process->process_id,
+            'part_number_id' => $partNumber->part_number_id,
+            'cycle_time' => 60.25,
+            'over_time' => 120.5,
+            'cycle_time_name' => 'Test Cycle Time',
         ];
 
         $cycleTime = new CycleTime($data);
@@ -34,8 +38,9 @@ class CycleTimeRepositoryTest extends RepositoryTestCase
         $this->assertInstanceOf(CycleTime::class, $cycleTime);
         $this->assertEquals($data['process_id'], $cycleTime->process_id);
         $this->assertEquals($data['part_number_id'], $cycleTime->part_number_id);
-        $this->assertEquals($data['seconds'], $cycleTime->seconds);
-        $this->assertEquals($data['target_seconds'], $cycleTime->target_seconds);
+        $this->assertEquals($data['cycle_time'], $cycleTime->cycle_time);
+        $this->assertEquals($data['over_time'], $cycleTime->over_time);
+        $this->assertEquals($data['cycle_time_name'], $cycleTime->cycle_time_name);
     }
 
     public function test_can_find_cycle_time_by_id()

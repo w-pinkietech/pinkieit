@@ -21,23 +21,22 @@ class DefectiveProductionRepositoryTest extends RepositoryTestCase
 
     public function test_can_create_defective_production()
     {
+        $productionLine = ProductionLine::factory()->create();
+        $now = now();
+        
         $data = [
-            'production_id' => 1,
-            'process_id' => 1,
-            'quantity' => 5,
-            'reason' => 'Quality issue',
-            'recorded_at' => now(),
+            'production_line_id' => $productionLine->production_line_id,
+            'count' => 5,
+            'at' => $now,
         ];
 
         $defectiveProduction = new DefectiveProduction($data);
         $this->repository->storeModel($defectiveProduction);
 
         $this->assertInstanceOf(DefectiveProduction::class, $defectiveProduction);
-        $this->assertEquals($data['production_id'], $defectiveProduction->production_id);
-        $this->assertEquals($data['process_id'], $defectiveProduction->process_id);
-        $this->assertEquals($data['quantity'], $defectiveProduction->quantity);
-        $this->assertEquals($data['reason'], $defectiveProduction->reason);
-        $this->assertEquals($data['recorded_at']->timestamp, $defectiveProduction->recorded_at->timestamp);
+        $this->assertEquals($data['production_line_id'], $defectiveProduction->production_line_id);
+        $this->assertEquals($data['count'], $defectiveProduction->count);
+        $this->assertEquals($data['at']->timestamp, $defectiveProduction->at->timestamp);
     }
 
     public function test_can_find_defective_production_by_id()

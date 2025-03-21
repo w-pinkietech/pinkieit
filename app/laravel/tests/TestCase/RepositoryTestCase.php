@@ -2,7 +2,7 @@
 
 namespace Tests\TestCase;
 
-use Tests\TestCase;
+use Tests\TestCase as BaseTestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;

@@ -31,7 +31,8 @@ class ProductionHistoryRepositoryTest extends RepositoryTestCase
             'finished_at' => now(),
         ];
 
-        $history = $this->repository->create($data);
+        $history = new ProductionHistory($data);
+        $this->repository->storeModel($history);
 
         $this->assertInstanceOf(ProductionHistory::class, $history);
         $this->assertEquals($data['production_id'], $history->production_id);
@@ -77,8 +78,8 @@ class ProductionHistoryRepositoryTest extends RepositoryTestCase
             'finished_at' => now()->subDays(9)
         ]); // Outside range
         ProductionHistory::factory()->count(2)->create([
-            'started_at' => now()->subDays(5),
-            'finished_at' => now()->subDays(4)
+            'start' => now()->subDays(5),
+            'finish' => now()->subDays(4)
         ]); // Inside range
 
         $found = $this->repository->getByDateRange($startDate, $endDate);

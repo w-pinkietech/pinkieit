@@ -12,6 +12,7 @@ class RaspberryPiRepositoryTest extends RepositoryTestCase
     use WithFaker;
 
     private RaspberryPiRepository $repository;
+    private $model = RaspberryPi::class;
 
     protected function setUp(): void
     {
@@ -29,7 +30,8 @@ class RaspberryPiRepositoryTest extends RepositoryTestCase
             'description' => 'Production line sensor hub',
         ];
 
-        $raspberryPi = $this->repository->create($data);
+        $raspberryPi = new $this->model($data);
+        $this->repository->storeModel($raspberryPi);
 
         $this->assertInstanceOf(RaspberryPi::class, $raspberryPi);
         $this->assertEquals($data['process_id'], $raspberryPi->process_id);

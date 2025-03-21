@@ -12,6 +12,7 @@ class ProcessPlannedOutageRepositoryTest extends RepositoryTestCase
     use WithFaker;
 
     private ProcessPlannedOutageRepository $repository;
+    protected $model = ProcessPlannedOutage::class;
 
     protected function setUp(): void
     {
@@ -24,19 +25,20 @@ class ProcessPlannedOutageRepositoryTest extends RepositoryTestCase
         $data = [
             'process_id' => 1,
             'planned_outage_id' => 1,
-            'start_time' => '09:00',
-            'end_time' => '10:00',
-            'active' => true,
+            'start_time' => now(),
+            'end_time' => now()->addHour(),
         ];
 
-        $outage = $this->repository->create($data);
+        $outage = new $this->model($data);
+        $this->repository->storeModel($outage);
 
         $this->assertInstanceOf(ProcessPlannedOutage::class, $outage);
         $this->assertEquals($data['process_id'], $outage->process_id);
         $this->assertEquals($data['planned_outage_id'], $outage->planned_outage_id);
         $this->assertEquals($data['start_time'], $outage->start_time);
         $this->assertEquals($data['end_time'], $outage->end_time);
-        $this->assertEquals($data['active'], $outage->active);
+        $this->assertEquals($data['start_time']->timestamp, $outage->start_time->timestamp);
+        $this->assertEquals($data['end_time']->timestamp, $outage->end_time->timestamp);
     }
 
     public function test_can_find_process_planned_outage_by_id()
@@ -52,7 +54,8 @@ class ProcessPlannedOutageRepositoryTest extends RepositoryTestCase
     public function test_can_update_process_planned_outage()
     {
         $outage = ProcessPlannedOutage::factory()->create([
-            'active' => false
+            'start_time' => now()->subHour(),
+            'end_time' => now(),
         ]);
 
         $updated = $this->repository->update($outage->id, [
@@ -74,11 +77,13 @@ class ProcessPlannedOutageRepositoryTest extends RepositoryTestCase
             'active' => false
         ]);
 
-        $activeOutages = $this->repository->getActiveByProcessId($processId);
+        $currentOutages = $this->repository->getCurrentOutagesByProcessId($processId);
 
-        $this->assertCount(2, $activeOutages);
-        $this->assertTrue($activeOutages->every(fn($outage) => 
-            $outage->process_id === $processId && $outage->active
+        $this->assertCount(2, $currentOutages);
+        $this->assertTrue($currentOutages->every(fn($outage) => 
+            $outage->process_id === $processId && 
+            $outage->start_time <= now() && 
+            $outage->end_time >= now()
         ));
     }
 }

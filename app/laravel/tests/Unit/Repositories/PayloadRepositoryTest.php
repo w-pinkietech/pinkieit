@@ -36,8 +36,8 @@ class PayloadRepositoryTest extends RepositoryTestCase
         $this->assertTrue($result);
         $payload = Payload::where('production_line_id', $payloadData['production_line_id'])->first();
         $this->assertInstanceOf(Payload::class, $payload);
-        $this->assertEquals($data['production_line_id'], $payload->production_line_id);
-        $this->assertEquals($data['payload'], $payload->payload);
+        $this->assertEquals($payloadData['production_line_id'], $payload->production_line_id);
+        $this->assertEquals($payloadData['payload'], $payload->payload);
     }
 
     public function test_can_find_payload_by_id()

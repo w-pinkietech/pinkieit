@@ -7,7 +7,8 @@
         "watch-poll": "mix watch -- --watch-options-poll=1000",
         "hot": "mix watch --hot",
         "prod": "npm run production",
-        "production": "mix --production"
+        "production": "mix --production",
+        "lint": "semistandard | snazzy"
     },
     "devDependencies": {
         "@fortawesome/fontawesome-free": "^6.1.2",
@@ -36,11 +37,18 @@
         "resolve-url-loader": "^5.0.0",
         "sass": "^1.32.11",
         "sass-loader": "^11.0.1",
+        "semistandard": "^17.0.0",
         "slick-carousel": "^1.8.1",
+        "snazzy": "^9.0.0",
         "toastr": "^2.1.4"
     },
     "name": "pinkieit",
     "description": "Pinkieit - Next generation toolkit",
     "repository": "https://github.com/your-account/pinkieit",
-    "bugs": "https://github.com/your-account/pinkieit/issues"
+    "bugs": "https://github.com/your-account/pinkieit/issues",
+    "semistandard": {
+        "ignore": [
+            "public/"
+        ]
+    }
 }

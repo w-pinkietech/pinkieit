@@ -1,0 +1,76 @@
+<?php
+
+namespace Tests\Unit\Repositories;
+
+use Tests\TestCase\RepositoryTestCase;
+use App\Models\Process;
+use App\Repositories\ProcessRepository;
+use Illuminate\Foundation\Testing\WithFaker;
+
+class ProcessRepositoryTest extends RepositoryTestCase
+{
+    use WithFaker;
+
+    private ProcessRepository $repository;
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+        $this->repository = new ProcessRepository();
+    }
+
+    public function test_can_create_process()
+    {
+        $data = [
+            'production_history_id' => 1,
+            'process_name' => 'Assembly Process',
+            'plan_color' => '#FFFFFF',
+            'remark' => 'Test process'
+        ];
+
+        $process = new Process($data);
+        $this->repository->storeModel($process);
+
+        $this->assertInstanceOf(Process::class, $process);
+        $this->assertEquals($data['production_history_id'], $process->production_history_id);
+        $this->assertEquals($data['process_name'], $process->process_name);
+        $this->assertEquals($data['plan_color'], $process->plan_color);
+        $this->assertEquals($data['remark'], $process->remark);
+    }
+
+    public function test_can_find_process_by_id()
+    {
+        $process = Process::factory()->create();
+
+        $found = $this->repository->find($process->id);
+
+        $this->assertInstanceOf(Process::class, $found);
+        $this->assertEquals($process->id, $found->id);
+    }
+
+    public function test_can_update_process()
+    {
+        $process = Process::factory()->create([
+            'process_name' => 'Old Process Name'
+        ]);
+
+        $updated = $this->repository->update($process->id, [
+            'process_name' => 'New Process Name'
+        ]);
+
+        $this->assertEquals('New Process Name', $updated->process_name);
+    }
+
+    public function test_can_get_processes_by_line_id()
+    {
+        $lineId = 1;
+        $processes = Process::factory()->count(3)->create([
+            'line_id' => $lineId
+        ]);
+
+        $found = $this->repository->getByLineId($lineId);
+
+        $this->assertCount(3, $found);
+        $this->assertEquals($processes->pluck('id')->sort()->values(), $found->pluck('id')->sort()->values());
+    }
+}

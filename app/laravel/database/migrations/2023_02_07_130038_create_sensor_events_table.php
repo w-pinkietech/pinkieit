@@ -36,7 +36,7 @@ return new class extends Migration
             // 値
             $table->float('value', 8, 3);
             // タイムスタンプ
-            $table->timestamp('at', 3)->index()->default(DB::raw('CURRENT_TIMESTAMP'));
+            $table->timestamp('at', 3)->index()->default(DB::raw('CURRENT_TIMESTAMP(3)'));
             // 外部キー
             $table->foreign('process_id')->references('process_id')->on('processes')->cascadeOnDelete();
             $table->foreign('sensor_id')->references('sensor_id')->on('sensors')->cascadeOnDelete();

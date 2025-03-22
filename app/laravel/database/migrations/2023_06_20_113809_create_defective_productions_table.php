@@ -18,7 +18,7 @@ return new class extends Migration
             // 生産ラインID (主キーではない)
             $table->unsignedBigInteger('production_line_id')->comment(__('pinkieit.target_id', ['target' => __('pinkieit.production_line')]));
             // 作成日時
-            $table->dateTime('at', 3)->index()->default(DB::raw('CURRENT_TIMESTAMP'))->comment(__('pinkieit.created_at'));
+            $table->dateTime('at', 3)->index()->default(DB::raw('CURRENT_TIMESTAMP(3)'))->comment(__('pinkieit.created_at'));
             // 不良品カウント
             $table->integer('count')->comment(__('pinkieit.defective_count'));
             // 外部キー

@@ -6,15 +6,15 @@ COPY docker/app/apache/sites-available/000-default.conf /etc/apache2/sites-avail
 # Copy .env file
 COPY .env /var/www/html/.env
 
-# Run npm production
-RUN npm run production
-
-# Set permissions for storage and bootstrap/cache directories
-RUN chmod -R 775 /var/www/html/storage /var/www/html/bootstrap/cache \
-    && chown -R www-data:www-data /var/www/html
-
-# Generate application key
-RUN php artisan key:generate --force
+RUN \
+    groupadd -g 999 docker && \
+    # Run npm production
+    npm run production && \
+    # Set permissions for storage and bootstrap/cache directories
+    chmod -R 775 /var/www/html/storage /var/www/html/bootstrap/cache && \
+    chown -R www-data:www-data /var/www/html && \
+    # Generate application key
+    php artisan key:generate --force
 
 # Add startup script
 COPY app/laravel/app-entrypoint.sh /usr/local/bin/

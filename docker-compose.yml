@@ -41,10 +41,29 @@ services:
       MARIADB_USER: ${DB_USERNAME:-pinkieit}
       MARIADB_PASSWORD: ${DB_PASSWORD}
     volumes:
-      - dbdata:/var/lib/mysql
+      - db-data:/var/lib/mysql
       #- ./docker/db/my.cnf:/etc/mysql/conf.d/my.cnf # my.cnf ファイルが準備できたらコメントを外してください
     networks:
       - pinkieit
+
+  db-test:
+    image: mariadb:10.11.4
+    container_name: pinkieit-db-test
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - pinkieit
+    environment:
+      MARIADB_DATABASE: pinkieit_test
+      MARIADB_USER: pinkieit
+      MARIADB_PASSWORD: PdZRSzTP1?
+      MARIADB_RANDOM_ROOT_PASSWORD: yes
+    volumes:
+      - test-db-data:/var/lib/mysql
 
   mqtt:
     image: eclipse-mosquitto:latest
@@ -64,4 +83,5 @@ networks:
     driver: bridge
 
 volumes:
-  dbdata:
+  db-data:
+  test-db-data:

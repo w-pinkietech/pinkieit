@@ -23,10 +23,9 @@ RUN apt-get update && apt-get install -y \
     vim \
     zip \
     && apt-get clean \
-    && rm -rf /var/lib/apt/lists/*
-
-# PHP拡張を1つのRUNコマンドに統合
-RUN set -ex; \
+    && rm -rf /var/lib/apt/lists/* \
+    # PHP拡張を1つのRUNコマンドに統合
+    && set -ex; \
     # mbstring拡張
     CFLAGS="-O0" docker-php-ext-configure mbstring; \
     docker-php-ext-install -j1 mbstring; \

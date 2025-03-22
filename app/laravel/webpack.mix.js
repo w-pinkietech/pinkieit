@@ -18,12 +18,12 @@ const mix = require('laravel-mix');
 // });
 
 mix.setResourceRoot('/')
-    .copy('node_modules/chartjs-adapter-moment/dist/chartjs-adapter-moment.js', 'public/js/chartjs-adapter-moment/chartjs-adapter-moment.js')
-    .js([
-        'resources/js/app.js',
-        'resources/js/indicator.js',
-        'resources/js/payload.js',
-        'resources/js/production.js'
-    ], 'public/js')
-    .sass('resources/sass/app.scss', 'public/css')
-    .sourceMaps();
+  .copy('node_modules/chartjs-adapter-moment/dist/chartjs-adapter-moment.js', 'public/js/chartjs-adapter-moment/chartjs-adapter-moment.js')
+  .js([
+    'resources/js/app.js',
+    'resources/js/indicator.js',
+    'resources/js/payload.js',
+    'resources/js/production.js'
+  ], 'public/js')
+  .sass('resources/sass/app.scss', 'public/css')
+  .sourceMaps();

@@ -25,11 +25,13 @@
                 "SonarSource.sonarlint-vscode",
                 "streetsidesoftware.code-spell-checker",
                 "saoudrizwan.claude-dev",
-                "cognition.devin"
+                "cognition.devin",
+                "recca0120.vscode-phpunit"
             ],
             "settings": {
                 "php.validate.executablePath": "/usr/local/bin/php",
-                "terminal.integrated.defaultProfile.linux": "zsh"
+                "terminal.integrated.defaultProfile.linux": "zsh",
+                "phpunit.phpunit": "app/laravel/vendor/bin/phpunit"
             }
         },
         "codespaces": {

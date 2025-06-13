@@ -12,7 +12,7 @@
             workerForm.removeClass('d-none');
         }
 
-        $('input[name="defective"]').on('switchChange.bootstrapSwitch', (e) => {
+        $('input[name="defective"]').on('change', (e) => {
             if (toggle) {
                 parentForm.addClass('d-none');
                 workerForm.removeClass('d-none');

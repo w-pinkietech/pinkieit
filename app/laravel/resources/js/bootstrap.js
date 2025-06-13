@@ -20,7 +20,6 @@ try {
   require('datatables.net-bs4');
   require('daterangepicker');
   require('bootstrap-colorpicker');
-  require('bootstrap-switch');
   require('chart.js/dist/chart.js');
   require('slick-carousel');
 } catch (e) { }

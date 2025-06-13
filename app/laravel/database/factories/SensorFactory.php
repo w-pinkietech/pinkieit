@@ -3,6 +3,8 @@
 namespace Database\Factories;
 
 use App\Enums\SensorType;
+use App\Models\Process;
+use App\Models\RaspberryPi;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -29,8 +31,8 @@ class SensorFactory extends Factory
         ];
 
         return [
-            'process_id' => 1,
-            'raspberry_pi_id' => 1,
+            'process_id' => Process::factory(),
+            'raspberry_pi_id' => RaspberryPi::factory(),
             'identification_number' => $this->faker->numberBetween(1, 999),
             'sensor_type' => $this->faker->randomElement($sensorTypes),
             'alarm_text' => $this->faker->sentence(3),

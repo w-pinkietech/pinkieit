@@ -2,6 +2,8 @@
 
 namespace Database\Factories;
 
+use App\Models\Process;
+use App\Models\OnOff;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -17,8 +19,8 @@ class OnOffEventFactory extends Factory
     public function definition()
     {
         return [
-            'process_id' => 1,
-            'on_off_id' => 1,
+            'process_id' => Process::factory(),
+            'on_off_id' => OnOff::factory(),
             'event_name' => $this->faker->words(2, true),
             'message' => $this->faker->optional()->sentence(3),
             'on_off' => $this->faker->boolean(),

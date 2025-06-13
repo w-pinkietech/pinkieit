@@ -2,6 +2,8 @@
 
 namespace Database\Factories;
 
+use App\Models\Process;
+use App\Models\RaspberryPi;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -17,8 +19,8 @@ class OnOffFactory extends Factory
     public function definition()
     {
         return [
-            'process_id' => 1,
-            'raspberry_pi_id' => 1,
+            'process_id' => Process::factory(),
+            'raspberry_pi_id' => RaspberryPi::factory(),
             'event_name' => $this->faker->words(2, true),
             'on_message' => $this->faker->sentence(3),
             'off_message' => $this->faker->optional()->sentence(3),

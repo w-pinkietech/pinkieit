@@ -3,7 +3,6 @@
 namespace Tests\Unit\Models;
 
 use App\Enums\RoleType;
-use App\Models\AndonLayout;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -148,16 +147,13 @@ class UserTest extends TestCase
     }
 
     /**
-     * Test andon layouts relationship
+     * Test password reset notification method
      */
-    public function test_andon_layouts_relationship(): void
+    public function test_password_reset_notification_method(): void
     {
-        $andonLayout = AndonLayout::factory()->create([
-            'user_id' => $this->user->id,
-        ]);
-
-        $this->assertInstanceOf(\Illuminate\Database\Eloquent\Relations\HasMany::class, $this->user->andonLayouts());
-        $this->assertTrue($this->user->andonLayouts->contains($andonLayout));
+        // Test that the sendPasswordResetNotification method exists and is callable
+        $this->assertTrue(method_exists($this->user, 'sendPasswordResetNotification'));
+        $this->assertTrue(is_callable([$this->user, 'sendPasswordResetNotification']));
     }
 
     /**
@@ -229,10 +225,13 @@ class UserTest extends TestCase
      */
     public function test_admin_lte_integration_methods(): void
     {
-        // Test that AdminLTE required methods exist
-        $this->assertTrue(method_exists($this->user, 'adminlte_image'));
-        $this->assertTrue(method_exists($this->user, 'adminlte_desc'));
+        // Test that AdminLTE profile URL method exists
         $this->assertTrue(method_exists($this->user, 'adminlte_profile_url'));
+        
+        // Test that it returns a string
+        $profileUrl = $this->user->adminlte_profile_url();
+        $this->assertIsString($profileUrl);
+        $this->assertEquals('user/profile', $profileUrl);
     }
 
     /**

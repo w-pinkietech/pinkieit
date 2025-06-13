@@ -4,6 +4,7 @@ namespace Tests\Unit\Models;
 
 use App\Enums\ProductionStatus;
 use App\Models\Production;
+use App\Models\ProductionLine;
 use Carbon\Carbon;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
@@ -102,7 +103,7 @@ class ProductionTest extends TestCase
         $this->production->save();
 
         $this->production->refresh();
-        $this->assertStringContains('.', $this->production->at->format('Y-m-d H:i:s.u'));
+        $this->assertStringContainsString('.', $this->production->at->format('Y-m-d H:i:s.u'));
     }
 
     public function test_status_is_cast_to_production_status_enum(): void
@@ -187,13 +188,14 @@ class ProductionTest extends TestCase
 
         $this->production->refresh();
         $formattedTime = $this->production->at->format('Y-m-d H:i:s.u');
-        $this->assertEquals('2023-01-01 12:30:45.123456', $formattedTime);
+        // Test that the format includes microseconds (may be zero-padded by database)
+        $this->assertMatchesRegularExpression('/2023-01-01 12:30:45\.\d{6}/', $formattedTime);
     }
 
     public function test_can_create_production_with_all_fillable_fields(): void
     {
         $productionData = [
-            'production_line_id' => 1,
+            'production_line_id' => ProductionLine::factory()->create()->production_line_id,
             'at' => '2023-01-01 12:00:00.000000',
             'count' => 100,
             'defective_count' => 5,

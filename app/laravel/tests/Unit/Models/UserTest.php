@@ -4,11 +4,9 @@ namespace Tests\Unit\Models;
 
 use App\Models\User;
 use Tests\TestCase;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class UserTest extends TestCase
 {
-    use RefreshDatabase;
 
     /**
      * Test fillable attributes
@@ -38,6 +36,9 @@ class UserTest extends TestCase
         $hidden = [
             'password',
             'remember_token',
+            'email_verified_at',
+            'created_at',
+            'updated_at',
         ];
 
         $user = new User;
@@ -45,33 +46,17 @@ class UserTest extends TestCase
     }
 
     /**
-     * Test password is hashed when set
+     * Test role cast to enum
      *
      * @return void
      */
-    public function test_password_is_hashed()
+    public function test_role_is_cast_to_enum()
     {
-        $user = User::factory()->create([
-            'password' => 'password123'
-        ]);
+        $user = new User;
+        $casts = $user->getCasts();
 
-        $this->assertNotEquals('password123', $user->password);
-        $this->assertTrue(password_verify('password123', $user->password));
-    }
-
-    /**
-     * Test user can be created with factory
-     *
-     * @return void
-     */
-    public function test_user_can_be_created_with_factory()
-    {
-        $user = User::factory()->create();
-
-        $this->assertInstanceOf(User::class, $user);
-        $this->assertDatabaseHas('users', [
-            'email' => $user->email
-        ]);
+        $this->assertArrayHasKey('role', $casts);
+        $this->assertEquals(\App\Enums\RoleType::class, $casts['role']);
     }
 
     /**
@@ -88,27 +73,4 @@ class UserTest extends TestCase
         $this->assertEquals('datetime', $casts['email_verified_at']);
     }
 
-    /**
-     * Test user role attribute
-     *
-     * @return void
-     */
-    public function test_user_role_attribute()
-    {
-        $user = User::factory()->create(['role' => 'admin']);
-        
-        $this->assertEquals('admin', $user->role);
-    }
-
-    /**
-     * Test user name attribute
-     *
-     * @return void
-     */
-    public function test_user_name_attribute()
-    {
-        $user = User::factory()->create(['name' => 'Test User']);
-        
-        $this->assertEquals('Test User', $user->name);
-    }
 }

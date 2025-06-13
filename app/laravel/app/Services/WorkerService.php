@@ -37,8 +37,8 @@ class WorkerService
     /**
      * 作業者を追加する
      *
-     * @param StoreWorkerRequest $request 作業者追加リクエスト
-     * @return boolean 成否
+     * @param  StoreWorkerRequest  $request  作業者追加リクエスト
+     * @return bool 成否
      */
     public function store(StoreWorkerRequest $request): bool
     {
@@ -48,9 +48,9 @@ class WorkerService
     /**
      * 作業者を更新する
      *
-     * @param UpdateWorkerRequest $request 作業者更新リクエスト
-     * @param Worker $worker 削除対象の作業者
-     * @return boolean 成否
+     * @param  UpdateWorkerRequest  $request  作業者更新リクエスト
+     * @param  Worker  $worker  削除対象の作業者
+     * @return bool 成否
      */
     public function update(UpdateWorkerRequest $request, Worker $worker): bool
     {
@@ -60,8 +60,8 @@ class WorkerService
     /**
      * 作業者を削除する
      *
-     * @param Worker $worker 削除対象の作業者
-     * @return boolean 成否
+     * @param  Worker  $worker  削除対象の作業者
+     * @return bool 成否
      */
     public function destroy(Worker $worker): bool
     {

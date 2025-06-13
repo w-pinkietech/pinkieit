@@ -11,10 +11,10 @@ return [
     /**
      * アプリケーションバージョン
      */
-    'version'       => env('PINKIEIT_VERSION', '1.0.0 (2025-01-31)'),
+    'version' => env('PINKIEIT_VERSION', '1.0.0 (2025-01-31)'),
 
     /**
      * アプリケーションバージョン
      */
-    'copyright'     => env('PINKIEIT_COPYRIGHT', 'Copyright'),
+    'copyright' => env('PINKIEIT_COPYRIGHT', 'Copyright'),
 ];

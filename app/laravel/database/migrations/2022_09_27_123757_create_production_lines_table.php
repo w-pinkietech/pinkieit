@@ -33,11 +33,11 @@ return new class extends Migration
             // 統計フラグ
             $table->boolean('indicator')->default(false)->comment(__('pinkieit.indicator'));
             // オフセットカウント
-            $table->integer('offset_count', false, true)->nullable()->comment(__('pinkieit.offset') . __('pinkieit.count'));
+            $table->integer('offset_count', false, true)->nullable()->comment(__('pinkieit.offset').__('pinkieit.count'));
             // 現在のカウント
             $table->integer('count', false, true)->default(0)->comment(__('pinkieit.count'));
             // オフセット秒
-            $table->integer('offset_second')->default(0)->comment(__('pinkieit.offset') . 'sec');
+            $table->integer('offset_second')->default(0)->comment(__('pinkieit.offset').'sec');
             // タイムスタンプ
             $table->timestamps();
             // 複合インデックス

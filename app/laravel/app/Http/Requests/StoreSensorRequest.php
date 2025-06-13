@@ -11,7 +11,7 @@ use Illuminate\Validation\Rule;
 /**
  * センサー追加リクエスト
  *
- * @property integer $raspberry_pi_id ラズパイID
+ * @property int $raspberry_pi_id ラズパイID
  */
 class StoreSensorRequest extends FormRequest
 {
@@ -53,7 +53,7 @@ class StoreSensorRequest extends FormRequest
         // パラメータをマージ
         $this->merge([
             'process_id' => $process->process_id,
-            'trigger' => !is_null($this->trigger)
+            'trigger' => ! is_null($this->trigger),
         ]);
     }
 }

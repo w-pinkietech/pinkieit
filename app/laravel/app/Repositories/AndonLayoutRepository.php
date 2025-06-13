@@ -25,9 +25,9 @@ class AndonLayoutRepository extends AbstractRepository
     /**
      * レイアウト設定を更新する
      *
-     * @param array<int, array{display?: bool}> $layouts レイアウト
-     * @param integer $userId ユーザーID
-     * @return boolean 成否
+     * @param  array<int, array{display?: bool}>  $layouts  レイアウト
+     * @param  int  $userId  ユーザーID
+     * @return bool 成否
      */
     public function updateLayouts(array $layouts, int $userId): bool
     {
@@ -46,7 +46,7 @@ class AndonLayoutRepository extends AbstractRepository
                     'is_display' => $isDisplay,
                 ]);
                 $result = $this->storeModel($l);
-                if (!$result) {
+                if (! $result) {
                     return false;
                 }
             } else {
@@ -54,13 +54,14 @@ class AndonLayoutRepository extends AbstractRepository
                     'order' => $order,
                     'is_display' => $isDisplay,
                 ]);
-                if (!$result) {
+                if (! $result) {
                     return false;
                 }
             }
             $order++;
         }
         Log::info("{$this->model()} is updated", ['user_id' => $userId, 'layout' => $layouts]);
+
         return true;
     }
 }

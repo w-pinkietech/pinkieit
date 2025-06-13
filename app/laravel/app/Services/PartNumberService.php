@@ -37,8 +37,8 @@ class PartNumberService
     /**
      * 品番を追加する
      *
-     * @param StorePartNumberRequest $request 品番追加リクエスト
-     * @return boolean 成否
+     * @param  StorePartNumberRequest  $request  品番追加リクエスト
+     * @return bool 成否
      */
     public function store(StorePartNumberRequest $request): bool
     {
@@ -48,9 +48,9 @@ class PartNumberService
     /**
      * 品番を更新する
      *
-     * @param UpdatePartNumberRequest $request 品番更新リクエスト
-     * @param PartNumber $partNumber 更新対象の品番
-     * @return boolean 成否
+     * @param  UpdatePartNumberRequest  $request  品番更新リクエスト
+     * @param  PartNumber  $partNumber  更新対象の品番
+     * @return bool 成否
      */
     public function update(UpdatePartNumberRequest $request, PartNumber $partNumber): bool
     {
@@ -60,8 +60,8 @@ class PartNumberService
     /**
      * 品番を削除する
      *
-     * @param PartNumber $partNumber 削除対象の品番
-     * @return boolean 成否
+     * @param  PartNumber  $partNumber  削除対象の品番
+     * @return bool 成否
      */
     public function destroy(PartNumber $partNumber): bool
     {

@@ -38,22 +38,16 @@ class PayloadData extends Data
 
     /**
      * 終了フラグ
-     *
-     * @var boolean
      */
     public bool $isComplete = false;
 
     /**
      * 生産カウント
-     *
-     * @var integer
      */
     public int $count = 0;
 
     /**
      * 現在時刻の文字列
-     *
-     * @var string
      */
     public string $at;
 
@@ -66,57 +60,45 @@ class PayloadData extends Data
 
     /**
      * 操業時間
-     *
-     * @var integer
      */
     public int $workingTime = 0;
 
     /**
      * 負荷時間 (操業時間-休止ロス)
-     *
-     * @var integer
      */
     public int $loadingTime = 0;
 
     /**
      * 稼働時間 (負荷時間-停止ロス)
-     *
-     * @var integer
      */
     public int $operatingTime = 0;
 
     /**
      * 正味稼働時間 (稼働時間-性能ロス)
-     *
-     * @var integer
      */
     public int $netTime = 0;
 
     /**
      * 自動段取り替え復帰回数
-     *
-     * @var integer
      */
     public int $autoResumeCount = 0;
 
     /**
      * 計画値ジョブ用のキー
-     *
-     * @var string
      */
     public string $jobKey;
 
     /**
      * コンストラクタ
      *
-     * @param integer $lineId 生産ラインID
-     * @param array<int, int> $defectiveCounts 不良品カウント
-     * @param string $start 生産開始時刻
-     * @param integer $cycleTimeMs サイクルタイムミリ秒
-     * @param integer $overTimeMs オーバータイムミリ秒
-     * @param array<int, array{startTime: string, endTime: string}> $plannedOutages 計画停止時間
-     * @param array<int, array{from: string, to: string|null}> $changeovers 段取り替え区間
-     * @param boolean $indicator 指標フラグ
+     * @param  int  $lineId  生産ラインID
+     * @param  array<int, int>  $defectiveCounts  不良品カウント
+     * @param  string  $start  生産開始時刻
+     * @param  int  $cycleTimeMs  サイクルタイムミリ秒
+     * @param  int  $overTimeMs  オーバータイムミリ秒
+     * @param  array<int, array{startTime: string, endTime: string}>  $plannedOutages  計画停止時間
+     * @param  array<int, array{from: string, to: string|null}>  $changeovers  段取り替え区間
+     * @param  bool  $indicator  指標フラグ
      */
     public function __construct(
         public readonly int $lineId,
@@ -135,7 +117,7 @@ class PayloadData extends Data
     /**
      * 良品数を取得する
      *
-     * @return integer 良品数
+     * @return int 良品数
      */
     public function goodCount(): int
     {
@@ -145,7 +127,7 @@ class PayloadData extends Data
     /**
      * 不良品数を取得する
      *
-     * @return integer 不良品数
+     * @return int 不良品数
      */
     public function defectiveCount(): int
     {
@@ -155,9 +137,8 @@ class PayloadData extends Data
     /**
      * 不良品数を設定する
      *
-     * @param integer $productionLineId 生産ラインID
-     * @param integer $count 不良品カウント
-     * @return void
+     * @param  int  $productionLineId  生産ラインID
+     * @param  int  $count  不良品カウント
      */
     public function setDefectiveCount(int $productionLineId, int $count): void
     {
@@ -237,7 +218,7 @@ class PayloadData extends Data
     /**
      * 計画値を取得する
      *
-     * @return integer 計画値
+     * @return int 計画値
      */
     public function planCount(): int
     {
@@ -278,8 +259,7 @@ class PayloadData extends Data
     /**
      * ペイロードを更新する
      *
-     * @param Carbon $date 更新時刻
-     * @return void
+     * @param  Carbon  $date  更新時刻
      */
     public function update(Carbon $date): void
     {
@@ -295,23 +275,24 @@ class PayloadData extends Data
     /**
      * 計画停止時間中かどうかを取得する
      *
-     * @param Carbon|null $date
-     * @return boolean trueなら計画停止時間中
+     * @return bool trueなら計画停止時間中
      */
-    public function inPlannedOutage(Carbon $date = null): bool
+    public function inPlannedOutage(?Carbon $date = null): bool
     {
         if (is_null($date)) {
             if (is_null($this->plannedOutageSections)) {
                 return false;
             } else {
                 $at = Utility::parse($this->at);
-                return !$this->plannedOutageSections
+
+                return ! $this->plannedOutageSections
                     ->filter(fn (FromTo $x) => $x->from->lte($at) && $at->lte($x->to))
                     ->isEmpty();
             }
         } else {
             $this->plannedOutageSections = $this->plannedOutageSections($date);
-            return !$this->plannedOutageSections
+
+            return ! $this->plannedOutageSections
                 ->filter(fn (FromTo $x) => $x->from->lte($date) && $date->lte($x->to))
                 ->isEmpty();
         }
@@ -338,8 +319,7 @@ class PayloadData extends Data
     /**
      * 生産の完了処理
      *
-     * @param Carbon $date 完了時刻
-     * @return void
+     * @param  Carbon  $date  完了時刻
      */
     public function complete(Carbon $date): void
     {
@@ -352,9 +332,8 @@ class PayloadData extends Data
     /**
      * 段取り替えの開始/終了時刻を追加する
      *
-     * @param Carbon $date チョコ停の開始/終了時刻
-     * @param boolean $isStart trueならチョコ停の開始
-     * @return void
+     * @param  Carbon  $date  チョコ停の開始/終了時刻
+     * @param  bool  $isStart  trueならチョコ停の開始
      */
     public function addChangeover(Carbon $date, bool $isStart): void
     {
@@ -368,14 +347,13 @@ class PayloadData extends Data
     /**
      * チョコ停の開始/終了時刻を追加する
      *
-     * @param Carbon $date チョコ停の開始/終了時刻
-     * @param boolean $isStart trueならチョコ停の開始
-     * @return void
+     * @param  Carbon  $date  チョコ停の開始/終了時刻
+     * @param  bool  $isStart  trueならチョコ停の開始
      */
     public function addBreakdown(Carbon $date, bool $isStart): void
     {
         $result = $this->addDate($date, $isStart, $this->breakdowns);
-        if (!$result && !$this->isComplete) {
+        if (! $result && ! $this->isComplete) {
             Log::critical('Breakdown time is Conflict!', [$date, $this->breakdowns]);
         }
         // Log::debug('Breakdown Sections', $this->breakdowns);
@@ -384,8 +362,7 @@ class PayloadData extends Data
     /**
      * 操業時間[ms]を更新する
      *
-     * @param Carbon $at 現在時刻
-     * @return void
+     * @param  Carbon  $at  現在時刻
      */
     private function updateWorkingTime(Carbon $at): void
     {
@@ -397,8 +374,6 @@ class PayloadData extends Data
 
     /**
      * 負荷時間[ms]を更新する
-     *
-     * @return void
      */
     private function updateLoadingTime(): void
     {
@@ -408,8 +383,6 @@ class PayloadData extends Data
 
     /**
      * 稼働時間[ms]を更新する
-     *
-     * @return void
      */
     private function updateOperatingTime(): void
     {
@@ -419,8 +392,6 @@ class PayloadData extends Data
 
     /**
      * 正味稼働時間を更新する
-     *
-     * @return void
      */
     private function updateNetTime(): void
     {
@@ -431,34 +402,36 @@ class PayloadData extends Data
     /**
      * 段取り替え中かどうかを取得する
      *
-     * @return boolean trueなら段取り替え中
+     * @return bool trueなら段取り替え中
      */
     private function isChangeover(): bool
     {
         $key = array_key_last($this->changeovers);
         $last = is_null($key) ? null : $this->changeovers[$key];
-        return !is_null($last) && is_null($last['to']);
+
+        return ! is_null($last) && is_null($last['to']);
     }
 
     /**
      * チョコ停中かどうかを取得する
      *
-     * @return boolean trueならチョコ停中
+     * @return bool trueならチョコ停中
      */
     private function isBreakdown(): bool
     {
         $key = array_key_last($this->breakdowns);
         $last = is_null($key) ? null : $this->breakdowns[$key];
-        return !is_null($last) && is_null($last['to']);
+
+        return ! is_null($last) && is_null($last['to']);
     }
 
     /**
      * チョコ停/段取り替えの開始/終了時刻を追加する
      *
-     * @param Carbon $date チョコ停/段取り替えの開始/終了時刻
-     * @param boolean $isStart trueなら開始
-     * @param array<int, array{from: string, to: string|null}> $fromToArray 追加対象時刻リスト
-     * @return boolean 更新の有無
+     * @param  Carbon  $date  チョコ停/段取り替えの開始/終了時刻
+     * @param  bool  $isStart  trueなら開始
+     * @param  array<int, array{from: string, to: string|null}>  $fromToArray  追加対象時刻リスト
+     * @return bool 更新の有無
      */
     private function addDate(Carbon $date, bool $isStart, array &$fromToArray): bool
     {
@@ -467,25 +440,27 @@ class PayloadData extends Data
 
         if ($isStart) {
             $from = Utility::format($date);
-            if (is_null($last) || (!is_null($last['to']) && strcmp($last['to'], $from) <= 0)) {
+            if (is_null($last) || (! is_null($last['to']) && strcmp($last['to'], $from) <= 0)) {
                 array_push($fromToArray, [
                     'from' => $from,
                     'to' => null,
                 ]);
                 $this->update($date);
+
                 return true;
             } else {
                 return false;
             }
         } else {
             $to = Utility::format($date);
-            if (!is_null($last) && is_null($last['to']) & strcmp($last['from'], $to) <= 0) {
+            if (! is_null($last) && is_null($last['to']) & strcmp($last['from'], $to) <= 0) {
                 array_pop($fromToArray);
                 array_push($fromToArray, [
                     'from' => $last['from'],
                     'to' => $to,
                 ]);
                 $this->update($date);
+
                 return true;
             } else {
                 return false;
@@ -496,7 +471,7 @@ class PayloadData extends Data
     /**
      * 計画停止時間区間を更新する
      *
-     * @param Carbon $date 現在時刻
+     * @param  Carbon  $date  現在時刻
      * @return Collection<FromTo>
      */
     private function plannedOutageSections(Carbon $date): Collection
@@ -526,6 +501,7 @@ class PayloadData extends Data
             }
             $startDay->addDay();
         }
+
         // Log::debug('Planned Outage Sections', $sections->toArray());
         return $sections;
     }
@@ -533,7 +509,7 @@ class PayloadData extends Data
     /**
      * 計画停止合計時間(休止ロス)を取得する
      *
-     * @return integer 休止ロス[ms]
+     * @return int 休止ロス[ms]
      */
     private function totalLoadingLossTime(): int
     {
@@ -543,22 +519,24 @@ class PayloadData extends Data
     /**
      * 計画停止時間と段取り替え時間の合計時間(停止ロス)を取得する
      *
-     * @return integer 停止ロス[ms]
+     * @return int 停止ロス[ms]
      */
     private function totalStopLossTime(): int
     {
         $mergedSections = PayloadData::mergeSections($this->plannedOutageSections, $this->changeoverSections);
+
         return $mergedSections->reduce(fn (int $result, FromTo $value) => $result + $value->span(), 0);
     }
 
     /**
      * 計画停止時間と段取り替え時間とチョコ停時間の合計時間(性能ロス)を取得する
      *
-     * @return integer 性能ロス[ms]
+     * @return int 性能ロス[ms]
      */
     private function totalPerformanceLossTime(): int
     {
         $mergedSections = PayloadData::mergeSections($this->plannedOutageSections, $this->changeoverSections, $this->breakdownSections);
+
         return $mergedSections->reduce(fn (int $result, FromTo $value) => $result + $value->span(), 0);
     }
 
@@ -578,7 +556,7 @@ class PayloadData extends Data
     /**
      * 配列の時間区間データを時間区間データオブジェクトのコレクションに変換する
      *
-     * @param array<array{from: string, to: string|null}> $array 配列の時間区間データ
+     * @param  array<array{from: string, to: string|null}>  $array  配列の時間区間データ
      * @return Collection<FromTo> 時間区間データオブジェクトのコレクション
      */
     private function arrayToCollection(array $array): Collection
@@ -586,6 +564,7 @@ class PayloadData extends Data
         return collect(array_map(function ($x) {
             $from = Utility::parse($x['from']);
             $to = Utility::parse(is_null($x['to']) ? $this->at : $x['to']);
+
             return new FromTo($from, $to);
         }, $array));
     }
@@ -593,12 +572,12 @@ class PayloadData extends Data
     /**
      * 指定した複数の区間の重複を合成した時間区間を合成する
      *
-     * @param Collection<FromTo> ...$sections 時間区間
+     * @param  Collection<FromTo>  ...$sections  時間区間
      * @return Collection<FromTo> 合成した時間区間
      */
     private static function mergeSections(Collection ...$sections): Collection
     {
-        /** @var array<int, array{datetime: Carbon, isStart: boolean}> */
+        /** @var array<int, array{datetime: Carbon, isStart: bool}> */
         $concatSections = collect($sections)
             ->flatten(1)
             ->map(function (FromTo $x) {
@@ -635,6 +614,7 @@ class PayloadData extends Data
                 }
             }
         }
+
         return $mergedSections;
     }
 }

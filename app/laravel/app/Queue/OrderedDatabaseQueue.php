@@ -3,9 +3,9 @@
 namespace App\Queue;
 
 use Carbon\Carbon;
+use DateTimeInterface;
 use Illuminate\Queue\DatabaseQueue;
 use Illuminate\Queue\Jobs\DatabaseJobRecord;
-use DateTimeInterface;
 
 class OrderedDatabaseQueue extends DatabaseQueue
 {
@@ -32,8 +32,9 @@ class OrderedDatabaseQueue extends DatabaseQueue
     protected function availableAt($delay = 0)
     {
         $delay = $this->parseDateInterval($delay);
+
         return $delay instanceof DateTimeInterface
-            ? (int)$delay->format('Uv')
+            ? (int) $delay->format('Uv')
             : Carbon::now()->addRealMilliseconds($delay)->getTimestampMs();
     }
 

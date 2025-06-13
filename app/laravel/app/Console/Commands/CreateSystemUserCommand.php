@@ -32,7 +32,7 @@ class CreateSystemUserCommand extends Command
     /**
      * コンストラクタ
      *
-     * @param UserService $userService ユーザーサービス
+     * @param  UserService  $userService  ユーザーサービス
      * @return void
      */
     public function __construct(private readonly UserService $userService)
@@ -56,8 +56,6 @@ class CreateSystemUserCommand extends Command
 
     /**
      * コマンドを実行する
-     *
-     * @return int
      */
     public function handle(): int
     {

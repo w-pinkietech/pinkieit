@@ -7,6 +7,6 @@ return [
     'channel' => env('SLACK_CHANNEL'),
     'proxy' => [
         'http' => env('HTTP_PROXY'),
-        'https' => env('HTTPS_PROXY')
-    ]
+        'https' => env('HTTPS_PROXY'),
+    ],
 ];

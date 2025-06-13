@@ -18,7 +18,7 @@ class CycleTimeController extends AbstractController
     /**
      * コンストラクタ
      *
-     * @param CycleTimeService $service サイクルタイムサービス
+     * @param  CycleTimeService  $service  サイクルタイムサービス
      */
     public function __construct(private readonly CycleTimeService $service)
     {
@@ -48,28 +48,28 @@ class CycleTimeController extends AbstractController
     /**
      * Show the form for creating a new resource.
      *
-     * @param Process $process 工程 工程
-     * @return View
+     * @param  Process  $process  工程 工程
      */
     public function create(Process $process): View
     {
         $this->authorizeAdmin();
         $this->throwExceptionIfRunning($process);
         $partNumbers = $this->service->unusedPartNumberOptions($process->process_id);
+
         return view('process.cycle-time.create', ['process' => $process, 'partNumbers' => $partNumbers]);
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param StoreCycleTimeRequest $request リクエスト
-     * @param Process $process 工程 工程
-     * @return RedirectResponse
+     * @param  StoreCycleTimeRequest  $request  リクエスト
+     * @param  Process  $process  工程 工程
      */
     public function store(StoreCycleTimeRequest $request, Process $process): RedirectResponse
     {
         $this->throwExceptionIfRunning($process);
         $result = $this->service->store($request);
+
         return $this->redirectWithStore($result, 'process.show', ['process' => $process, 'tab' => 'part-number']);
     }
 
@@ -87,44 +87,44 @@ class CycleTimeController extends AbstractController
     /**
      * Show the form for editing the specified resource.
      *
-     * @param CycleTime $cycleTime サイクルタイム
-     * @param Process $process 工程 工程
-     * @return View
+     * @param  CycleTime  $cycleTime  サイクルタイム
+     * @param  Process  $process  工程 工程
      */
     public function edit(Process $process, CycleTime $cycleTime): View
     {
         $this->authorizeAdmin();
         $this->throwExceptionIfRunning($process);
+
         return view('process.cycle-time.edit', ['process' => $process, 'cycleTime' => $cycleTime]);
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param UpdateCycleTimeRequest $request リクエスト
-     * @param Process $process 工程 工程
-     * @param CycleTime $cycleTime サイクルタイム
-     * @return RedirectResponse
+     * @param  UpdateCycleTimeRequest  $request  リクエスト
+     * @param  Process  $process  工程 工程
+     * @param  CycleTime  $cycleTime  サイクルタイム
      */
     public function update(UpdateCycleTimeRequest $request, Process $process, CycleTime $cycleTime): RedirectResponse
     {
         $this->throwExceptionIfRunning($process);
         $result = $this->service->update($request, $cycleTime);
+
         return $this->redirectWithUpdate($result, 'process.show', ['process' => $process, 'tab' => 'part-number']);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param Process $process 工程 工程
-     * @param CycleTime $cycleTime サイクルタイム
-     * @return RedirectResponse
+     * @param  Process  $process  工程 工程
+     * @param  CycleTime  $cycleTime  サイクルタイム
      */
     public function destroy(Process $process, CycleTime $cycleTime): RedirectResponse
     {
         $this->authorizeAdmin();
         $this->throwExceptionIfRunning($process);
         $result = $this->service->destroy($cycleTime);
+
         return $this->redirectWithDestroy($result, 'process.show', ['process' => $process, 'tab' => 'part-number']);
     }
 }

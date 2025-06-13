@@ -10,8 +10,8 @@ use Illuminate\Validation\Rule;
 /**
  * ライン追加リクエスト
  *
- * @property integer $process_id 工程ID
- * @property integer $raspberry_pi_id ラズパイID
+ * @property int $process_id 工程ID
+ * @property int $raspberry_pi_id ラズパイID
  */
 class StoreLineRequest extends FormRequest
 {
@@ -45,8 +45,8 @@ class StoreLineRequest extends FormRequest
                 Rule::exists('lines', 'line_id')->where(function ($query) {
                     $query->where('process_id', $this->process_id);
                     $query->where('defective', false);
-                })
-            ]
+                }),
+            ],
         ];
     }
 
@@ -59,7 +59,7 @@ class StoreLineRequest extends FormRequest
     {
         /** @var Process */
         $process = $this->route('process');
-        $defective = !is_null($this->defective);
+        $defective = ! is_null($this->defective);
 
         // パラメータをマージ
         $this->merge([

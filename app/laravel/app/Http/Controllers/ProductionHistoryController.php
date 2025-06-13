@@ -20,7 +20,7 @@ class ProductionHistoryController extends AbstractController
     /**
      * コンストラクタ
      *
-     * @param ProductionHistoryService $service 生産履歴サービス
+     * @param  ProductionHistoryService  $service  生産履歴サービス
      */
     public function __construct(private readonly ProductionHistoryService $service)
     {
@@ -39,46 +39,43 @@ class ProductionHistoryController extends AbstractController
 
     /**
      * Display a listing of the resource.
-     *
-     * @return View
      */
     public function index(Process $process): View
     {
         $histories = $this->service->histories($process->process_id);
+
         return view('process.production.index', ['process' => $process, 'histories' => $histories]);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param Process $process 工程
-     * @param  \App\Models\ProductionHistory $history
-     * @return View
+     * @param  Process  $process  工程
      */
     public function show(Process $process, ProductionHistory $history): View
     {
         $lines = $this->service->productionLines($history->production_history_id);
+
         return view('process.production.show', ['process' => $process, 'history' => $history, 'lines' => $lines]);
     }
 
     /**
      * Show the form for creating a new resource.
      *
-     * @param Process $process 工程
-     * @return View
+     * @param  Process  $process  工程
      */
     public function create(Process $process): View
     {
         $partNumbers = $this->service->partNumberOptions($process);
+
         return view('process.production.create', ['process' => $process, 'partNumbers' => $partNumbers]);
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param StoreProductionHistoryRequest $request リクエスト
-     * @param Process $process 工程
-     * @return RedirectResponse
+     * @param  StoreProductionHistoryRequest  $request  リクエスト
+     * @param  Process  $process  工程
      */
     public function store(StoreProductionHistoryRequest $request, Process $process): RedirectResponse
     {
@@ -99,14 +96,12 @@ class ProductionHistoryController extends AbstractController
                 ]
             ));
         }
+
         return $route;
     }
 
     /**
      * 生産を停止する
-     *
-     * @param Process $process
-     * @return RedirectResponse
      */
     public function stop(Process $process): RedirectResponse
     {
@@ -119,14 +114,12 @@ class ProductionHistoryController extends AbstractController
             Log::error($th->getMessage(), $th->getTrace());
             $route->with('toast_danger', __('pinkieit.failed_toast', ['target' => $this->name(), 'action' => $action]));
         }
+
         return $route;
     }
 
     /**
      * 段取り替えを開始する
-     *
-     * @param Process $process
-     * @return RedirectResponse
      */
     public function startChangeover(Process $process): RedirectResponse
     {
@@ -142,14 +135,12 @@ class ProductionHistoryController extends AbstractController
             Log::error($th->getMessage(), $th->getTrace());
             $route->with('toast_danger', __('pinkieit.failed_toast2', ['action' => __('pinkieit.changeover')]));
         }
+
         return $route;
     }
 
     /**
      * 段取り替えを終了して生産を開始する
-     *
-     * @param Process $process
-     * @return RedirectResponse
      */
     public function stopChangeover(Process $process): RedirectResponse
     {
@@ -165,6 +156,7 @@ class ProductionHistoryController extends AbstractController
             Log::error($th->getMessage(), $th->getTrace());
             $route->with('toast_danger', __('pinkieit.failed_toast2', ['action' => __('pinkieit.start_production')]));
         }
+
         return $route;
     }
 }

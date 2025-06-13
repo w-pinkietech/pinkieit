@@ -9,7 +9,6 @@ use App\Models\ProductionHistory;
 use App\Services\Utility;
 use Carbon\Carbon;
 use Illuminate\Pagination\LengthAwarePaginator;
-use Illuminate\Support\Facades\Log;
 
 /**
  * 生産履歴リポジトリ
@@ -31,9 +30,8 @@ class ProductionHistoryRepository extends AbstractRepository
     /**
      * 稼働履歴の生産ステータスを更新する
      *
-     * @param ProductionHistory $history 対象の稼働履歴
-     * @param ProductionStatus $status ステータス
-     * @return void
+     * @param  ProductionHistory  $history  対象の稼働履歴
+     * @param  ProductionStatus  $status  ステータス
      */
     public function updateStatus(ProductionHistory $history, ProductionStatus $status): void
     {
@@ -44,10 +42,10 @@ class ProductionHistoryRepository extends AbstractRepository
     /**
      * 稼働履歴を登録する
      *
-     * @param Process $process 工程
-     * @param CycleTime $cycleTime サイクルタイム
-     * @param ProductionStatus $status ステータス
-     * @param integer|null $goal 目標値
+     * @param  Process  $process  工程
+     * @param  CycleTime  $cycleTime  サイクルタイム
+     * @param  ProductionStatus  $status  ステータス
+     * @param  int|null  $goal  目標値
      * @return ProductionHistory|null 稼働履歴
      */
     public function storeHistory(Process $process, CycleTime $cycleTime, ProductionStatus $status, ?int $goal = null): ?ProductionHistory
@@ -64,15 +62,16 @@ class ProductionHistoryRepository extends AbstractRepository
             'start' => Utility::now(),
             'status' => $status,
         ]);
+
         return $this->storeModel($productionHistory) ? $productionHistory : null;
     }
 
     /**
      * 稼働を停止する
      *
-     * @param ProductionHistory $history 稼働履歴
-     * @param Carbon $date 停止時刻
-     * @return boolean 成否
+     * @param  ProductionHistory  $history  稼働履歴
+     * @param  Carbon  $date  停止時刻
+     * @return bool 成否
      */
     public function stop(ProductionHistory $history, Carbon $date): bool
     {
@@ -85,8 +84,8 @@ class ProductionHistoryRepository extends AbstractRepository
     /**
      * 指定した工程IDの稼働履歴を取得する
      *
-     * @param integer $processId 工程ID
-     * @param integer $page ページあたりの件数
+     * @param  int  $processId  工程ID
+     * @param  int  $page  ページあたりの件数
      * @return LengthAwarePaginator<ProductionHistory>
      */
     public function histories(int $processId, int $page): LengthAwarePaginator

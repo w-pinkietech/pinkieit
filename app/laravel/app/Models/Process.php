@@ -3,8 +3,6 @@
 namespace App\Models;
 
 use App\Enums\ProductionStatus;
-use App\Models\PlannedOutage;
-use App\Models\ProcessPlannedOutage;
 use App\Services\Utility;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -19,8 +17,8 @@ use Illuminate\Support\Facades\DB;
 /**
  * 工程モデルクラス
  *
- * @property integer $process_id 主キー
- * @property integer|null $production_history_id 生産履歴ID
+ * @property int $process_id 主キー
+ * @property int|null $production_history_id 生産履歴ID
  * @property string $process_name 工程名
  * @property string $plan_color 計画値色
  * @property string|null $remark 備考
@@ -63,8 +61,6 @@ class Process extends Model
 
     /**
      * 工程と多対多で関連する計画停止時間を取得
-     *
-     * @return BelongsToMany
      */
     public function plannedOutages(): BelongsToMany
     {
@@ -75,8 +71,6 @@ class Process extends Model
 
     /**
      * 工程と多対多で関連する品番を取得
-     *
-     * @return BelongsToMany
      */
     public function partNumbers(): BelongsToMany
     {
@@ -87,8 +81,6 @@ class Process extends Model
 
     /**
      * 工程と多対多で関連するラズパイを取得
-     *
-     * @return BelongsToMany
      */
     public function raspberryPis(): BelongsToMany
     {
@@ -101,8 +93,6 @@ class Process extends Model
 
     /**
      * 工程と1対多で関連するラインを取得
-     *
-     * @return HasMany
      */
     public function lines(): HasMany
     {
@@ -111,8 +101,6 @@ class Process extends Model
 
     /**
      * 工程と1対多で関連するセンサーを取得
-     *
-     * @return HasMany
      */
     public function sensors(): HasMany
     {
@@ -121,8 +109,6 @@ class Process extends Model
 
     /**
      * 工程と1対多で関連するセンサーイベントを取得
-     *
-     * @return HasMany
      */
     public function sensorEvents(): HasMany
     {
@@ -139,8 +125,6 @@ class Process extends Model
 
     /**
      * 工程と1対多で関連するON-OFFメッセージを取得
-     *
-     * @return HasMany
      */
     public function onOffs(): HasMany
     {
@@ -149,8 +133,6 @@ class Process extends Model
 
     /**
      * 工程と1対多で関連するON-OFFメッセージイベントを取得
-     *
-     * @return HasMany
      */
     public function onOffEvents(): HasMany
     {
@@ -162,8 +144,6 @@ class Process extends Model
 
     /**
      * 工程と1対1で関連する現在稼働中の生産履歴を取得
-     *
-     * @return BelongsTo
      */
     public function productionHistory(): BelongsTo
     {
@@ -172,13 +152,12 @@ class Process extends Model
 
     /**
      * 工程と1対1で関連するアンドンレイアウト設定を取得
-     *
-     * @return HasOne
      */
     public function andonLayout(): HasOne
     {
         $userId = Auth::id();
         $processId = $this->process_id;
+
         return $this->hasOne(AndonLayout::class, 'process_id')
             ->withDefault(function (AndonLayout $model) use ($userId, $processId) {
                 $model->process_id = $processId;
@@ -192,17 +171,17 @@ class Process extends Model
     /**
      * 生産が稼働しているかどうか
      *
-     * @return boolean trueであれば停止
+     * @return bool trueであれば停止
      */
     public function isRunning(): bool
     {
-        return !$this->isStopped();
+        return ! $this->isStopped();
     }
 
     /**
      * 生産が停止しているかどうか
      *
-     * @return boolean trueであれば停止
+     * @return bool trueであれば停止
      */
     public function isStopped(): bool
     {
@@ -212,7 +191,7 @@ class Process extends Model
     /**
      * 段取替え中かどうか
      *
-     * @return boolean trueであれば段取替え
+     * @return bool trueであれば段取替え
      */
     public function isChangeover(): bool
     {
@@ -252,16 +231,16 @@ class Process extends Model
         unset($info['plan_color']);
         unset($info['production_history_id']);
         unset($info['remark']);
+
         return $info;
     }
 
     /**
      * 製造履歴のデータをマップし、不要なフィールドを除去します。
      *
-     * @param ProductionHistory|null $productionHistory
      * @return array<string, mixed>|null
      */
-    private function mapProductionHistory(?ProductionHistory $productionHistory): array|null
+    private function mapProductionHistory(?ProductionHistory $productionHistory): ?array
     {
         if (is_null($productionHistory)) {
             return null;
@@ -273,6 +252,7 @@ class Process extends Model
         unset($ph['plan_color']);
         unset($ph['process_id']);
         unset($ph['process_name']);
+
         return $ph;
     }
 }

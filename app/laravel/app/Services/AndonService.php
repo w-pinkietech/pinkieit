@@ -20,7 +20,9 @@ use Illuminate\Support\Facades\DB;
 class AndonService
 {
     private readonly AndonConfigRepository $andonConfig;
+
     private readonly AndonLayoutRepository $andonLayout;
+
     private readonly ProcessRepository $process;
 
     /**
@@ -48,10 +50,11 @@ class AndonService
                 'productionHistory.indicatorLine.payload',
             ])
             ->map(function (Process $p) {
-                if (!is_null($p->productionHistory)) {
+                if (! is_null($p->productionHistory)) {
                     $payloadData = $p->productionHistory->indicatorLine->payload->getPayloadData();
                     $p->production_summary = $p->productionHistory->makeProductionSummary($payloadData);
                 }
+
                 return $p;
             })
             ->sortBy([
@@ -59,13 +62,12 @@ class AndonService
                 ['process_id', 'asc'],
             ])
             ->values();
+
         return $processes;
     }
 
     /**
      * アンドン設定を取得する
-     *
-     * @return AndonConfig
      */
     public function andonConfig(): AndonConfig
     {
@@ -75,7 +77,6 @@ class AndonService
     /**
      * アンドン設定を更新する
      *
-     * @param UpdateAndonConfigRequest $request
      * @throws ModelNotFoundException
      */
     public function update(UpdateAndonConfigRequest $request): void
@@ -84,9 +85,9 @@ class AndonService
             $config = $this->andonConfig();
             $result = $this->andonConfig->update($request, $config);
             Utility::throwIfException($config, $result);
-            if (!is_null($request->layouts)) {
-                if (!$this->andonLayout->updateLayouts($request->layouts, Auth::id())) {
-                    throw new ModelNotFoundException();
+            if (! is_null($request->layouts)) {
+                if (! $this->andonLayout->updateLayouts($request->layouts, Auth::id())) {
+                    throw new ModelNotFoundException;
                 }
             }
         });

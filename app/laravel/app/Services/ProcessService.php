@@ -18,6 +18,7 @@ use Illuminate\Support\Facades\App;
 class ProcessService
 {
     private readonly ProcessRepository $process;
+
     private readonly ProductionLineRepository $productionLine;
 
     /**
@@ -48,14 +49,15 @@ class ProcessService
     {
         /** @var Collection<int, Process> */
         $processes = $this->process->all('partNumbers');
+
         return $processes->map(fn (Process $p) => $p->info());
     }
 
     /**
      * 工程を追加する
      *
-     * @param StoreProcessRequest $request 工程追加リクエスト
-     * @return boolean 成否
+     * @param  StoreProcessRequest  $request  工程追加リクエスト
+     * @return bool 成否
      */
     public function store(StoreProcessRequest $request): bool
     {
@@ -65,9 +67,9 @@ class ProcessService
     /**
      * 工程を更新する
      *
-     * @param UpdateProcessRequest $request 工程更新リクエスト
-     * @param Process $process 更新対象の工程
-     * @return boolean 成否
+     * @param  UpdateProcessRequest  $request  工程更新リクエスト
+     * @param  Process  $process  更新対象の工程
+     * @return bool 成否
      */
     public function update(UpdateProcessRequest $request, Process $process): bool
     {
@@ -77,8 +79,8 @@ class ProcessService
     /**
      * 工程を削除する
      *
-     * @param Process $process 削除対象の工程
-     * @return boolean 成否
+     * @param  Process  $process  削除対象の工程
+     * @return bool 成否
      */
     public function destroy(Process $process): bool
     {
@@ -88,7 +90,7 @@ class ProcessService
     /**
      * 生産数を取得する
      *
-     * @param Process $process 工程
+     * @param  Process  $process  工程
      * @return Collection<int, ProductionLine>|null 生産数
      */
     public function productionLines(Process $process): ?Collection

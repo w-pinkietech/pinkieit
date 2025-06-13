@@ -27,8 +27,9 @@ class LineRepository extends AbstractRepository
     /**
      * ライン並べ替えを行う
      *
-     * @param integer $processId 工程ID
-     * @param array<int, string> $orders 順序
+     * @param  int  $processId  工程ID
+     * @param  array<int, string>  $orders  順序
+     *
      * @throws ModelNotFoundException
      */
     public function sort(int $processId, array $orders): void
@@ -41,8 +42,8 @@ class LineRepository extends AbstractRepository
                         ->where('process_id', $processId),
                     ['order' => $i]
                 );
-                if (!$result) {
-                    throw new ModelNotFoundException();
+                if (! $result) {
+                    throw new ModelNotFoundException;
                 }
             }
         });
@@ -52,11 +53,11 @@ class LineRepository extends AbstractRepository
     /**
      * ラインの作業者を更新する
      *
-     * @param integer $lineId ラインID
-     * @param integer|null $workerId 作業者ID
-     * @return boolean 成否
+     * @param  int  $lineId  ラインID
+     * @param  int|null  $workerId  作業者ID
+     * @return bool 成否
      */
-    public function updateWorker(int $lineId, int|null $workerId): bool
+    public function updateWorker(int $lineId, ?int $workerId): bool
     {
         return $this->updateModel($this->model->find($lineId), ['worker_id' => $workerId]);
     }

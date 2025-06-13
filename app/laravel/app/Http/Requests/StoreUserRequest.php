@@ -13,7 +13,7 @@ use Illuminate\Validation\Rule;
  * @property string $name 氏名
  * @property string $email メールアドレス
  * @property string $password パスワード
- * @property string|integer $role 権限
+ * @property string|int $role 権限
  */
 class StoreUserRequest extends FormRequest
 {

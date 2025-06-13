@@ -60,18 +60,18 @@ class UpdateAndonConfigRequest extends FormRequest
     {
         // パラメータをマージ
         $this->merge([
-            'is_show_part_number' => !is_null($this->is_show_part_number),
-            'is_show_start' => !is_null($this->is_show_start),
-            'is_show_good_count' => !is_null($this->is_show_good_count),
-            'is_show_good_rate' => !is_null($this->is_show_good_rate),
-            'is_show_defective_count' => !is_null($this->is_show_defective_count),
-            'is_show_defective_rate' => !is_null($this->is_show_defective_rate),
-            'is_show_plan_count' => !is_null($this->is_show_plan_count),
-            'is_show_achievement_rate' => !is_null($this->is_show_achievement_rate),
-            'is_show_cycle_time' => !is_null($this->is_show_cycle_time),
-            'is_show_time_operating_rate' => !is_null($this->is_show_time_operating_rate),
-            'is_show_performance_operating_rate' => !is_null($this->is_show_performance_operating_rate),
-            'is_show_overall_equipment_effectiveness' => !is_null($this->is_show_overall_equipment_effectiveness),
+            'is_show_part_number' => ! is_null($this->is_show_part_number),
+            'is_show_start' => ! is_null($this->is_show_start),
+            'is_show_good_count' => ! is_null($this->is_show_good_count),
+            'is_show_good_rate' => ! is_null($this->is_show_good_rate),
+            'is_show_defective_count' => ! is_null($this->is_show_defective_count),
+            'is_show_defective_rate' => ! is_null($this->is_show_defective_rate),
+            'is_show_plan_count' => ! is_null($this->is_show_plan_count),
+            'is_show_achievement_rate' => ! is_null($this->is_show_achievement_rate),
+            'is_show_cycle_time' => ! is_null($this->is_show_cycle_time),
+            'is_show_time_operating_rate' => ! is_null($this->is_show_time_operating_rate),
+            'is_show_performance_operating_rate' => ! is_null($this->is_show_performance_operating_rate),
+            'is_show_overall_equipment_effectiveness' => ! is_null($this->is_show_overall_equipment_effectiveness),
         ]);
     }
 }

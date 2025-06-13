@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Gate;
 /**
  * 生産時の計画停止時間追加リクエスト
  *
- * @property integer $process_id 工程ID
+ * @property int $process_id 工程ID
  */
 class StoreProcessPlannedOutageRequest extends FormRequest
 {

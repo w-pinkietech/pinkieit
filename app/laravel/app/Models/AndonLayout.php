@@ -8,11 +8,11 @@ use Illuminate\Database\Eloquent\Relations\Pivot;
 /**
  * アンドンレイアウトモデルクラス
  *
- * @property integer $andon_layout_id 主キー
- * @property integer $user_id ユーザーID(外部キー)
- * @property integer $process_id 工程ID(外部キー)
- * @property boolean $is_display 表示フラグ
- * @property integer $order 順序
+ * @property int $andon_layout_id 主キー
+ * @property int $user_id ユーザーID(外部キー)
+ * @property int $process_id 工程ID(外部キー)
+ * @property bool $is_display 表示フラグ
+ * @property int $order 順序
  */
 class AndonLayout extends Pivot
 {

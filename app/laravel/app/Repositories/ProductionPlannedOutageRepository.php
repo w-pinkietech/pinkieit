@@ -27,9 +27,9 @@ class ProductionPlannedOutageRepository extends AbstractRepository
     /**
      * 生産時の計画停止時間を登録する。
      *
-     * @param PlannedOutage $plannedOutage 計画停止時間
-     * @param integer $productionHistoryId 生産履歴ID
-     * @return boolean 成否
+     * @param  PlannedOutage  $plannedOutage  計画停止時間
+     * @param  int  $productionHistoryId  生産履歴ID
+     * @return bool 成否
      */
     public function save(PlannedOutage $plannedOutage, int $productionHistoryId): bool
     {
@@ -39,13 +39,14 @@ class ProductionPlannedOutageRepository extends AbstractRepository
             'end_time' => $plannedOutage->end_time,
             'production_history_id' => $productionHistoryId,
         ]);
+
         return $this->storeModel($pbt);
     }
 
     /**
      * 計画停止時間の開始と終了までの区間の配列を取得する。
      *
-     * @param integer $historyId 生産履歴ID
+     * @param  int  $historyId  生産履歴ID
      * @return array<int, array{startTime: string, endTime: string}> 計画停止時間の開始と終了までの区間の配列
      */
     public function getStartEndAsArray(int $historyId): array
@@ -105,6 +106,7 @@ class ProductionPlannedOutageRepository extends AbstractRepository
                 'endTime' => '00:00:00',
             ]);
         }
+
         return $mergedPlannedOutages;
     }
 }

@@ -32,8 +32,8 @@ class BreakdownJudgeJob implements ShouldQueue
     /**
      * チョコ停判定ジョブのインスタンスを作成する。
      *
-     * @param Production $production チョコ停基準となる生産データ
-     * @param Carbon $breakdownTime チョコ停発生予定時刻
+     * @param  Production  $production  チョコ停基準となる生産データ
+     * @param  Carbon  $breakdownTime  チョコ停発生予定時刻
      */
     public function __construct(
         private readonly Production $production,
@@ -78,14 +78,16 @@ class BreakdownJudgeJob implements ShouldQueue
             if ($payloadData->status()->isNot(ProductionStatus::RUNNING())) {
                 // 稼働中でない場合は終了
                 Log::debug('Status is not RUNNING.');
+
                 return;
             }
 
             // 生産時刻からチョコ停時刻からチョコ停が発生したかどうかをチェック
             $isBreakdown = $productionRepository->judgeBreakdown($this->production, $this->breakdownTime);
-            if (!$isBreakdown) {
+            if (! $isBreakdown) {
                 // チョコ停ではなかった場合は終了
                 Log::info('Breakdown is not occurred.');
+
                 return;
             }
 
@@ -112,9 +114,8 @@ class BreakdownJudgeJob implements ShouldQueue
     /**
      * チョコ停判定ジョブを登録し、指定されたオーバータイムだけ遅延実行させる。
      *
-     * @param integer $overTimeMs オーバータイム[ms]
-     * @param Production $production チョコ停基準となる生産データ
-     * @return void
+     * @param  int  $overTimeMs  オーバータイム[ms]
+     * @param  Production  $production  チョコ停基準となる生産データ
      */
     public static function delayedDispatch(int $overTimeMs, Production $production): void
     {

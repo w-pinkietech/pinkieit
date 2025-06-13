@@ -35,6 +35,7 @@ class AndonConfigRepository extends AbstractRepository
             $config = new AndonConfig(['user_id' => $userId]);
             $this->storeModel($config);
         }
+
         return $config;
     }
 }

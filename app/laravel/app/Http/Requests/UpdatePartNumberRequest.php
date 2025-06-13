@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Gate;
 /**
  * 品番更新リクエスト
  *
- * @property integer $part_number_id 品番ID
+ * @property int $part_number_id 品番ID
  */
 class UpdatePartNumberRequest extends FormRequest
 {

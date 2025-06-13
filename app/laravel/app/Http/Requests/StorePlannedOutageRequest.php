@@ -27,7 +27,7 @@ class StorePlannedOutageRequest extends FormRequest
         return [
             'planned_outage_name' => 'required|unique:planned_outages,planned_outage_name|max:32',
             'start_time' => 'required|date_format:H:i',
-            'end_time' => 'required|date_format:H:i|different:start_time'
+            'end_time' => 'required|date_format:H:i|different:start_time',
         ];
     }
 }

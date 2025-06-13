@@ -12,7 +12,7 @@ class NoIndicatorException extends Exception
     /**
      * Create a new exception instance.
      *
-     * @param string $message メッセージ
+     * @param  string  $message  メッセージ
      */
     public function __construct(string $message = '')
     {

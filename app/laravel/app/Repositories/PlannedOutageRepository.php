@@ -26,7 +26,7 @@ class PlannedOutageRepository extends AbstractRepository
     /**
      * 指定したIDを除いた計画停止時間一覧を取得する
      *
-     * @param Collection<int, ProcessPlannedOutage> $processPlannedOutages 除外する計画停止時間ID
+     * @param  Collection<int, ProcessPlannedOutage>  $processPlannedOutages  除外する計画停止時間ID
      * @return Collection<int, PlannedOutage>
      */
     public function except(Collection $processPlannedOutages): Collection

@@ -10,19 +10,19 @@ use Illuminate\Database\Eloquent\Model;
 /**
  * 生産データモデルクラス
  *
- * @property integer $production_id 主キー
- * @property integer $production_line_id 生産ラインID(外部キー)
+ * @property int $production_id 主キー
+ * @property int $production_line_id 生産ラインID(外部キー)
  * @property Carbon $at 生産時刻
- * @property integer $count 生産数
- * @property integer $defective_count 不良品数
+ * @property int $count 生産数
+ * @property int $defective_count 不良品数
  * @property ProductionStatus $status 生産ステータス
- * @property boolean $in_planned_outage 計画停止
- * @property integer $working_time 操業時間
- * @property integer $loading_time 負荷時間
- * @property integer $operating_time 稼働時間
- * @property integer $net_time 正味稼働時間
- * @property integer $breakdown_count チョコ停回数
- * @property integer $auto_resume_count 段取り替え自動復帰回数
+ * @property bool $in_planned_outage 計画停止
+ * @property int $working_time 操業時間
+ * @property int $loading_time 負荷時間
+ * @property int $operating_time 稼働時間
+ * @property int $net_time 正味稼働時間
+ * @property int $breakdown_count チョコ停回数
+ * @property int $auto_resume_count 段取り替え自動復帰回数
  * @property string $status_name ステータス名
  */
 class Production extends Model
@@ -92,8 +92,6 @@ class Production extends Model
 
     /**
      * ステータス名を取得する
-     *
-     * @return string
      */
     public function getStatusNameAttribute(): string
     {

@@ -14,22 +14,20 @@ class Utility
 {
     /**
      * 現在時刻を取得する
-     *
-     * @return Carbon
      */
     public static function now(): Carbon
     {
         $now = Carbon::now(new DateTimeZone(config('app.timezone')));
         $millisecond = $now->millisecond;
+
         return $now->microseconds(0)->milliseconds($millisecond);
     }
 
     /**
      * 時刻を文字列に変換する
      *
-     * @param Carbon $date 時刻
-     * @param string $format フォーマット
-     * @return string
+     * @param  Carbon  $date  時刻
+     * @param  string  $format  フォーマット
      */
     public static function format(Carbon $date, string $format = 'Y-m-d H:i:s.u'): string
     {
@@ -39,9 +37,8 @@ class Utility
     /**
      * 年月日と時分秒のデータを結合する
      *
-     * @param Carbon $ymd 年月日
-     * @param Carbon $hms 時分秒
-     * @return Carbon
+     * @param  Carbon  $ymd  年月日
+     * @param  Carbon  $hms  時分秒
      */
     public static function merge(Carbon $ymd, Carbon $hms): Carbon
     {
@@ -54,9 +51,8 @@ class Utility
     /**
      * 指定した文字列を時刻へ変換する
      *
-     * @param string $datetime 時刻文字列
-     * @param string $format フォーマット
-     * @return Carbon
+     * @param  string  $datetime  時刻文字列
+     * @param  string  $format  フォーマット
      */
     public static function parse(string $datetime, string $format = 'Y-m-d H:i:s.u'): Carbon
     {
@@ -66,12 +62,12 @@ class Utility
     /**
      * ピン番号を文字列化
      *
-     * @param int $pinNumber ピン番号
-     * @return string
+     * @param  int  $pinNumber  ピン番号
      */
     public static function padPinNumber(int $pinNumber): string
     {
-        $pin = str_pad((string)$pinNumber, 2, '0', STR_PAD_LEFT);
+        $pin = str_pad((string) $pinNumber, 2, '0', STR_PAD_LEFT);
+
         return "gpio/$pin";
     }
 
@@ -84,6 +80,7 @@ class Utility
     {
         return array_reduce(range(2, 27), function (array $carry, int $item) {
             $carry[$item] = self::padPinNumber($item);
+
             return $carry;
         }, []);
     }
@@ -91,25 +88,27 @@ class Utility
     /**
      * 指定したモデルがnullの場合に例外を投げる。
      *
-     * @param Model|null $model モデル
+     * @param  Model|null  $model  モデル
      * @return void
+     *
      * @throws ModelNotFoundException
      */
     public static function throwIfNullException(?Model $model = null)
     {
-        is_null($model) && throw new ModelNotFoundException();
+        is_null($model) && throw new ModelNotFoundException;
     }
 
     /**
      * 指定した結果がfalseの場合に例外を投げる。
      *
-     * @param Model $model モデル
-     * @param boolean $result falseの場合に例外を投げる
+     * @param  Model  $model  モデル
+     * @param  bool  $result  falseの場合に例外を投げる
      * @return void
+     *
      * @throws ModelNotFoundException
      */
     public static function throwIfException(Model $model, bool $result)
     {
-        $result || throw (new ModelNotFoundException())->setModel(get_class($model));
+        $result || throw (new ModelNotFoundException)->setModel(get_class($model));
     }
 }

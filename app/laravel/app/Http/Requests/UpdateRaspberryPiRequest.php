@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Gate;
 /**
  * ラズパイ更新リクエスト
  *
- * @property integer $raspberry_pi_id ラズパイID
+ * @property int $raspberry_pi_id ラズパイID
  */
 class UpdateRaspberryPiRequest extends FormRequest
 {

@@ -2,7 +2,6 @@
 
 namespace App\Repositories;
 
-use App\Enums\RoleType;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 
@@ -26,11 +25,11 @@ class UserRepository extends AbstractRepository
     /**
      * ユーザーを作成する
      *
-     * @param string $name ユーザー名
-     * @param string $email ユーザーEメール
-     * @param string $password パスワード(生)
-     * @param string|int $role 権限
-     * @return boolean 成否
+     * @param  string  $name  ユーザー名
+     * @param  string  $email  ユーザーEメール
+     * @param  string  $password  パスワード(生)
+     * @param  string|int  $role  権限
+     * @return bool 成否
      */
     public function create(string $name, string $email, string $password, string|int $role): bool
     {
@@ -40,6 +39,7 @@ class UserRepository extends AbstractRepository
             'role' => $role,
             'password' => Hash::make($password),
         ]);
+
         return $this->storeModel($user);
     }
 }

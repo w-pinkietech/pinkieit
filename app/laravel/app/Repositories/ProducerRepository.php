@@ -28,10 +28,10 @@ class ProducerRepository extends AbstractRepository
     /**
      * 生産者を保存する
      *
-     * @param Worker $worker 作業者
-     * @param integer $productionLineId 生産ラインID
-     * @param Carbon $at 時刻
-     * @return boolean 成否
+     * @param  Worker  $worker  作業者
+     * @param  int  $productionLineId  生産ラインID
+     * @param  Carbon  $at  時刻
+     * @return bool 成否
      */
     public function save(Worker $worker, int $productionLineId, Carbon $at): bool
     {
@@ -42,15 +42,14 @@ class ProducerRepository extends AbstractRepository
             'worker_name' => $worker->worker_name,
             'start' => $at,
         ]);
+
         return $this->storeModel($p);
     }
 
     /**
      * 生産を停止する
      *
-     * @param Collection<int, ProductionLine>|Producer $obj
-     * @param Carbon $date
-     * @return void
+     * @param  Collection<int, ProductionLine>|Producer  $obj
      */
     public function stop(Collection|Producer $obj, Carbon $date): void
     {
@@ -70,8 +69,7 @@ class ProducerRepository extends AbstractRepository
     /**
      * 指定した生産ラインIDの生産者を取得する
      *
-     * @param integer $productionLineId 生産ラインID
-     * @return Producer|null
+     * @param  int  $productionLineId  生産ラインID
      */
     public function findBy(int $productionLineId): ?Producer
     {

@@ -2,8 +2,8 @@
 
 namespace App\Providers;
 
-use Illuminate\Support\ServiceProvider;
 use App\Services\SlackService;
+use Illuminate\Support\ServiceProvider;
 
 class SlackServiceProvider extends ServiceProvider
 {

@@ -28,7 +28,7 @@ class OnOffNotificationEvent implements ShouldBroadcast
     /**
      * イベントインスタンスの生成します。
      *
-     * @param integer $onOffEventId ON-OFFイベントID
+     * @param  int  $onOffEventId  ON-OFFイベントID
      */
     public function __construct(int $onOffEventId)
     {

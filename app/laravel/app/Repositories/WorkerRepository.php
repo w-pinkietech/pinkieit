@@ -31,8 +31,10 @@ class WorkerRepository extends AbstractRepository
     {
         /** @var Collection<int, Worker> */
         $workers = $this->all(order: 'identification_number');
+
         return $workers->reduce(function (array $carry, Worker $worker) {
             $carry[$worker->worker_id] = "{$worker->identification_number} : {$worker->worker_name}";
+
             return $carry;
         }, ['' => '']);
     }

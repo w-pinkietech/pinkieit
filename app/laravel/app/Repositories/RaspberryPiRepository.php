@@ -4,7 +4,6 @@ namespace App\Repositories;
 
 use App\Models\RaspberryPi;
 use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Support\Facades\Log;
 
 /**
  * ラズベリーパイリポジトリ
@@ -26,10 +25,10 @@ class RaspberryPiRepository extends AbstractRepository
     /**
      * CPU情報を更新する
      *
-     * @param string $ipAddress IPアドレス
-     * @param float $cpuTemperature CPU温度
-     * @param float $cpuUtilization CPU使用率
-     * @return boolean 成否
+     * @param  string  $ipAddress  IPアドレス
+     * @param  float  $cpuTemperature  CPU温度
+     * @param  float  $cpuUtilization  CPU使用率
+     * @return bool 成否
      */
     public function updateCpuInfo(string $ipAddress, float $cpuTemperature, float $cpuUtilization): bool
     {
@@ -51,8 +50,10 @@ class RaspberryPiRepository extends AbstractRepository
     {
         /** @var Collection<int, RaspberryPi> */
         $raspberryPis = $this->all(order: 'ip_address');
+
         return $raspberryPis->reduce(function (array $carry, RaspberryPi $raspi) {
             $carry[$raspi->raspberry_pi_id] = "{$raspi->raspberry_pi_name} : {$raspi->ip_address}";
+
             return $carry;
         }, []);
     }

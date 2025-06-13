@@ -18,17 +18,15 @@ class StopProductionController extends BaseController
     /**
      * コンストラクタ
      *
-     * @param ProductionHistoryService $service 生産履歴サービス
+     * @param  ProductionHistoryService  $service  生産履歴サービス
      */
     public function __construct(
         private readonly ProductionHistoryService $service
-    ) {
-    }
+    ) {}
 
     /**
      * Handle the incoming request.
      *
-     * @param StopProductionRequest $request
      * @return Response
      */
     public function __invoke(StopProductionRequest $request)
@@ -36,7 +34,8 @@ class StopProductionController extends BaseController
         $this->authorizeAdmin();
         try {
             $this->service->stopFromApi($request);
-            return new Response();
+
+            return new Response;
         } catch (ModelNotFoundException $th) {
             Log::error($th->getMessage(), $th->getTrace());
             $response = response(status: 400);

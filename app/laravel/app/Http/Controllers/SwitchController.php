@@ -21,9 +21,6 @@ class SwitchController extends BaseController
 {
     /**
      * コンストラクタ
-     *
-     * @param SwitchService $service
-     * @param ProductionHistoryService $productionHistoryService
      */
     public function __construct(
         private readonly SwitchService $service,
@@ -34,19 +31,18 @@ class SwitchController extends BaseController
 
     /**
      * Display a listing of the resource.
-     *
-     * @param  Request $request
-     * @return View
      */
     public function index(Request $request): View
     {
         $processes = $this->service->processes();
         $plannedOutages = $processes->reduce(function (array $carry, Process $x) {
             $carry[$x->process_id] = $x->productionHistory?->inPlannedOutage() ?? false;
+
             return $carry;
         }, []);
         $workers = $this->service->workers();
         $initialId = $request->input('process');
+
         return view('switch.index', [
             'processes' => $processes,
             'workers' => $workers,
@@ -58,9 +54,7 @@ class SwitchController extends BaseController
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \App\Http\Requests\StoreProductionHistoryRequest $request
-     * @param Process $process 工程
-     * @return RedirectResponse
+     * @param  Process  $process  工程
      */
     public function store(StoreProductionHistoryRequest $request, Process $process): RedirectResponse
     {
@@ -81,14 +75,12 @@ class SwitchController extends BaseController
                 ]
             ));
         }
+
         return $route;
     }
 
     /**
      * 生産を停止する
-     *
-     * @param Process $process
-     * @return RedirectResponse
      */
     public function stop(Process $process): RedirectResponse
     {
@@ -103,14 +95,12 @@ class SwitchController extends BaseController
             Log::error($th->getMessage(), $th->getTrace());
             $route->with('toast_danger', __('pinkieit.failed_toast', $session));
         }
+
         return $route;
     }
 
     /**
      * 段取り替えを開始する
-     *
-     * @param Process $process
-     * @return RedirectResponse
      */
     public function startChangeover(Process $process): RedirectResponse
     {
@@ -126,14 +116,12 @@ class SwitchController extends BaseController
             Log::error($th->getMessage(), $th->getTrace());
             $route->with('toast_danger', __('pinkieit.failed_toast2', ['action' => __('pinkieit.changeover')]));
         }
+
         return $route;
     }
 
     /**
      * 段取り替えを終了して生産を開始する
-     *
-     * @param Process $process
-     * @return RedirectResponse
      */
     public function stopChangeover(Process $process): RedirectResponse
     {
@@ -149,15 +137,12 @@ class SwitchController extends BaseController
             Log::error($th->getMessage(), $th->getTrace());
             $route->with('toast_danger', __('pinkieit.failed_toast2', ['action' => __('pinkieit.start_production')]));
         }
+
         return $route;
     }
 
     /**
      * 作業者の入れ替えを行う
-     *
-     * @param UpdateLineWorkerRequest $request
-     * @param Process $process
-     * @return RedirectResponse
      */
     public function changeWorker(UpdateLineWorkerRequest $request, Process $process): RedirectResponse
     {
@@ -170,6 +155,7 @@ class SwitchController extends BaseController
             Log::error($th->getMessage(), $th->getTrace());
             $route->with('toast_danger', __('pinkieit.failed_toast', ['target' => __('pinkieit.worker'), 'action' => $action]));
         }
+
         return $route;
     }
 }

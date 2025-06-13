@@ -9,10 +9,10 @@ use Illuminate\Database\Eloquent\Relations\Pivot;
 /**
  * サイクルタイムモデルクラス
  *
- * @property integer $cycle_time_id 主キー
- * @property integer $process_id 工程ID(外部キー)
- * @property integer $part_number_id 品番ID(外部キー)
- * @property integer $cycle_time_name サイクルタイム名
+ * @property int $cycle_time_id 主キー
+ * @property int $process_id 工程ID(外部キー)
+ * @property int $part_number_id 品番ID(外部キー)
+ * @property int $cycle_time_name サイクルタイム名
  * @property float $cycle_time サイクルタイム[秒]
  * @property float $over_time オーバータイム[秒]
  * @property PartNumber $partNumber 品番
@@ -67,8 +67,6 @@ class CycleTime extends Pivot
 
     /**
      * サイクルタイムに関連する品番
-     *
-     * @return BelongsTo
      */
     public function partNumber(): BelongsTo
     {
@@ -77,8 +75,6 @@ class CycleTime extends Pivot
 
     /**
      * サイクルタイムに関連する工程
-     *
-     * @return BelongsTo
      */
     public function process(): BelongsTo
     {

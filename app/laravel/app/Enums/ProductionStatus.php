@@ -18,7 +18,10 @@ use BenSampo\Enum\Enum;
 final class ProductionStatus extends Enum implements LocalizedEnum
 {
     public const RUNNING = 1;
+
     public const CHANGEOVER = 2;
+
     public const BREAKDOWN = 3;
+
     public const COMPLETE = 4;
 }

@@ -20,7 +20,9 @@ use Illuminate\Support\Facades\App;
 class LineService
 {
     private readonly LineRepository $line;
+
     private readonly RaspberryPiRepository $raspberryPi;
+
     private readonly WorkerRepository $worker;
 
     /**
@@ -36,7 +38,7 @@ class LineService
     /**
      * 不良品ではないライン選択用のオプションを取得する
      *
-     * @param Process $process 工程
+     * @param  Process  $process  工程
      * @return array<mixed, string>
      */
     public function nonDefectiveLineOptions(Process $process)
@@ -49,6 +51,7 @@ class LineService
 
         return $lines->reduce(function (array $carry, Line $line) {
             $carry[$line->line_id] = $line->line_name;
+
             return $carry;
         }, ['' => '']);
     }
@@ -76,8 +79,8 @@ class LineService
     /**
      * ラインを追加する
      *
-     * @param StoreLineRequest $request ライン追加リクエスト
-     * @return boolean 成否
+     * @param  StoreLineRequest  $request  ライン追加リクエスト
+     * @return bool 成否
      */
     public function store(StoreLineRequest $request): bool
     {
@@ -87,9 +90,9 @@ class LineService
     /**
      * ラインを更新する
      *
-     * @param UpdateLineRequest $request ライン更新リクエスト
-     * @param Line $line 更新対象のライン
-     * @return boolean 成否
+     * @param  UpdateLineRequest  $request  ライン更新リクエスト
+     * @param  Line  $line  更新対象のライン
+     * @return bool 成否
      */
     public function update(UpdateLineRequest $request, Line $line): bool
     {
@@ -99,8 +102,8 @@ class LineService
     /**
      * ラインを削除する
      *
-     * @param Line $line 削除対象のライン
-     * @return boolean 成否
+     * @param  Line  $line  削除対象のライン
+     * @return bool 成否
      */
     public function destroy(Line $line): bool
     {
@@ -110,8 +113,9 @@ class LineService
     /**
      * ラインの並べ替えを行う
      *
-     * @param SortLineRequest $request ライン並べ替えリクエスト
-     * @param Process $process 工程
+     * @param  SortLineRequest  $request  ライン並べ替えリクエスト
+     * @param  Process  $process  工程
+     *
      * @throws ModelNotFoundException
      */
     public function sort(SortLineRequest $request, Process $process): void

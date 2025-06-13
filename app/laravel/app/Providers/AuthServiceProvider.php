@@ -20,6 +20,7 @@ class AuthServiceProvider extends ServiceProvider
      * Register any authentication / authorization services.
      *
      * @return void
+     *
      * @see https://www.ritolab.com/entry/56
      */
     public function boot()

@@ -37,13 +37,6 @@ class MqttSubscribeCommand extends Command
 
     /**
      * コンストラクタ
-     *
-     * @param RaspberryPiService $raspberryPiService
-     * @param ProductionService $productionService
-     * @param BarcodeHistoryService $barcodeHistoryService
-     * @param ProductionHistoryService $productionHistoryService
-     * @param SensorService $sensorService
-     * @param OnOffService $onOffService
      */
     public function __construct(
         private readonly RaspberryPiService $raspberryPiService,
@@ -71,9 +64,11 @@ class MqttSubscribeCommand extends Command
             $mqtt->subscribe('alarm', fn ($_, $message) => $this->subscribeAlarm(json_decode($message, true)), 2);
             $mqtt->subscribe('onoff', fn ($_, $message) => $this->subscribeOnOff(json_decode($message, true)), 2);
             $mqtt->loop(true);
+
             return Command::SUCCESS;
         } catch (Throwable $e) {
             Log::error($e->getMessage(), $e->getTrace());
+
             return Command::FAILURE;
         } finally {
             $mqtt->unsubscribe('production');
@@ -88,7 +83,7 @@ class MqttSubscribeCommand extends Command
     /**
      * ハートビートトピックの購読
      *
-     * @param array{ipAddress: string, cpuTemperature: float, cpuUtilization: float} $heartbeat 受信したハートビートデータ
+     * @param  array{ipAddress: string, cpuTemperature: float, cpuUtilization: float}  $heartbeat  受信したハートビートデータ
      * @return void
      */
     private function subscribeHeartbeat(array $heartbeat)
@@ -106,7 +101,7 @@ class MqttSubscribeCommand extends Command
     /**
      * 生産数通知用トピックの購読
      *
-     * @param array{ipAddress: string, count: int, pinNumber: int|string} $production 生産数データ
+     * @param  array{ipAddress: string, count: int, pinNumber: int|string}  $production  生産数データ
      * @return void
      */
     private function subscribeProduction(array $production)
@@ -127,7 +122,7 @@ class MqttSubscribeCommand extends Command
     /**
      * バーコード読取通知用トピックの購読
      *
-     * @param array{ipAddress: string, macAddress: string, barcode: string} $barcodeData バーコードデータ
+     * @param  array{ipAddress: string, macAddress: string, barcode: string}  $barcodeData  バーコードデータ
      * @return void
      */
     private function subscribeBarcode(array $barcodeData)
@@ -147,7 +142,7 @@ class MqttSubscribeCommand extends Command
     /**
      * センサーアラート通知用トピックの購読
      *
-     * @param array{pinNumber:int|string, sensorType: int, signal: bool, ipAddress: string, value: int|float} $data 通知データ
+     * @param  array{pinNumber:int|string, sensorType: int, signal: bool, ipAddress: string, value: int|float}  $data  通知データ
      * @return void
      */
     private function subscribeAlarm(array $data)
@@ -167,7 +162,7 @@ class MqttSubscribeCommand extends Command
     /**
      * ON-OFFメッセージ通知用トピックの購読
      *
-     * @param array{onOff: bool, pinNumber: int, ipAddress: string} $data 通知データ
+     * @param  array{onOff: bool, pinNumber: int, ipAddress: string}  $data  通知データ
      * @return void
      */
     private function subscribeOnOff(array $data)

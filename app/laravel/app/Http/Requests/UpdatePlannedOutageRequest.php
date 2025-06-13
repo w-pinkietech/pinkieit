@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Gate;
 /**
  * 計画停止時間更新リクエスト
  *
- * @property integer $planned_outage_id 計画停止時間ID
+ * @property int $planned_outage_id 計画停止時間ID
  */
 class UpdatePlannedOutageRequest extends FormRequest
 {
@@ -33,7 +33,7 @@ class UpdatePlannedOutageRequest extends FormRequest
         return [
             'planned_outage_name' => "required|string|unique:planned_outages,planned_outage_name,{$this->planned_outage_id},planned_outage_id|max:32",
             'start_time' => 'required|date_format:H:i',
-            'end_time' => 'required|date_format:H:i|different:start_time'
+            'end_time' => 'required|date_format:H:i|different:start_time',
         ];
     }
 

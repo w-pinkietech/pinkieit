@@ -19,17 +19,15 @@ class SwitchPartNumberController extends BaseController
     /**
      * コンストラクタ
      *
-     * @param ProductionHistoryService $service 生産履歴サービス
+     * @param  ProductionHistoryService  $service  生産履歴サービス
      */
     public function __construct(
         private readonly ProductionHistoryService $service
-    ) {
-    }
+    ) {}
 
     /**
      * Handle the incoming request.
      *
-     * @param SwitchPartNumberRequestFromApi $request
      * @return Response
      */
     public function __invoke(SwitchPartNumberRequestFromApi $request)
@@ -37,11 +35,12 @@ class SwitchPartNumberController extends BaseController
         $this->authorizeAdmin();
         try {
             $result = $this->service->switchPartNumberFromApi($request);
-            if (!$result) {
+            if (! $result) {
                 $response = response(status: 400);
                 throw new HttpResponseException($response);
             }
-            return new Response();
+
+            return new Response;
         } catch (ModelNotFoundException $th) {
             Log::error($th->getMessage(), $th->getTrace());
             $response = response(status: 400);

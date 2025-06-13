@@ -19,7 +19,7 @@ return new class extends Migration
             // 順序
             $table->integer('order')->after('defective')->comment(__('pinkieit.order'));
             // オフセットミリ秒
-            $table->integer('offset_millisecond')->default(0)->after('count')->comment(__('pinkieit.offset') . 'ms');
+            $table->integer('offset_millisecond')->default(0)->after('count')->comment(__('pinkieit.offset').'ms');
             // オフセット秒の削除
             $table->dropColumn('offset_second');
             // 外部キーは自身のテーブル
@@ -36,7 +36,7 @@ return new class extends Migration
     {
         Schema::table('production_lines', function (Blueprint $table) {
             $table->dropForeign('production_lines_parent_id_foreign');
-            $table->integer('offset_second')->default(0)->after('count')->comment(__('pinkieit.offset') . 'sec');
+            $table->integer('offset_second')->default(0)->after('count')->comment(__('pinkieit.offset').'sec');
             $table->dropColumn('offset_millisecond');
             $table->dropColumn('order');
             $table->dropColumn('parent_id');

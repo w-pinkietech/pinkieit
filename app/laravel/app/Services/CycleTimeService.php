@@ -17,6 +17,7 @@ use Illuminate\Support\Facades\App;
 class CycleTimeService
 {
     private readonly CycleTimeRepository $cycleTime;
+
     private readonly PartNumberRepository $partNumber;
 
     /**
@@ -31,15 +32,17 @@ class CycleTimeService
     /**
      * 指定した工程IDで使用されていない品番選択用のオプションを取得する
      *
-     * @param integer $processId 工程ID
+     * @param  int  $processId  工程ID
      * @return Collection<int, string> 品番選択用のオプション
      */
     public function unusedPartNumberOptions(int $processId): Collection
     {
         $cycleTimes = $this->cycleTime->get(['process_id' => $processId], column: ['part_number_id']);
         $partNumbers = $this->partNumber->except($cycleTimes);
+
         return $partNumbers->reduce(function (Collection $carry, PartNumber $partNumber) {
             $carry->put($partNumber->part_number_id, $partNumber->part_number_name);
+
             return $carry;
         }, collect());
     }
@@ -47,8 +50,8 @@ class CycleTimeService
     /**
      * サイクルタイムを追加する
      *
-     * @param StoreCycleTimeRequest $request サイクルタイム追加リクエスト
-     * @return boolean 成否
+     * @param  StoreCycleTimeRequest  $request  サイクルタイム追加リクエスト
+     * @return bool 成否
      */
     public function store(StoreCycleTimeRequest $request): bool
     {
@@ -58,9 +61,9 @@ class CycleTimeService
     /**
      * サイクルタイムを更新する
      *
-     * @param UpdateCycleTimeRequest $request サイクルタイム更新リクエスト
-     * @param CycleTime $cycleTime 更新対象のサイクルタイム
-     * @return boolean 成否
+     * @param  UpdateCycleTimeRequest  $request  サイクルタイム更新リクエスト
+     * @param  CycleTime  $cycleTime  更新対象のサイクルタイム
+     * @return bool 成否
      */
     public function update(UpdateCycleTimeRequest $request, CycleTime $cycleTime): bool
     {
@@ -70,8 +73,8 @@ class CycleTimeService
     /**
      * サイクルタイムを削除する
      *
-     * @param CycleTime $cycleTime 削除対象のサイクルタイム
-     * @return boolean 成否
+     * @param  CycleTime  $cycleTime  削除対象のサイクルタイム
+     * @return bool 成否
      */
     public function destroy(CycleTime $cycleTime): bool
     {

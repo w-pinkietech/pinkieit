@@ -18,36 +18,28 @@ class SlackNotification extends Notification
 
     /**
      * スラック通知ユーザー名
-     *
-     * @var string
      */
     protected string $username;
 
     /**
      * スラック通知アイコン
-     *
-     * @var string
      */
     protected string $icon;
 
     /**
      * スラック通知チャンネル
-     *
-     * @var string
      */
     protected string $channel;
 
     /**
      * プロキシサーバーURL
-     *
-     * @var string
      */
     protected string $proxy;
 
     /**
      * Create a new notification instance.
      *
-     * @param string|null $message 通知メッセージ
+     * @param  string|null  $message  通知メッセージ
      */
     public function __construct(protected ?string $message = null)
     {
@@ -92,9 +84,9 @@ class SlackNotification extends Notification
             'Username' => $this->username,
             'Icon' => $this->icon,
             'Channel' => $this->channel,
-            'Proxy' => $this->proxy
+            'Proxy' => $this->proxy,
         ];
-        Log::debug("Send slack: $this->message " . json_encode($log));
+        Log::debug("Send slack: $this->message ".json_encode($log));
 
         return $msg;
     }
@@ -102,7 +94,7 @@ class SlackNotification extends Notification
     /**
      * Get the array representation of the notification.
      *
-     * @param mixed $notifiable
+     * @param  mixed  $notifiable
      * @return array<int, mixed>
      */
     public function toArray($notifiable)

@@ -30,7 +30,7 @@ class LineTest extends TestCase
             'order',
         ];
 
-        $line = new Line();
+        $line = new Line;
         $this->assertEquals($fillable, $line->getFillable());
     }
 
@@ -41,7 +41,7 @@ class LineTest extends TestCase
      */
     public function test_defective_is_cast_to_boolean()
     {
-        $line = new Line();
+        $line = new Line;
         $casts = $line->getCasts();
 
         $this->assertArrayHasKey('defective', $casts);
@@ -56,7 +56,7 @@ class LineTest extends TestCase
     public function test_pin_number_formatting()
     {
         $line = new Line(['pin_number' => 5]);
-        
+
         // Since we don't have Utility class loaded, we'll test the method exists
         $this->assertTrue(method_exists($line, 'pinNumber'));
     }
@@ -68,20 +68,20 @@ class LineTest extends TestCase
      */
     public function test_relationships_are_defined()
     {
-        $line = new Line();
+        $line = new Line;
 
         // Test worker relationship
         $this->assertInstanceOf('Illuminate\Database\Eloquent\Relations\BelongsTo', $line->worker());
-        
+
         // Test process relationship
         $this->assertInstanceOf('Illuminate\Database\Eloquent\Relations\BelongsTo', $line->process());
-        
+
         // Test raspberryPi relationship
         $this->assertInstanceOf('Illuminate\Database\Eloquent\Relations\BelongsTo', $line->raspberryPi());
-        
+
         // Test parentLine relationship
         $this->assertInstanceOf('Illuminate\Database\Eloquent\Relations\BelongsTo', $line->parentLine());
-        
+
         // Test defectiveLines relationship
         $this->assertInstanceOf('Illuminate\Database\Eloquent\Relations\HasMany', $line->defectiveLines());
     }
@@ -94,8 +94,8 @@ class LineTest extends TestCase
     public function test_hidden_attributes()
     {
         $hidden = ['created_at', 'updated_at'];
-        
-        $line = new Line();
+
+        $line = new Line;
         $this->assertEquals($hidden, $line->getHidden());
     }
 }

@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Gate;
 /**
  * 作業者更新リクエスト
  *
- * @property integer $worker_id 作業者ID
+ * @property int $worker_id 作業者ID
  */
 class UpdateWorkerRequest extends FormRequest
 {

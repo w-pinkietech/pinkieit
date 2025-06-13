@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Gate;
 /**
  * 工程更新リクエスト
  *
- * @property integer $process_id 工程ID
+ * @property int $process_id 工程ID
  */
 class UpdateProcessRequest extends FormRequest
 {

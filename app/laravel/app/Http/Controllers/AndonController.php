@@ -19,7 +19,7 @@ class AndonController extends AbstractController
     /**
      * コンストラクタ
      *
-     * @param AndonService $service アンドンサービス
+     * @param  AndonService  $service  アンドンサービス
      */
     public function __construct(private readonly AndonService $service)
     {
@@ -38,20 +38,17 @@ class AndonController extends AbstractController
 
     /**
      * Display a listing of the resource.
-     *
-     * @return View
      */
     public function index(): View
     {
         $processes = $this->service->processes();
         $config = $this->service->andonConfig();
+
         return view('home', ['processes' => $processes, 'config' => $config]);
     }
 
     /**
      * Show the form for editing the specified resource.
-     *
-     * @return View
      */
     public function edit(): View
     {
@@ -59,22 +56,22 @@ class AndonController extends AbstractController
         $config = $this->service->andonConfig();
         $columns = array_combine(AndonColumnSize::getValues(), AndonColumnSize::getValues());
         $easing = array_combine(EasingType::getValues(), EasingType::getValues());
+
         return view('andon.config', ['processes' => $processes, 'config' => $config, 'columns' => $columns, 'easing' => $easing]);
     }
 
     /**
      * Update the specified resource in storage.
-     *
-     * @param  \App\Http\Requests\UpdateAndonConfigRequest $request
-     * @return RedirectResponse
      */
     public function update(UpdateAndonConfigRequest $request): RedirectResponse
     {
         try {
             $this->service->update($request);
+
             return $this->redirectWithUpdate(true, 'home');
         } catch (Exception $e) {
             Log::error($e->getMessage(), $e->getTrace());
+
             return $this->redirectWithUpdate(false, 'home');
         }
     }

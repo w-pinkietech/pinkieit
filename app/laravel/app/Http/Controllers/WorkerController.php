@@ -17,7 +17,7 @@ class WorkerController extends AbstractController
     /**
      * コンストラクタ
      *
-     * @param WorkerService $service 作業者サービス
+     * @param  WorkerService  $service  作業者サービス
      */
     public function __construct(private readonly WorkerService $service)
     {
@@ -36,35 +36,31 @@ class WorkerController extends AbstractController
 
     /**
      * Display a listing of the resource.
-     *
-     * @return View
      */
     public function index(): View
     {
         $workers = $this->service->all();
+
         return view('worker.index', ['workers' => $workers]);
     }
 
     /**
      * Show the form for creating a new resource.
-     *
-     * @return View
      */
     public function create(): View
     {
         $this->authorizeAdmin();
+
         return view('worker.create');
     }
 
     /**
      * Store a newly created resource in storage.
-     *
-     * @param StoreWorkerRequest $request
-     * @return RedirectResponse
      */
     public function store(StoreWorkerRequest $request): RedirectResponse
     {
         $result = $this->service->store($request);
+
         return $this->redirectWithStore($result, 'worker.index');
     }
 
@@ -81,39 +77,32 @@ class WorkerController extends AbstractController
 
     /**
      * Show the form for editing the specified resource.
-     *
-     * @param Worker $worker
-     * @return View
      */
     public function edit(Worker $worker): View
     {
         $this->authorizeAdmin();
+
         return view('worker.edit', ['worker' => $worker]);
     }
 
     /**
      * Update the specified resource in storage.
-     *
-     * @param UpdateWorkerRequest $request
-     * @param Worker $worker
-     * @return RedirectResponse
      */
     public function update(UpdateWorkerRequest $request, Worker $worker): RedirectResponse
     {
         $result = $this->service->update($request, $worker);
+
         return $this->redirectWithUpdate($result, 'worker.index');
     }
 
     /**
      * Remove the specified resource from storage.
-     *
-     * @param Worker $worker
-     * @return RedirectResponse
      */
     public function destroy(Worker $worker): RedirectResponse
     {
         $this->authorizeAdmin();
         $result = $this->service->destroy($worker);
+
         return $this->redirectWithDestroy($result, 'worker.index');
     }
 }

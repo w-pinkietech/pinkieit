@@ -17,7 +17,7 @@ class WorkerFactory extends Factory
     public function definition()
     {
         return [
-            'identification_number' => __('pinkieit.identification_number') . "：{$this->faker->unique()->realText(10)}",
+            'identification_number' => __('pinkieit.identification_number')."：{$this->faker->unique()->realText(10)}",
             'worker_name' => $this->faker->name,
         ];
     }

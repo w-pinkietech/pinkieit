@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Auth;
 /**
  * ユーザープロファイル更新リクエスト
  *
- * @property integer $user_id ユーザーID
+ * @property int $user_id ユーザーID
  */
 class UpdateProfileRequest extends FormRequest
 {

@@ -6,7 +6,6 @@ use Tests\TestCase;
 
 class AndonControllerTest extends TestCase
 {
-
     /**
      * Test home page redirects to login when unauthenticated
      *

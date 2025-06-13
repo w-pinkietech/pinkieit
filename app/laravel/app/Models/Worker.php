@@ -51,8 +51,6 @@ class Worker extends Model
     /**
      * 多対多の関係を定義します。
      * 作業者と関連する「工程」データを取得します。
-     *
-     * @return BelongsToMany
      */
     public function processes(): BelongsToMany
     {

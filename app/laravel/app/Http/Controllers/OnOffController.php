@@ -19,7 +19,7 @@ class OnOffController extends AbstractController
     /**
      * コンストラクタ
      *
-     * @param OnOffService $service ON-OFFサービス
+     * @param  OnOffService  $service  ON-OFFサービス
      */
     public function __construct(private readonly OnOffService $service)
     {
@@ -33,14 +33,11 @@ class OnOffController extends AbstractController
      */
     public function name(): string
     {
-        return  __('pinkieit.notification');
+        return __('pinkieit.notification');
     }
 
     /**
      * Display a listing of the resource.
-     *
-     * @param Process $process
-     * @return View
      */
     public function index(Process $process): View
     {
@@ -50,8 +47,7 @@ class OnOffController extends AbstractController
     /**
      * Show the form for creating a new resource.
      *
-     * @param Process $process 工程
-     * @return View
+     * @param  Process  $process  工程
      */
     public function create(Process $process): View
     {
@@ -59,6 +55,7 @@ class OnOffController extends AbstractController
         $this->throwExceptionIfRunning($process);
         $raspberryPiOptions = $this->service->raspberryPiOptions();
         $pinOptions = Utility::pinNumberOptions();
+
         return view('process.on-off.create', [
             'process' => $process,
             'raspberryPiOptions' => $raspberryPiOptions,
@@ -69,23 +66,21 @@ class OnOffController extends AbstractController
     /**
      * Store a newly created resource in storage.
      *
-     * @param StoreOnOffRequest $request リクエスト
-     * @param Process $process 工程
-     * @return RedirectResponse
+     * @param  StoreOnOffRequest  $request  リクエスト
+     * @param  Process  $process  工程
      */
     public function store(StoreOnOffRequest $request, Process $process): RedirectResponse
     {
         $this->throwExceptionIfRunning($process);
         $result = $this->service->store($request);
+
         return $this->redirectWithStore($result, 'process.show', ['process' => $process, 'tab' => 'on-off']);
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param Process $process 工程
-     * @param OnOff $onOff
-     * @return View
+     * @param  Process  $process  工程
      */
     public function edit(Process $process, OnOff $onOff): View
     {
@@ -93,6 +88,7 @@ class OnOffController extends AbstractController
         $this->throwExceptionIfRunning($process);
         $raspberryPiOptions = $this->service->raspberryPiOptions();
         $pinOptions = Utility::pinNumberOptions();
+
         return view('process.on-off.edit', [
             'process' => $process,
             'onOff' => $onOff,
@@ -104,30 +100,28 @@ class OnOffController extends AbstractController
     /**
      * Update the specified resource in storage.
      *
-     * @param UpdateOnOffRequest $request リクエスト
-     * @param Process $process 工程
-     * @param OnOff $onOff
-     * @return RedirectResponse
+     * @param  UpdateOnOffRequest  $request  リクエスト
+     * @param  Process  $process  工程
      */
     public function update(UpdateOnOffRequest $request, Process $process, OnOff $onOff): RedirectResponse
     {
         $this->throwExceptionIfRunning($process);
         $result = $this->service->update($request, $onOff);
+
         return $this->redirectWithUpdate($result, 'process.show', ['process' => $process, 'tab' => 'on-off']);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param Process $process 工程
-     * @param OnOff $onOff
-     * @return RedirectResponse
+     * @param  Process  $process  工程
      */
     public function destroy(Process $process, OnOff $onOff): RedirectResponse
     {
         $this->authorizeAdmin();
         $this->throwExceptionIfRunning($process);
         $result = $this->service->destroy($onOff);
+
         return $this->redirectWithDestroy($result, 'process.show', ['process' => $process, 'tab' => 'on-off']);
     }
 }

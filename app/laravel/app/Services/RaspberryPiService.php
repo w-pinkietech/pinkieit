@@ -37,8 +37,8 @@ class RaspberryPiService
     /**
      * ラズベリーパイを追加する
      *
-     * @param StoreRaspberryPiRequest $request ラズベリーパイ追加リクエスト
-     * @return boolean 成否
+     * @param  StoreRaspberryPiRequest  $request  ラズベリーパイ追加リクエスト
+     * @return bool 成否
      */
     public function store(StoreRaspberryPiRequest $request): bool
     {
@@ -48,9 +48,9 @@ class RaspberryPiService
     /**
      * ラズベリーパイを更新する
      *
-     * @param UpdateRaspberryPiRequest $request ラズベリーパイ更新リクエスト
-     * @param RaspberryPi $raspberryPi 更新対象のラズベリーパイ
-     * @return boolean 成否
+     * @param  UpdateRaspberryPiRequest  $request  ラズベリーパイ更新リクエスト
+     * @param  RaspberryPi  $raspberryPi  更新対象のラズベリーパイ
+     * @return bool 成否
      */
     public function update(UpdateRaspberryPiRequest $request, RaspberryPi $raspberryPi): bool
     {
@@ -60,8 +60,8 @@ class RaspberryPiService
     /**
      * ラズベリーパイを削除する
      *
-     * @param RaspberryPi $raspberryPi 削除対象のラズベリーパイ
-     * @return boolean 成否
+     * @param  RaspberryPi  $raspberryPi  削除対象のラズベリーパイ
+     * @return bool 成否
      */
     public function destroy(RaspberryPi $raspberryPi): bool
     {
@@ -71,10 +71,10 @@ class RaspberryPiService
     /**
      * ラズベリーパイのCPU情報を更新する
      *
-     * @param string $ipAddress ラズベリーパイのIPアドレス
-     * @param float $cpuTemperature CPU温度
-     * @param float $cpuUtilization CPU使用率
-     * @return boolean 成否
+     * @param  string  $ipAddress  ラズベリーパイのIPアドレス
+     * @param  float  $cpuTemperature  CPU温度
+     * @param  float  $cpuUtilization  CPU使用率
+     * @return bool 成否
      */
     public function updateCpuInfo(string $ipAddress, float $cpuTemperature, float $cpuUtilization): bool
     {

@@ -17,7 +17,7 @@ class RaspberryPiController extends AbstractController
     /**
      * コンストラクタ
      *
-     * @param RaspberryPiService $service ラズベリーパイサービス
+     * @param  RaspberryPiService  $service  ラズベリーパイサービス
      */
     public function __construct(private readonly RaspberryPiService $service)
     {
@@ -36,35 +36,33 @@ class RaspberryPiController extends AbstractController
 
     /**
      * Display a listing of the resource.
-     *
-     * @return View
      */
     public function index(): View
     {
         $raspberryPis = $this->service->all();
+
         return view('raspberry-pi.index', ['raspberryPis' => $raspberryPis]);
     }
 
     /**
      * Show the form for creating a new resource.
-     *
-     * @return View
      */
     public function create(): View
     {
         $this->authorizeAdmin();
+
         return view('raspberry-pi.create');
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param StoreRaspberryPiRequest $request リクエスト
-     * @return RedirectResponse
+     * @param  StoreRaspberryPiRequest  $request  リクエスト
      */
     public function store(StoreRaspberryPiRequest $request): RedirectResponse
     {
         $result = $this->service->store($request);
+
         return $this->redirectWithStore($result, 'raspberry-pi.index');
     }
 
@@ -81,39 +79,34 @@ class RaspberryPiController extends AbstractController
 
     /**
      * Show the form for editing the specified resource.
-     *
-     * @param RaspberryPi $raspberryPi
-     * @return View
      */
     public function edit(RaspberryPi $raspberryPi): View
     {
         $this->authorizeAdmin();
+
         return view('raspberry-pi.edit', ['raspberryPi' => $raspberryPi]);
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param UpdateRaspberryPiRequest $request リクエスト
-     * @param RaspberryPi $raspberryPi
-     * @return RedirectResponse
+     * @param  UpdateRaspberryPiRequest  $request  リクエスト
      */
     public function update(UpdateRaspberryPiRequest $request, RaspberryPi $raspberryPi): RedirectResponse
     {
         $result = $this->service->update($request, $raspberryPi);
+
         return $this->redirectWithUpdate($result, 'raspberry-pi.index');
     }
 
     /**
      * Remove the specified resource from storage.
-     *
-     * @param RaspberryPi $raspberryPi
-     * @return RedirectResponse
      */
     public function destroy(RaspberryPi $raspberryPi): RedirectResponse
     {
         $this->authorizeAdmin();
         $result = $this->service->destroy($raspberryPi);
+
         return $this->redirectWithDestroy($result, 'raspberry-pi.index');
     }
 }

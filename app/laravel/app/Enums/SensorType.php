@@ -24,13 +24,22 @@ use BenSampo\Enum\Enum;
 final class SensorType extends Enum implements LocalizedEnum
 {
     public const UNKNOWN = 0;
+
     public const GPIO_INPUT = 0x0101;
+
     public const GPIO_OUTPUT = 0x0102;
+
     public const AMMETER = 0x0103;
+
     public const DISTANCE = 0x0104;
+
     public const THERMOCOUPLE = 0x0105;
+
     public const ACCELERATION = 0x0106;
+
     public const DIFFERENCE_PRESSURE = 0x0107;
+
     public const ILLUMINANCE = 0x0108;
+
     public const OTHER = 0xFFFF;
 }

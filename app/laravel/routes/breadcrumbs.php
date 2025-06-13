@@ -16,7 +16,7 @@ Breadcrumbs::for('andon.config', function ($trail) {
 // 品番切り替え
 Breadcrumbs::for('switch.index', function ($trail) {
     $trail->parent('home');
-    $trail->push(__('pinkieit.switch_part_number') . ' & ' . __('pinkieit.switch_producer'), route('switch.index'));
+    $trail->push(__('pinkieit.switch_part_number').' & '.__('pinkieit.switch_producer'), route('switch.index'));
 });
 
 // アバウト
@@ -88,7 +88,7 @@ Breadcrumbs::for('production.create', function ($trail, $process) {
 // 生産履歴
 Breadcrumbs::for('production.index', function ($trail, $process) {
     $trail->parent('process.index', $process);
-    $trail->push($process->process_name . '：' . __('pinkieit.production_history'), route('production.index', ['process' => $process]));
+    $trail->push($process->process_name.'：'.__('pinkieit.production_history'), route('production.index', ['process' => $process]));
 });
 
 // 履歴詳細
@@ -202,13 +202,13 @@ Breadcrumbs::for('alarm.edit', function ($trail, $process) {
 // ON-OFFメッセージ一覧
 Breadcrumbs::for('onoff.index', function ($trail, $process) {
     $trail->parent('process.index', $process);
-    $trail->push($process->process_name . '：' . __('pinkieit.notification'));
+    $trail->push($process->process_name.'：'.__('pinkieit.notification'));
 });
 
 // ON-OFF追加
 Breadcrumbs::for('onoff.create', function ($trail, $process) {
     $trail->parent('process.show', $process);
-    $trail->push(__('pinkieit.target_add', ['target' =>  __('pinkieit.notification')]));
+    $trail->push(__('pinkieit.target_add', ['target' => __('pinkieit.notification')]));
 });
 
 // ON-OFF編集

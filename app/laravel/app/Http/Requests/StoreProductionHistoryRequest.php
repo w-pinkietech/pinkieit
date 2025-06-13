@@ -10,9 +10,9 @@ use Illuminate\Validation\Rule;
 /**
  * 生産履歴データ保存リクエスト
  *
- * @property integer $part_number_id 品番ID
+ * @property int $part_number_id 品番ID
  * @property ProductionStatus $status ステータス
- * @property integer $goal 目標値
+ * @property int $goal 目標値
  */
 class StoreProductionHistoryRequest extends FormRequest
 {
@@ -39,9 +39,9 @@ class StoreProductionHistoryRequest extends FormRequest
                 'integer',
                 Rule::exists('cycle_times', 'part_number_id')->where(function ($query) {
                     $query->where('process_id', $this->process_id);
-                })
+                }),
             ],
-            'status' =>  [
+            'status' => [
                 'required',
                 Rule::in([ProductionStatus::RUNNING(), ProductionStatus::CHANGEOVER()]),
             ],
@@ -60,7 +60,7 @@ class StoreProductionHistoryRequest extends FormRequest
         $process = $this->route('process');
         $this->merge([
             'process_id' => $process->process_id,
-            'status' => is_null($this->changeover) ?  ProductionStatus::RUNNING() : ProductionStatus::CHANGEOVER(),
+            'status' => is_null($this->changeover) ? ProductionStatus::RUNNING() : ProductionStatus::CHANGEOVER(),
         ]);
     }
 }

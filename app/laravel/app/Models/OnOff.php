@@ -10,13 +10,13 @@ use Illuminate\Database\Eloquent\Relations\Pivot;
 /**
  * ON-OFFメッセージモデルクラス
  *
- * @property integer $on_off_id 主キー
- * @property integer $process_id 工程ID(外部キー)
- * @property integer $raspberry_pi_id ラズベリーパイID(外部キー)
+ * @property int $on_off_id 主キー
+ * @property int $process_id 工程ID(外部キー)
+ * @property int $raspberry_pi_id ラズベリーパイID(外部キー)
  * @property string $event_name イベント名
  * @property string $on_message ON時のメッセージ
  * @property string|null $off_message OFF時のメッセージ
- * @property integer $pin_number ピン番号
+ * @property int $pin_number ピン番号
  */
 class OnOff extends Pivot
 {
@@ -69,8 +69,6 @@ class OnOff extends Pivot
 
     /**
      * ON-OFFメッセージに関連するラズベリーパイ
-     *
-     * @return BelongsTo
      */
     public function raspberryPi(): BelongsTo
     {
@@ -79,8 +77,6 @@ class OnOff extends Pivot
 
     /**
      * ピン番号文字列
-     *
-     * @return string
      */
     public function pinNumber(): string
     {

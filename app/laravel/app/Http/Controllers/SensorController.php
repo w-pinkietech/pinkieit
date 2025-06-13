@@ -18,7 +18,7 @@ class SensorController extends AbstractController
     /**
      * コンストラクタ
      *
-     * @param SensorService $service センサーサービス
+     * @param  SensorService  $service  センサーサービス
      */
     public function __construct(private readonly SensorService $service)
     {
@@ -48,9 +48,6 @@ class SensorController extends AbstractController
 
     /**
      * Show the form for creating a new resource.
-     *
-     * @param Process $process
-     * @return View
      */
     public function create(Process $process): View
     {
@@ -58,6 +55,7 @@ class SensorController extends AbstractController
         $this->throwExceptionIfRunning($process);
         $raspberryPiOptions = $this->service->raspberryPiOptions();
         $sensorTypes = $this->service->sensorTypeOptions();
+
         return view('process.alarm.create', [
             'process' => $process,
             'raspberryPiOptions' => $raspberryPiOptions,
@@ -68,14 +66,13 @@ class SensorController extends AbstractController
     /**
      * Store a newly created resource in storage.
      *
-     * @param StoreSensorRequest $request リクエスト
-     * @param Process $process
-     * @return RedirectResponse
+     * @param  StoreSensorRequest  $request  リクエスト
      */
     public function store(StoreSensorRequest $request, Process $process): RedirectResponse
     {
         $this->throwExceptionIfRunning($process);
         $result = $this->service->store($request);
+
         return $this->redirectWithStore($result, 'process.show', ['process' => $process, 'tab' => 'alarm']);
     }
 
@@ -94,14 +91,13 @@ class SensorController extends AbstractController
     /**
      * Show the form for editing the specified resource.
      *
-     * @param Process $process 工程
-     * @param Sensor $sensor
-     * @return View
+     * @param  Process  $process  工程
      */
     public function edit(Process $process, Sensor $sensor): View
     {
         $raspberryPiOptions = $this->service->raspberryPiOptions();
         $sensorTypes = $this->service->sensorTypeOptions();
+
         return view('process.alarm.edit', [
             'process' => $process,
             'sensor' => $sensor,
@@ -113,30 +109,28 @@ class SensorController extends AbstractController
     /**
      * Update the specified resource in storage.
      *
-     * @param UpdateSensorRequest $request リクエスト
-     * @param Process $process 工程
-     * @param Sensor $sensor
-     * @return RedirectResponse
+     * @param  UpdateSensorRequest  $request  リクエスト
+     * @param  Process  $process  工程
      */
     public function update(UpdateSensorRequest $request, Process $process, Sensor $sensor): RedirectResponse
     {
         $this->throwExceptionIfRunning($process);
         $result = $this->service->update($request, $sensor);
+
         return $this->redirectWithUpdate($result, 'process.show', ['process' => $process, 'tab' => 'alarm']);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param Process $process 工程
-     * @param Sensor $sensor
-     * @return RedirectResponse
+     * @param  Process  $process  工程
      */
     public function destroy(Process $process, Sensor $sensor): RedirectResponse
     {
         $this->authorizeAdmin();
         $this->throwExceptionIfRunning($process);
         $result = $this->service->destroy($sensor);
+
         return $this->redirectWithDestroy($result, 'process.show', ['process' => $process, 'tab' => 'alarm']);
     }
 }

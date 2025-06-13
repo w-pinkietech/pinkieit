@@ -58,8 +58,6 @@ class User extends Authenticatable
 
     /**
      * AdminLte用のユーザープロファイルURL
-     *
-     * @return string
      */
     public function adminlte_profile_url(): string
     {
@@ -69,8 +67,7 @@ class User extends Authenticatable
     /**
      * Send the password reset notification.
      *
-     * @param string $token
-     * @return void
+     * @param  string  $token
      */
     public function sendPasswordResetNotification($token): void
     {

@@ -21,9 +21,13 @@ use Illuminate\Support\Facades\DB;
 class SwitchService
 {
     private readonly LineRepository $line;
+
     private readonly ProcessRepository $process;
+
     private readonly ProducerRepository $producer;
+
     private readonly ProductionLineRepository $productionLine;
+
     private readonly WorkerRepository $worker;
 
     /**
@@ -71,8 +75,9 @@ class SwitchService
     /**
      * 作業者の入れ替えを行う
      *
-     * @param UpdateLineWorkerRequest $request 作業者入れ替えリクエスト
-     * @param Process $process 入れ替え対象の工程
+     * @param  UpdateLineWorkerRequest  $request  作業者入れ替えリクエスト
+     * @param  Process  $process  入れ替え対象の工程
+     *
      * @throws Exception
      */
     public function updateLineWorker(UpdateLineWorkerRequest $request, Process $process): void
@@ -109,21 +114,21 @@ class SwitchService
                 $producer = $this->producer->findBy($productionLine->production_line_id);
 
                 $result = true;
-                if (!is_null($producer) && !is_null($workerId) && $producer->worker_id != $workerId) {
+                if (! is_null($producer) && ! is_null($workerId) && $producer->worker_id != $workerId) {
                     // 生産者を入れ替え
                     $this->producer->stop($producer, $now);
                     $worker = $this->worker->find($workerId);
                     $result = $this->producer->save($worker, $productionLine->production_line_id, $now);
-                } else if (is_null($producer) && !is_null($workerId)) {
+                } elseif (is_null($producer) && ! is_null($workerId)) {
                     // 生産者新規登録
                     $worker = $this->worker->find($workerId);
                     $result = $this->producer->save($worker, $productionLine->production_line_id, $now);
-                } else if (!is_null($producer) && is_null($workerId)) {
+                } elseif (! is_null($producer) && is_null($workerId)) {
                     // 生産者不在
                     $this->producer->stop($producer, $now);
                 }
-                if (!$result) {
-                    throw new Exception();
+                if (! $result) {
+                    throw new Exception;
                 }
             }
         });

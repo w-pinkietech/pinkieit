@@ -18,7 +18,9 @@ use Illuminate\Support\Facades\Log;
 class OnOffService
 {
     private readonly OnOffRepository $onOff;
+
     private readonly OnOffEventRepository $onOffEvent;
+
     private readonly RaspberryPiRepository $raspberryPi;
 
     /**
@@ -44,8 +46,8 @@ class OnOffService
     /**
      * ON-OFFメッセージを追加する
      *
-     * @param StoreOnOffRequest $request ON-OFFメッセージ追加リクエスト
-     * @return boolean 成否
+     * @param  StoreOnOffRequest  $request  ON-OFFメッセージ追加リクエスト
+     * @return bool 成否
      */
     public function store(StoreOnOffRequest $request): bool
     {
@@ -55,9 +57,9 @@ class OnOffService
     /**
      * ON-OFFメッセージを更新する
      *
-     * @param UpdateOnOffRequest $request ON-OFFメッセージ更新リクエスト
-     * @param OnOff $onOff 更新対象のON-OFFメッセージ
-     * @return boolean 成否
+     * @param  UpdateOnOffRequest  $request  ON-OFFメッセージ更新リクエスト
+     * @param  OnOff  $onOff  更新対象のON-OFFメッセージ
+     * @return bool 成否
      */
     public function update(UpdateOnOffRequest $request, OnOff $onOff): bool
     {
@@ -67,8 +69,8 @@ class OnOffService
     /**
      * ON-OFFメッセージを削除する
      *
-     * @param OnOff $onOff 削除対象のON-OFFメッセージ
-     * @return boolean 成否
+     * @param  OnOff  $onOff  削除対象のON-OFFメッセージ
+     * @return bool 成否
      */
     public function destroy(OnOff $onOff): bool
     {
@@ -78,10 +80,10 @@ class OnOffService
     /**
      * ON-OFFメッセージイベントを登録する
      *
-     * @param boolean $isOn trueならON
-     * @param integer $pinNumber ピン番号
-     * @param string $ipAddress IPアドレス
-     * @return boolean 成否
+     * @param  bool  $isOn  trueならON
+     * @param  int  $pinNumber  ピン番号
+     * @param  string  $ipAddress  IPアドレス
+     * @return bool 成否
      */
     public function insert(bool $isOn, int $pinNumber, string $ipAddress): bool
     {
@@ -89,6 +91,7 @@ class OnOffService
         $raspi = $this->raspberryPi->first(['ip_address' => $ipAddress]);
         if (is_null($raspi)) {
             Log::warning('Raspberry pi not found', [$ipAddress]);
+
             return false;
         }
         // ラズパイIDとピン番号からON-OFFメッセージ設定を取得
@@ -98,12 +101,14 @@ class OnOffService
         ]);
         if (is_null($onOff)) {
             Log::warning('On off message not found', [$pinNumber]);
+
             return false;
         }
         // ON-OFFメッセージイベントを登録する
         $event = $this->onOffEvent->save($onOff, $isOn);
-        if (!is_null($event) && !is_null($event->message)) {
+        if (! is_null($event) && ! is_null($event->message)) {
             OnOffNotificationEvent::dispatch($event->on_off_event_id);
+
             return true;
         } else {
             return false;

@@ -19,7 +19,6 @@ abstract class BaseController extends Controller
     /**
      * 管理者権限のみ可
      *
-     * @return void
      * @throws AuthorizationException 管理者権限がない場合に例外を投げる
      */
     protected function authorizeAdmin(): void
@@ -30,7 +29,6 @@ abstract class BaseController extends Controller
     /**
      * システム管理者権限のみ可
      *
-     * @return void
      * @throws AuthorizationException システム管理者権限がない場合に例外を投げる
      */
     protected function authorizeSystem(): void
@@ -41,14 +39,14 @@ abstract class BaseController extends Controller
     /**
      * 指定した工程が停止していれば可
      *
-     * @param Process $process 工程
-     * @return void
+     * @param  Process  $process  工程
+     *
      * @throws AuthorizationException 工程が実行中の場合に例外を投げる
      */
     protected function throwExceptionIfRunning(Process $process): void
     {
         if ($process->isRunning()) {
-            throw new AuthorizationException();
+            throw new AuthorizationException;
         }
     }
 }

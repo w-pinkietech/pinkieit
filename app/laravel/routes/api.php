@@ -17,7 +17,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-
 Route::group(['prefix' => 'v1', 'as' => 'production.'], function () {
     Route::middleware('auth:sanctum')->group(function () {
         Route::get('/user', UserInfoController::class)->name('user');

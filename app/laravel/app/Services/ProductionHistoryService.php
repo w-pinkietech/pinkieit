@@ -23,9 +23,9 @@ use App\Repositories\PartNumberRepository;
 use App\Repositories\PayloadRepository;
 use App\Repositories\ProcessRepository;
 use App\Repositories\ProducerRepository;
-use App\Repositories\ProductionPlannedOutageRepository;
 use App\Repositories\ProductionHistoryRepository;
 use App\Repositories\ProductionLineRepository;
+use App\Repositories\ProductionPlannedOutageRepository;
 use App\Repositories\ProductionRepository;
 use App\Repositories\RaspberryPiRepository;
 use App\Repositories\WorkerRepository;
@@ -43,16 +43,27 @@ use Illuminate\Support\Facades\Log;
 class ProductionHistoryService
 {
     private readonly CycleTimeRepository $cycleTime;
+
     private readonly DefectiveProductionRepository $defectiveProduction;
+
     private readonly PartNumberRepository $partNumber;
+
     private readonly PayloadRepository $payload;
+
     private readonly ProcessRepository $process;
+
     private readonly ProductionHistoryRepository $productionHistory;
+
     private readonly ProducerRepository $producer;
+
     private readonly ProductionRepository $production;
+
     private readonly ProductionLineRepository $productionLine;
+
     private readonly ProductionPlannedOutageRepository $productionPlannedOutage;
+
     private readonly RaspberryPiRepository $raspberryPi;
+
     private readonly WorkerRepository $worker;
 
     /**
@@ -77,7 +88,7 @@ class ProductionHistoryService
     /**
      * 指定した工程IDの品番選択用のオプションを取得する
      *
-     * @param Process $process 工程
+     * @param  Process  $process  工程
      * @return array<int, string> 品番選択用のオプション
      */
     public function partNumberOptions(Process $process): array
@@ -88,8 +99,8 @@ class ProductionHistoryService
     /**
      * 指定した工程IDの生産履歴を取得する
      *
-     * @param integer $processId 工程ID
-     * @param integer $page ページあたりの件数
+     * @param  int  $processId  工程ID
+     * @param  int  $page  ページあたりの件数
      * @return LengthAwarePaginator<ProductionHistory>
      */
     public function histories(int $processId, int $page = 10): LengthAwarePaginator
@@ -100,7 +111,7 @@ class ProductionHistoryService
     /**
      * 生産履歴の詳細データを取得する
      *
-     * @param integer $historyId 生産履歴ID
+     * @param  int  $historyId  生産履歴ID
      * @return Collection<int, ProductionLine>
      */
     public function productionLines(int $historyId): Collection
@@ -115,9 +126,10 @@ class ProductionHistoryService
     /**
      * 品番切り替えをWebブラウザから実行する
      *
-     * @param StoreProductionHistoryRequest $request 品番切り替えリクエスト
-     * @param Process $process 品番切り替え対象の工程
-     * @return boolean 成否
+     * @param  StoreProductionHistoryRequest  $request  品番切り替えリクエスト
+     * @param  Process  $process  品番切り替え対象の工程
+     * @return bool 成否
+     *
      * @throws NoIndicatorException 生産指標が設定されていないエラー
      * @throws ModelNotFoundException
      */
@@ -126,15 +138,17 @@ class ProductionHistoryService
         // ラインがなければ終了
         if ($process->raspberryPis->count() === 0) {
             Log::warning('Line not found.', $process->toArray());
+
             return false;
         }
         // サイクルタイムが削除されていれば終了
         $cycleTime = $this->cycleTime->first([
-            'process_id' =>  $process->process_id,
+            'process_id' => $process->process_id,
             'part_number_id' => $request->part_number_id,
         ]);
         if (is_null($cycleTime)) {
             Log::warning('CycleTime not found.', $request->all());
+
             return false;
         }
 
@@ -149,13 +163,14 @@ class ProductionHistoryService
         $goal = $request->goal;
         // 品番切り替え実行
         $this->switchPartNumber($status, $process, $cycleTime, $goal);
+
         return true;
     }
 
     /**
      * 品番切り替えをWebAPIから実行する
      *
-     * @param SwitchPartNumberRequestFromApi $request 品番切り替えリクエスト
+     * @param  SwitchPartNumberRequestFromApi  $request  品番切り替えリクエスト
      * @return bool 成否
      */
     public function switchPartNumberFromApi(SwitchPartNumberRequestFromApi $request): bool
@@ -169,22 +184,26 @@ class ProductionHistoryService
         $partNumber = $this->partNumber->first(['part_number_name' => $partNumberName]);
         if (is_null($process) || is_null($partNumber)) {
             Log::warning('Process or PartNumber not found', $request->all());
+
             return false;
         }
         $cycleTime = $this->cycleTime->first([
             'process_id' => $process->process_id,
-            'part_number_id' => $partNumber->part_number_id
+            'part_number_id' => $partNumber->part_number_id,
         ]);
         if (is_null($cycleTime)) {
             Log::warning('CycleTime not found', $request->all());
+
             return false;
         }
         if ($process->isStopped()) {
             $this->switchPartNumber(ProductionStatus::CHANGEOVER(), $process, $cycleTime, $goal);
+
             return true;
-        } else if ($force) {
+        } elseif ($force) {
             $this->stop($process, false);
             $this->switchPartNumber(ProductionStatus::CHANGEOVER(), $process, $cycleTime, $goal);
+
             return true;
         } else {
             return false;
@@ -194,10 +213,10 @@ class ProductionHistoryService
     /**
      * 品番切り替えをMQTTから実行する
      *
-     * @param string $ipAddress IPアドレス
-     * @param string $macAddress MACアドレス
-     * @param string $barcode バーコード
-     * @return boolean 成否
+     * @param  string  $ipAddress  IPアドレス
+     * @param  string  $macAddress  MACアドレス
+     * @param  string  $barcode  バーコード
+     * @return bool 成否
      */
     public function switchPartNumberFromMqtt(string $ipAddress, string $macAddress, string $barcode): bool
     {
@@ -209,6 +228,7 @@ class ProductionHistoryService
         $partNumber = $this->partNumber->first(['barcode' => $barcode]);
         if (is_null($process) || is_null($partNumber)) {
             Log::warning('Process or PartNumber not found');
+
             return false;
         }
         $cycleTime = $this->cycleTime->first([
@@ -217,16 +237,19 @@ class ProductionHistoryService
         ]);
         if (is_null($cycleTime)) {
             Log::warning('CycleTime not found');
+
             return false;
         }
         if ($process->productionHistory?->part_number_name === $partNumber->part_number_name) {
             Log::warning('Part is already producing');
+
             return false;
         } else {
             if ($process->isRunning()) {
                 $this->stop($process, false);
             }
             $this->switchPartNumber(ProductionStatus::CHANGEOVER(), $process, $cycleTime);
+
             return true;
         }
     }
@@ -234,8 +257,8 @@ class ProductionHistoryService
     /**
      * 指定したIPアドレスとMACアドレスから品番切り替え対象の工程名を取得する
      *
-     * @param string $ipAddress IPアドレス
-     * @param string $macAddress MACアドレス
+     * @param  string  $ipAddress  IPアドレス
+     * @param  string  $macAddress  MACアドレス
      * @return string|null 工程名 (見つからない場合はnull)
      */
     private function searchProcessName(string $ipAddress, string $macAddress): ?string
@@ -243,6 +266,7 @@ class ProductionHistoryService
         $raspi = $this->raspberryPi->first(['ip_address' => $ipAddress], 'processes');
         if (is_null($raspi)) {
             Log::warning('Raspi not found', [$ipAddress]);
+
             return null;
         }
         $processNames = $raspi->processes->map(fn ($x) => $x->process_name)->unique();
@@ -251,25 +275,27 @@ class ProductionHistoryService
             $worker = $this->worker->first(['mac_address' => $macAddress], 'processes');
             if (is_null($worker)) {
                 Log::warning('Worker not found', [$macAddress]);
+
                 return null;
             }
             $processNames = $worker->processes->map(fn ($x) => $x->process_name)->unique();
             if ($processNames->count() != 1) {
                 Log::warning('Process cannot determine', [$macAddress]);
+
                 return null;
             }
         }
+
         return $processNames->first();
     }
 
     /**
      * 品番切り替えを行う
      *
-     * @param ProductionStatus $status 品番切り替え後のステータス
-     * @param Process $process 対象の工程
-     * @param CycleTime $cycleTime 対象のサイクルタイム
-     * @param integer|null $goal 目標値
-     * @return void
+     * @param  ProductionStatus  $status  品番切り替え後のステータス
+     * @param  Process  $process  対象の工程
+     * @param  CycleTime  $cycleTime  対象のサイクルタイム
+     * @param  int|null  $goal  目標値
      */
     private function switchPartNumber(ProductionStatus $status, Process $process, CycleTime $cycleTime, ?int $goal = null): void
     {
@@ -293,9 +319,7 @@ class ProductionHistoryService
     /**
      * 生産を停止する
      *
-     * @param Process $process 停止対象の工程
-     * @param boolean $isDispatchEvent
-     * @return void
+     * @param  Process  $process  停止対象の工程
      */
     public function stop(Process $process, bool $isDispatchEvent): void
     {
@@ -315,8 +339,7 @@ class ProductionHistoryService
     /**
      * 生産をWebAPIより停止する
      *
-     * @param StopProductionRequest $request 停止リクエスト
-     * @return void
+     * @param  StopProductionRequest  $request  停止リクエスト
      */
     public function stopFromApi(StopProductionRequest $request): void
     {
@@ -328,14 +351,16 @@ class ProductionHistoryService
     /**
      * 段取替えを実施する
      *
-     * @param Process $process 段取替え対象の工程
-     * @return boolean 成否
+     * @param  Process  $process  段取替え対象の工程
+     * @return bool 成否
+     *
      * @throws ModelNotFoundException
      */
     public function changeover(Process $process): bool
     {
         if ($process->isStopped()) {
             Log::warning('Process is COMPLETE.', $process->toArray());
+
             return false;
         }
 
@@ -352,7 +377,7 @@ class ProductionHistoryService
             $this->productionHistory->updateStatus($history, $nextStatus);
 
             // 段取り替えの開始/終了ジョブを登録
-            ChangeoverJob::dispatch($history->production_history_id, $now, !$isChangeover);
+            ChangeoverJob::dispatch($history->production_history_id, $now, ! $isChangeover);
         });
 
         return true;
@@ -361,11 +386,11 @@ class ProductionHistoryService
     /**
      * 稼働ラインを新規に登録する
      *
-     * @param Process $process 工程
-     * @param ProductionHistory $history 稼働履歴
-     * @param Carbon $date 時刻
-     * @param boolean $changeover 段取り替えの有無
-     * @return void
+     * @param  Process  $process  工程
+     * @param  ProductionHistory  $history  稼働履歴
+     * @param  Carbon  $date  時刻
+     * @param  bool  $changeover  段取り替えの有無
+     *
      * @throws NoIndicatorException 指標となるラインがない
      * @throws ModelNotFoundException DBに対象データが存在しない
      */
@@ -373,13 +398,13 @@ class ProductionHistoryService
     {
         $indicatorIndex = $process->raspberryPis
             ->reverse()
-            ->filter(fn (RaspberryPi $x) => !is_null($x->pivot))
+            ->filter(fn (RaspberryPi $x) => ! is_null($x->pivot))
             ->filter(fn (RaspberryPi $x) => $x->pivot->defective === false)
             ->keys()
             ->first();
 
         if (is_null($indicatorIndex)) {
-            throw new NoIndicatorException();
+            throw new NoIndicatorException;
         }
 
         $historyId = $history->production_history_id;
@@ -400,7 +425,7 @@ class ProductionHistoryService
 
             // 生産者を登録
             $productionLineId = $pl->production_line_id;
-            if (!is_null($raspi->pivot->worker_id)) {
+            if (! is_null($raspi->pivot->worker_id)) {
                 $worker = $this->worker->find($raspi->pivot->worker_id);
                 $this->producer->save($worker, $productionLineId, $date);
             }
@@ -441,9 +466,9 @@ class ProductionHistoryService
     /**
      * 稼働計画停止時間を登録する
      *
-     * @param Process $process 工程
-     * @param integer $productionHistoryId 稼働履歴ID
-     * @return void
+     * @param  Process  $process  工程
+     * @param  int  $productionHistoryId  稼働履歴ID
+     *
      * @throws ModelNotFoundException DBに対象データが存在しない
      */
     private function storeProductionPlannedOutage(Process $process, int $productionHistoryId): void

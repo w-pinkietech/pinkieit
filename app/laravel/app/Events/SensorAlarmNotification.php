@@ -28,7 +28,7 @@ class SensorAlarmNotification implements ShouldBroadcast
     /**
      * イベントインスタンスを作成します。
      *
-     * @param integer $sensorEventId センサーイベントID
+     * @param  int  $sensorEventId  センサーイベントID
      */
     public function __construct(int $sensorEventId)
     {

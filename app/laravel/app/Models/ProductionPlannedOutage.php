@@ -9,8 +9,8 @@ use Illuminate\Database\Eloquent\Model;
 /**
  * 生産時の計画停止時間モデルクラス
  *
- * @property integer $production_planned_outage_id 主キー
- * @property integer $production_history_id 生産履歴ID(外部キー)
+ * @property int $production_planned_outage_id 主キー
+ * @property int $production_history_id 生産履歴ID(外部キー)
  * @property string $planned_outage_name 計画停止時間名
  * @property Carbon $start_time 開始時間
  * @property Carbon $end_time 終了時間

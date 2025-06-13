@@ -73,7 +73,7 @@ jobs:
 
       - name: Prepare Laravel application
         run: |
-          cp .env.example .env
+          cp .env.test .env
           php artisan key:generate
           php artisan config:cache
           php artisan migrate --force

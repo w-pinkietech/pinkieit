@@ -26,7 +26,7 @@ npm run lint             # Run semistandard linter with snazzy output
 ./vendor/bin/phpstan     # Larastan static analysis
 
 # Testing
-php artisan test         # Run PHPUnit tests
+php artisan test         # Run PHPUnit tests (now available)
 php artisan dusk         # Run Laravel Dusk browser tests
 ```
 

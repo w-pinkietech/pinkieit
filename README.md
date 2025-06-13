@@ -1,6 +1,7 @@
 # PinkieIt
 
 [![js-semistandard-style](https://img.shields.io/badge/code%20style-semistandard-brightgreen.svg)](https://github.com/standard/semistandard)
+[![SonarCloud](https://sonarcloud.io/images/project_badges/sonarcloud-white.svg)](https://sonarcloud.io/summary/new_code?id=w-pinkietech_pinkieit)
 
 PinkieItは、Laravelを使用したWebアプリケーションです。このREADMEでは、プロジェクトのセットアップと実行方法について説明します。
 
@@ -144,6 +145,16 @@ docker compose exec web-app php artisan config:cache
 docker compose down -v --remove-orphans
 docker compose up -d --build
 ```
+
+## CI/CD & 品質管理
+
+このプロジェクトでは以下の自動化を実施しています：
+
+- **GitHub Actions**: プルリクエストとmainブランチへのプッシュ時に自動テスト実行
+- **テストカバレッジ**: PHPUnitとPCOVによるカバレッジ測定
+- **SonarQube Cloud**: コード品質とセキュリティの継続的な分析
+
+詳細は [CI/CDワークフロードキュメント](docs/CI_CD_WORKFLOW.md) を参照してください。
 
 ## ライセンス
 

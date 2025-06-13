@@ -18,7 +18,6 @@
         "axios": "^0.30",
         "bootstrap": "~5.0.0",
         "bootstrap-colorpicker": "^3.4.0",
-        "bootstrap-switch": "^3.4.0",
         "chart.js": "^3.9.1",
         "chartjs-adapter-moment": "^1.0.0",
         "datatables.net-bs4": "^1.12.1",

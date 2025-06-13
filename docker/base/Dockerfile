@@ -37,7 +37,10 @@ RUN set -ex; \
     --with-webp; \
     docker-php-ext-install -j1 gd; \
     # その他の拡張
-    docker-php-ext-install pdo_mysql exif pcntl bcmath zip;
+    docker-php-ext-install pdo_mysql exif pcntl bcmath zip; \
+    # PCOV for code coverage
+    pecl install pcov; \
+    docker-php-ext-enable pcov;
 
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
@@ -51,7 +54,7 @@ RUN curl -fsSL https://deb.nodesource.com/setup_20.x | bash - \
 WORKDIR /var/www/html
 
 # 依存関係ファイルのコピーを統合
-COPY ../../app/laravel/composer.* ../../app/laravel/package*.json ./
+COPY app/laravel/composer.* app/laravel/package*.json ./
 
 # 依存関係インストールを1つのレイヤーに統合
 ENV COMPOSER_ALLOW_SUPERUSER=1
@@ -61,6 +64,6 @@ RUN set -ex \
     && composer dump-autoload --optimize --no-scripts
 
 # アプリケーションコードのコピー（依存関係インストール後に実行）
-COPY ../../app/laravel .
+COPY app/laravel .
 
 EXPOSE 80

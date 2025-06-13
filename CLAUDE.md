@@ -23,10 +23,20 @@ npm run lint             # Run semistandard linter with snazzy output
 
 # PHP code quality
 ./vendor/bin/pint        # Laravel Pint for code formatting
-./vendor/bin/phpstan     # Larastan static analysis
+./vendor/bin/phpstan analyse --memory-limit=512M  # Larastan static analysis
 
 # Run pint to ensure coding styles
 ./vendor/bin/pint
+
+# Static Analysis with Larastan (PHPStan for Laravel)
+# Configuration file: phpstan.neon (rule level 5)
+./vendor/bin/phpstan analyse  # Run static analysis
+./vendor/bin/phpstan analyse --memory-limit=512M  # Run with increased memory
+./vendor/bin/phpstan analyse app/  # Analyze specific directory
+./vendor/bin/phpstan analyse --level=max  # Run with maximum rule level
+
+# Note: When using Docker, prefix commands with:
+# docker compose exec web-app [command]
 
 # Testing
 php artisan test         # Run PHPUnit tests (now available)
@@ -74,7 +84,7 @@ PinkieIT is a Production Management System (MES) designed for factory floor moni
 - **IoT Communication**: MQTT (Eclipse Mosquitto)
 - **Frontend**: Bootstrap 5, jQuery, Chart.js, AdminLTE 3 theme
 - **Asset Building**: Laravel Mix with Sass
-- **Code Quality**: PHPUnit with PCOV for coverage, SonarQube Cloud for analysis
+- **Code Quality**: PHPUnit with PCOV for coverage, Larastan (PHPStan) for static analysis, SonarQube Cloud for analysis
 
 ### Core Architecture Patterns
 
@@ -111,3 +121,6 @@ PinkieIT is a Production Management System (MES) designed for factory floor moni
 ## Updating this File
 
 If you think you need to update this file or the programmer ask to do so, update this rules to adapt to the new changes. This file is meant to be a living document that evolves with the project.
+
+## Development Guidelines
+- **Always read and follow editorconfig.**

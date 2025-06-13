@@ -14,13 +14,11 @@ class UserInfoController extends BaseController
 {
     /**
      * Handle the incoming request.
-     *
-     * @param Request $request
-     * @return User|null
      */
     public function __invoke(Request $request): ?User
     {
         $this->authorizeAdmin();
+
         return Auth::user();
     }
 }

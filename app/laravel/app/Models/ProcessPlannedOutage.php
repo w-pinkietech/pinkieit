@@ -8,9 +8,9 @@ use Illuminate\Database\Eloquent\Relations\Pivot;
 /**
  * 工程と計画停止時間の関連モデルクラス
  *
- * @property integer $process_planned_outage_id 主キー
- * @property integer $process_id 工程ID(外部キー)
- * @property integer $planned_outage_id 計画停止時間ID(外部キー)
+ * @property int $process_planned_outage_id 主キー
+ * @property int $process_id 工程ID(外部キー)
+ * @property int $planned_outage_id 計画停止時間ID(外部キー)
  */
 class ProcessPlannedOutage extends Pivot
 {

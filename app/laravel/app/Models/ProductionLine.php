@@ -12,19 +12,19 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 /**
  * 生産ラインモデルクラス
  *
- * @property integer $production_line_id 主キー
- * @property integer $production_history_id 生産履歴ID(外部キー)
- * @property integer|null $line_id ラインID(外部キー)
- * @property integer|null $parent_id 関連のあるラインID(外部キー)
+ * @property int $production_line_id 主キー
+ * @property int $production_history_id 生産履歴ID(外部キー)
+ * @property int|null $line_id ラインID(外部キー)
+ * @property int|null $parent_id 関連のあるラインID(外部キー)
  * @property string $line_name ライン名
  * @property string $chart_color チャート色
  * @property string $ip_address IPアドレス
- * @property integer $pin_number ピン番号
- * @property boolean $defective 不良品フラグ
- * @property integer $order 順序
- * @property boolean $indicator 指標フラグ
- * @property integer|null $offset_count オフセットカウント
- * @property integer $count カウント
+ * @property int $pin_number ピン番号
+ * @property bool $defective 不良品フラグ
+ * @property int $order 順序
+ * @property bool $indicator 指標フラグ
+ * @property int|null $offset_count オフセットカウント
+ * @property int $count カウント
  * @property ProductionHistory $productionHistory 生産履歴
  * @property Payload $payload ペイロード
  */
@@ -81,8 +81,6 @@ class ProductionLine extends Model
 
     /**
      * 生産ラインに関連する生産履歴を取得する
-     *
-     * @return BelongsTo
      */
     public function productionHistory(): BelongsTo
     {
@@ -91,8 +89,6 @@ class ProductionLine extends Model
 
     /**
      * 生産ラインに1対多で関連する生産データを取得する
-     *
-     * @return HasMany
      */
     public function productions(): HasMany
     {
@@ -103,8 +99,6 @@ class ProductionLine extends Model
 
     /**
      * 生産ラインに1対多で関連する不良品ラインを取得する
-     *
-     * @return HasMany
      */
     public function defectiveProductions(): HasMany
     {
@@ -114,8 +108,6 @@ class ProductionLine extends Model
 
     /**
      * 生産ラインに1対多で関連する生産者を取得する
-     *
-     * @return HasMany
      */
     public function producers(): HasMany
     {
@@ -125,8 +117,6 @@ class ProductionLine extends Model
 
     /**
      * 生産ラインと1対1で関連するペイロードを取得する
-     *
-     * @return HasOne
      */
     public function payload(): HasOne
     {
@@ -135,8 +125,6 @@ class ProductionLine extends Model
 
     /**
      * 不良品ラインの親となるラインとの関連
-     *
-     * @return BelongsTo
      */
     public function parentLine(): BelongsTo
     {
@@ -157,17 +145,18 @@ class ProductionLine extends Model
         } else {
             /** @var PayloadData */
             $payloadData = $payload->getPayloadData();
+
             return [
                 'goodCount' => $payloadData->goodCount(),
-                'goodRate' => round($payloadData->goodRate() * 100.0) . ' [%]',
+                'goodRate' => round($payloadData->goodRate() * 100.0).' [%]',
                 'defectiveCount' => $payloadData->defectiveCount(),
-                'defectiveRate' => round($payloadData->defectiveRate() * 100.0) . ' [%]',
+                'defectiveRate' => round($payloadData->defectiveRate() * 100.0).' [%]',
                 'planCount' => $payloadData->planCount(),
-                'achievementRate' => round($payloadData->achievementRate() * 100.0) . ' [%]',
-                'cycleTime' => round($payloadData->cycleTime()) . ' [sec]',
-                'timeOperatingRate' => round($payloadData->timeOperatingRate() * 100.0) . ' [%]',
-                'performanceOperatingRate' => round($payloadData->performanceOperatingRate() * 100.0) . ' [%]',
-                'overallEquipmentEffectiveness' => round($payloadData->overallEquipmentEffectiveness() * 100.0) . ' [%]',
+                'achievementRate' => round($payloadData->achievementRate() * 100.0).' [%]',
+                'cycleTime' => round($payloadData->cycleTime()).' [sec]',
+                'timeOperatingRate' => round($payloadData->timeOperatingRate() * 100.0).' [%]',
+                'performanceOperatingRate' => round($payloadData->performanceOperatingRate() * 100.0).' [%]',
+                'overallEquipmentEffectiveness' => round($payloadData->overallEquipmentEffectiveness() * 100.0).' [%]',
             ];
         }
     }

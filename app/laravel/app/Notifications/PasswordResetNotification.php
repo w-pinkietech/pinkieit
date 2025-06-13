@@ -77,7 +77,7 @@ class PasswordResetNotification extends Notification
             ->subject(__('passwords.subject'))
             ->line(__('passwords.header'))
             ->action(__('passwords.button'), $url)
-            ->line(__('passwords.description', ['count' => config('auth.passwords.' . config('auth.defaults.passwords') . '.expire')]))
+            ->line(__('passwords.description', ['count' => config('auth.passwords.'.config('auth.defaults.passwords').'.expire')]))
             ->line(__('passwords.supplement'));
     }
 

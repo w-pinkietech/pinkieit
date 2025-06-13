@@ -9,8 +9,8 @@ use Illuminate\Database\Eloquent\Model;
 /**
  * 指標計算のデータ保持用
  *
- * @property integer $payload_id 主キー
- * @property integer $production_line_id 生産ラインID(外部キー)
+ * @property int $payload_id 主キー
+ * @property int $production_line_id 生産ラインID(外部キー)
  * @property array<string, mixed> $payload ペイロード
  */
 class Payload extends Model
@@ -67,8 +67,7 @@ class Payload extends Model
     /**
      * 指標計算用データを設定する
      *
-     * @param PayloadData $payloadData 指標計算用データ
-     * @return void
+     * @param  PayloadData  $payloadData  指標計算用データ
      */
     public function setPayloadData(PayloadData $payloadData): void
     {

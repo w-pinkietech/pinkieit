@@ -30,9 +30,9 @@ class FinishChangeoverJob implements ShouldQueue
     /**
      * 段取り替えの自動終了ジョブのインスタンスを作成する。
      *
-     * @param integer $productionLineId 生産ラインID
-     * @param integer $count カウント
-     * @param Carbon $date 時刻
+     * @param  int  $productionLineId  生産ラインID
+     * @param  int  $count  カウント
+     * @param  Carbon  $date  時刻
      */
     public function __construct(
         private readonly int $productionLineId,

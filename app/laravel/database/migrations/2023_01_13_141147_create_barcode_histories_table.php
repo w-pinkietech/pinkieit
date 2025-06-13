@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('barcode_histories', function (Blueprint $table) {
             // バーコード履歴ID
             $table->id('barcode_history_id')->comment(__('pinkieit.target_id', ['target' => __('pinkieit.barcode')]));
-             // IPアドレス
+            // IPアドレス
             $table->ipAddress()->comment(__('pinkieit.ip_address'));
             // MACアドレス
             $table->macAddress()->comment(__('pinkieit.mac_address'));

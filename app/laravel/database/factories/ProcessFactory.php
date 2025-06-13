@@ -17,7 +17,7 @@ class ProcessFactory extends Factory
     public function definition()
     {
         return [
-            'process_name' => __('pinkieit.process') . "：{$this->faker->unique()->realText(10)}",
+            'process_name' => __('pinkieit.process')."：{$this->faker->unique()->realText(10)}",
             'plan_color' => '#FFFFFF',
             'remark' => $this->faker->realText(256),
         ];

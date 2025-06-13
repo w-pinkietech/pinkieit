@@ -27,7 +27,7 @@ return new class extends Migration
     {
         Schema::table('production_lines', function (Blueprint $table) {
             // オフセットミリ秒
-            $table->integer('offset_millisecond')->default(0)->after('count')->comment(__('pinkieit.offset') . 'ms');
+            $table->integer('offset_millisecond')->default(0)->after('count')->comment(__('pinkieit.offset').'ms');
         });
     }
 };

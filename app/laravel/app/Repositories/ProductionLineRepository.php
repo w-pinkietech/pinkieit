@@ -27,10 +27,10 @@ class ProductionLineRepository extends AbstractRepository
     /**
      * 生産ラインを追加する
      *
-     * @param Line $line ライン
-     * @param integer $productionHistoryId 生産履歴ID
-     * @param string $ipAddress IPアドレス
-     * @param boolean $indicator 指標
+     * @param  Line  $line  ライン
+     * @param  int  $productionHistoryId  生産履歴ID
+     * @param  string  $ipAddress  IPアドレス
+     * @param  bool  $indicator  指標
      * @return ProductionLine|null 追加された生産ライン (失敗時はnull)
      */
     public function save(Line $line, int $productionHistoryId, string $ipAddress, bool $indicator): ?ProductionLine
@@ -46,16 +46,17 @@ class ProductionLineRepository extends AbstractRepository
             'indicator' => $indicator,
             'production_history_id' => $productionHistoryId,
         ]);
+
         return $this->storeModel($pl) ? $pl : null;
     }
 
     /**
      * 不良品ラインを追加する
      *
-     * @param Line $line ライン
-     * @param integer $productionHistoryId 生産履歴ID
-     * @param string $ipAddress IPアドレス
-     * @param int $productionLineId 関連する加工数量ライン
+     * @param  Line  $line  ライン
+     * @param  int  $productionHistoryId  生産履歴ID
+     * @param  string  $ipAddress  IPアドレス
+     * @param  int  $productionLineId  関連する加工数量ライン
      * @return ProductionLine|null 追加された生産ライン (失敗時はnull)
      */
     public function saveDefectiveLine(Line $line, int $productionHistoryId, string $ipAddress, int $productionLineId): ?ProductionLine
@@ -72,15 +73,15 @@ class ProductionLineRepository extends AbstractRepository
             'indicator' => false,
             'production_history_id' => $productionHistoryId,
         ]);
+
         return $this->storeModel($pl) ? $pl : null;
     }
 
     /**
      * 指定したIPアドレスとピン番号に一致する最新の生産ラインを取得する
      *
-     * @param string $ipAddress IPアドレス
-     * @param integer|string $pinNumber ピン番号
-     * @return ProductionLine|null
+     * @param  string  $ipAddress  IPアドレス
+     * @param  int|string  $pinNumber  ピン番号
      */
     public function lastProductionLine(string $ipAddress, int|string $pinNumber): ?ProductionLine
     {
@@ -95,9 +96,9 @@ class ProductionLineRepository extends AbstractRepository
     /**
      * 生産ライン情報を更新する
      *
-     * @param ProductionLine $productionLine 生産ライン
-     * @param integer $count 生産カウント
-     * @return integer オフセットカウント
+     * @param  ProductionLine  $productionLine  生産ライン
+     * @param  int  $count  生産カウント
+     * @return int オフセットカウント
      */
     public function updateLineInfo(ProductionLine $productionLine, int $count): int
     {
@@ -111,19 +112,19 @@ class ProductionLineRepository extends AbstractRepository
                 'offset_count' => $offsetCount,
                 'count' => 1,
             ]);
-            if (!$result) {
-                throw new ProductionException();
+            if (! $result) {
+                throw new ProductionException;
             }
-        } else if ($productionLine->count < $count - $offsetCount) {
+        } elseif ($productionLine->count < $count - $offsetCount) {
             // 最終カウントを更新
             $result = $this->updateModel($productionLine, ['count' => $count - $offsetCount]);
-            if (!$result) {
-                throw new ProductionException();
+            if (! $result) {
+                throw new ProductionException;
             }
         } else {
             // カウントの矛盾が発生
             Log::warning('Count is contradiction.', ['count' => $count]);
-            throw new ProductionException();
+            throw new ProductionException;
         }
 
         return $offsetCount;

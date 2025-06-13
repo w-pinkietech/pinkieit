@@ -4,7 +4,6 @@ namespace App\Services;
 
 use App\Enums\ProductionStatus;
 use App\Exceptions\ProductionException;
-use App\Jobs\BreakdownJudgeJob;
 use App\Jobs\CountJob;
 use App\Jobs\FinishBreakdownJob;
 use App\Jobs\FinishChangeoverJob;
@@ -22,6 +21,7 @@ use Illuminate\Support\Facades\Log;
 class ProductionService
 {
     private readonly ProductionHistoryRepository $productionHistory;
+
     private readonly ProductionLineRepository $productionLine;
 
     /**
@@ -36,11 +36,11 @@ class ProductionService
     /**
      * 生産数のカウント情報を登録する
      *
-     * @param string $ipAddress IPアドレス
-     * @param integer $count カウント
-     * @param integer $pinNumber ピン番号
-     * @param Carbon $datetime 時刻
-     * @return void
+     * @param  string  $ipAddress  IPアドレス
+     * @param  int  $count  カウント
+     * @param  int  $pinNumber  ピン番号
+     * @param  Carbon  $datetime  時刻
+     *
      * @throws ProductionException 生産通知エラー
      */
     public function store(string $ipAddress, int $count, int|string $pinNumber, Carbon $datetime): void
@@ -87,9 +87,10 @@ class ProductionService
     /**
      * 生産中のラインを取得する
      *
-     * @param string $ipAddress IPアドレス
-     * @param integer $pinNumber ピン番号
+     * @param  string  $ipAddress  IPアドレス
+     * @param  int  $pinNumber  ピン番号
      * @return ProductionLine 生産中のライン
+     *
      * @throws ProductionException 生産通知エラー
      */
     private function getRunningProductionLine(string $ipAddress, int|string $pinNumber): ProductionLine
@@ -103,14 +104,14 @@ class ProductionService
                 'ip_address' => $ipAddress,
                 'pin_number' => $pinNumber,
             ]);
-            throw new ProductionException();
+            throw new ProductionException;
         }
 
         // 生産が停止していたら終了
         $history = $productionLine->productionHistory;
         if ($history->isComplete()) {
             // Log::debug('Process is not RUNNING.');
-            throw new ProductionException();
+            throw new ProductionException;
         }
 
         return $productionLine;

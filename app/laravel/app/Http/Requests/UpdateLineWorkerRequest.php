@@ -8,7 +8,7 @@ use Illuminate\Foundation\Http\FormRequest;
 /**
  * 生産ラインの作業者の更新
  *
- * @property integer $process_id 工程ID
+ * @property int $process_id 工程ID
  * @property array<int, array<string, mixed>> $lines 生産ラインデータ
  */
 class UpdateLineWorkerRequest extends FormRequest
@@ -33,11 +33,12 @@ class UpdateLineWorkerRequest extends FormRequest
         $rules = [
             'lines' => 'required|array',
             'lines.*.line_id' => 'required|exists:lines,line_id',
-            'lines.*.raspberry_pi_id' => "nullable|exists:raspberry_pis,raspberry_pi_id",
+            'lines.*.raspberry_pi_id' => 'nullable|exists:raspberry_pis,raspberry_pi_id',
         ];
         foreach ($this->lines as $line) {
             $rules["lines.{$line['line_id']}.worker_id"] = "nullable|exists:workers,worker_id|unique:lines,worker_id,{$this->process_id},process_id,raspberry_pi_id,{$line['raspberry_pi_id']}";
         }
+
         return $rules;
     }
 
@@ -55,6 +56,7 @@ class UpdateLineWorkerRequest extends FormRequest
             $attributes["lines.$lineId.line_id"] = __('pinkieit.target_name', ['target' => __('pinkieit.line')]);
             $attributes["lines.$lineId.raspberry_pi_id"] = __('pinkieit.raspberry_pi');
         }
+
         return $attributes;
     }
 
@@ -65,8 +67,6 @@ class UpdateLineWorkerRequest extends FormRequest
 
     /**
      * バリデーションのためのデータの準備
-     *
-     * @return void
      */
     protected function prepareForValidation(): void
     {

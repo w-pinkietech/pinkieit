@@ -22,7 +22,7 @@ class LineController extends AbstractController
     /**
      * コンストラクタ
      *
-     * @param LineService $service ラインサービス
+     * @param  LineService  $service  ラインサービス
      */
     public function __construct(private readonly LineService $service)
     {
@@ -53,8 +53,7 @@ class LineController extends AbstractController
     /**
      * Show the form for creating a new resource.
      *
-     * @param Process $process 工程
-     * @return View
+     * @param  Process  $process  工程
      */
     public function create(Process $process): View
     {
@@ -64,6 +63,7 @@ class LineController extends AbstractController
         $raspberryPiOptions = $this->service->raspberryPiOptions();
         $workerOptions = $this->service->workerOptions();
         $nonDefectiveLines = $this->service->nonDefectiveLineOptions($process);
+
         return view('process.line.create', [
             'process' => $process,
             'line' => null,
@@ -77,14 +77,14 @@ class LineController extends AbstractController
     /**
      * Store a newly created resource in storage.
      *
-     * @param StoreLineRequest $request リクエスト
-     * @param Process $process 工程
-     * @return RedirectResponse
+     * @param  StoreLineRequest  $request  リクエスト
+     * @param  Process  $process  工程
      */
     public function store(StoreLineRequest $request, Process $process): RedirectResponse
     {
         $this->throwExceptionIfRunning($process);
         $result = $this->service->store($request);
+
         return $this->redirectWithStore($result, 'process.show', ['process' => $process, 'tab' => 'line']);
     }
 
@@ -103,9 +103,7 @@ class LineController extends AbstractController
     /**
      * Show the form for editing the specified resource.
      *
-     * @param Process $process 工程
-     * @param Line $line
-     * @return View
+     * @param  Process  $process  工程
      */
     public function edit(Process $process, Line $line): View
     {
@@ -115,6 +113,7 @@ class LineController extends AbstractController
         $raspberryPiOptions = $this->service->raspberryPiOptions();
         $workerOptions = $this->service->workerOptions();
         $nonDefectiveLines = $this->service->nonDefectiveLineOptions($process);
+
         return view('process.line.edit', [
             'process' => $process,
             'line' => $line,
@@ -128,52 +127,44 @@ class LineController extends AbstractController
     /**
      * Update the specified resource in storage.
      *
-     * @param UpdateLineRequest $request リクエスト
-     * @param Process $process 工程
-     * @param Line $line
-     * @return RedirectResponse
+     * @param  UpdateLineRequest  $request  リクエスト
+     * @param  Process  $process  工程
      */
     public function update(UpdateLineRequest $request, Process $process, Line $line): RedirectResponse
     {
         $this->throwExceptionIfRunning($process);
         $result = $this->service->update($request, $line);
+
         return $this->redirectWithUpdate($result, 'process.show', ['process' => $process, 'tab' => 'line']);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param Process $process 工程
-     * @param Line $line
-     * @return RedirectResponse
+     * @param  Process  $process  工程
      */
     public function destroy(Process $process, Line $line): RedirectResponse
     {
         $this->authorizeAdmin();
         $this->throwExceptionIfRunning($process);
         $result = $this->service->destroy($line);
+
         return $this->redirectWithDestroy($result, 'process.show', ['process' => $process, 'tab' => 'line']);
     }
 
     /**
      * ラインの並べ替えをフォーム画面を表示する。
-     *
-     * @param Process $process
-     * @return View
      */
     public function sorting(Process $process): View
     {
         $this->authorizeAdmin();
         $this->throwExceptionIfRunning($process);
+
         return view('process.line.sorting', ['process' => $process]);
     }
 
     /**
      * ラインの並べ替えを行う。
-     *
-     * @param SortLineRequest $request
-     * @param Process $process
-     * @return RedirectResponse
      */
     public function sort(SortLineRequest $request, Process $process): RedirectResponse
     {
@@ -187,6 +178,7 @@ class LineController extends AbstractController
             Log::error($e->getMessage(), $e->getTrace());
             $route->with('toast_danger', __('pinkieit.failed_toast2', ['action' => __('pinkieit.sort')]));
         }
+
         return $route;
     }
 }

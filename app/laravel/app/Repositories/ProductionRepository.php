@@ -7,7 +7,6 @@ use App\Enums\ProductionStatus;
 use App\Models\Production;
 use App\Services\Utility;
 use Carbon\Carbon;
-use Illuminate\Support\Facades\Log;
 
 /**
  * 生産データリポジトリ
@@ -29,8 +28,8 @@ class ProductionRepository extends AbstractRepository
     /**
      * 生産数を登録する
      *
-     * @param integer $productionLineId 生産ラインID]
-     * @param PayloadData $payloadData ペイロードデータ
+     * @param  int  $productionLineId  生産ラインID]
+     * @param  PayloadData  $payloadData  ペイロードデータ
      * @return Production|null 登録された生産データ (失敗時にはnull)
      */
     public function save(int $productionLineId, PayloadData $payloadData): ?Production
@@ -56,13 +55,12 @@ class ProductionRepository extends AbstractRepository
     /**
      * チョコ停判定
      *
-     * @param Production $production
-     * @param Carbon $breakdownTime チョコ停時間
-     * @return boolean trueの場合チョコ停発生
+     * @param  Carbon  $breakdownTime  チョコ停時間
+     * @return bool trueの場合チョコ停発生
      */
     public function judgeBreakdown(Production $production, Carbon $breakdownTime): bool
     {
-        return !$this->model
+        return ! $this->model
             ->where('production_id', '>', $production->production_id)
             ->where('production_line_id', $production->production_line_id)
             ->where('at', '<=', Utility::format($breakdownTime))

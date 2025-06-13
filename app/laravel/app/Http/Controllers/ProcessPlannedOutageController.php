@@ -17,7 +17,7 @@ class ProcessPlannedOutageController extends AbstractController
     /**
      * コンストラクタ
      *
-     * @param ProcessPlannedOutageService $service 工程計画停止時間サービス
+     * @param  ProcessPlannedOutageService  $service  工程計画停止時間サービス
      */
     public function __construct(private readonly ProcessPlannedOutageService $service)
     {
@@ -48,28 +48,28 @@ class ProcessPlannedOutageController extends AbstractController
     /**
      * Show the form for creating a new resource.
      *
-     * @param Process $process 工程
-     * @return View
+     * @param  Process  $process  工程
      */
     public function create(Process $process): View
     {
         $this->authorizeAdmin();
         $this->throwExceptionIfRunning($process);
         $plannedOutages = $this->service->unusedPlannedOutageOptions($process->process_id);
+
         return view('process.planned-outage.create', ['process' => $process, 'plannedOutages' => $plannedOutages]);
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param StoreProcessPlannedOutageRequest $request リクエスト
-     * @param Process $process 工程
-     * @return RedirectResponse
+     * @param  StoreProcessPlannedOutageRequest  $request  リクエスト
+     * @param  Process  $process  工程
      */
     public function store(StoreProcessPlannedOutageRequest $request, Process $process): RedirectResponse
     {
         $this->throwExceptionIfRunning($process);
         $result = $this->service->store($request);
+
         return $this->redirectWithStore($result, 'process.show', ['process' => $process, 'tab' => 'planned-outage']);
     }
 
@@ -112,15 +112,14 @@ class ProcessPlannedOutageController extends AbstractController
     /**
      * Remove the specified resource from storage.
      *
-     * @param Process $process 工程
-     * @param ProcessPlannedOutage $processPlannedOutage
-     * @return RedirectResponse
+     * @param  Process  $process  工程
      */
     public function destroy(Process $process, ProcessPlannedOutage $processPlannedOutage): RedirectResponse
     {
         $this->authorizeAdmin();
         $this->throwExceptionIfRunning($process);
         $result = $this->service->destroy($processPlannedOutage);
+
         return $this->redirectWithDestroy($result, 'process.show', ['process' => $process, 'tab' => 'planned-outage']);
     }
 }

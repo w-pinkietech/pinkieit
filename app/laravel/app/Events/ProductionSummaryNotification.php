@@ -28,9 +28,6 @@ class ProductionSummaryNotification implements ShouldBroadcast
 
     /**
      * イベントインスタンスを作成します。
-     *
-     * @param ProductionHistory $history
-     * @param PayloadData $payloadData
      */
     public function __construct(ProductionHistory $history, PayloadData $payloadData)
     {

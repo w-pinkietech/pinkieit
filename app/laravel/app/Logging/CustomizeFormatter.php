@@ -6,10 +6,10 @@ use Illuminate\Log\Logger;
 use Illuminate\Support\Facades\Auth;
 use Monolog\Formatter\LineFormatter;
 use Monolog\Handler\StreamHandler;
+use Monolog\Logger as MonoLogger;
 use Monolog\Processor\IntrospectionProcessor;
 use Monolog\Processor\MemoryUsageProcessor;
 use Monolog\Processor\WebProcessor;
-use Monolog\Logger as MonoLogger;
 
 /**
  * カスタムロギングフォーマッタークラス(コピペ)
@@ -22,23 +22,23 @@ class CustomizeFormatter
 
     public function __invoke(Logger $logger): void
     {
-        $format = '[%datetime%] %channel%.%level_name% (%extra.class%:%extra.line%) %extra.function%: %message% %context% ' .
+        $format = '[%datetime%] %channel%.%level_name% (%extra.class%:%extra.line%) %extra.function%: %message% %context% '.
             json_encode([
                 'ipAddress' => '%extra.ip%',
                 'userId' => '%extra.userid%',
                 'userName' => '%extra.username%',
                 'memoryUsage' => '%extra.memory_usage%',
                 'version' => config('pinkieit.version'),
-            ]) . PHP_EOL;
+            ]).PHP_EOL;
 
         // ログのフォーマットと日付のフォーマットを指定する
         $lineFormatter = new LineFormatter($format, $this->dateFormat, true, true);
         // IntrospectionProcessorを使うとextraフィールドが使えるようになる
         $ip = new IntrospectionProcessor(MonoLogger::DEBUG, ['Illuminate\\']);
         // WebProcessorを使うとextra.ipが使えるようになる
-        $wp = new WebProcessor();
+        $wp = new WebProcessor;
         // MemoryUsageProcessorを使うとextra.memory_usageが使えるようになる
-        $mup = new MemoryUsageProcessor();
+        $mup = new MemoryUsageProcessor;
 
         /** @var array<int, StreamHandler> */
         $handlers = $logger->getHandlers();
@@ -56,7 +56,7 @@ class CustomizeFormatter
     /**
      * Undocumented function
      *
-     * @param array<string, mixed> $record
+     * @param  array<string, mixed>  $record
      * @return array<string, mixed>
      */
     public function addExtraFields(array $record): array
@@ -64,6 +64,7 @@ class CustomizeFormatter
         $user = Auth::user();
         $record['extra']['userid'] = $user->id ?? null;
         $record['extra']['username'] = $user ? $user->name : null;
+
         return $record;
     }
 }

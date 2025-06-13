@@ -2,8 +2,8 @@
 
 namespace App\Services;
 
-use Illuminate\Notifications\Notifiable;
 use App\Notifications\SlackNotification;
+use Illuminate\Notifications\Notifiable;
 
 /**
  * スラック通知サービスクラス
@@ -16,19 +16,14 @@ class SlackService
 
     /**
      * 通知処理
-     *
-     * @param string $message
-     * @return void
      */
-    public function send(string $message = null): void
+    public function send(?string $message = null): void
     {
         $this->notify(new SlackNotification($message));
     }
 
     /**
      * Slack通知用URLを指定する
-     *
-     * @return string
      */
     protected function routeNotificationForSlack(): string
     {

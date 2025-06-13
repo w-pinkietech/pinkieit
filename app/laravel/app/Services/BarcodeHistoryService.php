@@ -10,7 +10,6 @@ use Illuminate\Support\Facades\App;
  */
 class BarcodeHistoryService
 {
-
     private readonly BarcodeHistoryRepository $barcodeHistory;
 
     /**
@@ -24,14 +23,15 @@ class BarcodeHistoryService
     /**
      * バーコード履歴を登録する
      *
-     * @param string $ipAddress IPアドレス
-     * @param string $macAddress MACアドレス
-     * @param string $barcode バーコード
-     * @return boolean 成否
+     * @param  string  $ipAddress  IPアドレス
+     * @param  string  $macAddress  MACアドレス
+     * @param  string  $barcode  バーコード
+     * @return bool 成否
      */
     public function store(string $ipAddress, string $macAddress, string $barcode): bool
     {
         $stored = $this->barcodeHistory->storeBarcode($ipAddress, $macAddress, $barcode);
-        return !is_null($stored);
+
+        return ! is_null($stored);
     }
 }

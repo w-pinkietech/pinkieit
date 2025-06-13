@@ -26,9 +26,9 @@ class DefectiveProductionRepository extends AbstractRepository
     /**
      * 不良品生産数を追加する
      *
-     * @param integer $productionLineId 生産ラインID
-     * @param integer $count カウント
-     * @param Carbon $date 時刻
+     * @param  int  $productionLineId  生産ラインID
+     * @param  int  $count  カウント
+     * @param  Carbon  $date  時刻
      * @return DefectiveProduction|null 追加されたデータ
      */
     public function save(int $productionLineId, int $count, Carbon $date): ?DefectiveProduction

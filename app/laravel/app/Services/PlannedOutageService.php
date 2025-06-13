@@ -37,8 +37,8 @@ class PlannedOutageService
     /**
      * 計画停止時間を追加する
      *
-     * @param StorePlannedOutageRequest $request 計画停止時間追加リクエスト
-     * @return boolean 成否
+     * @param  StorePlannedOutageRequest  $request  計画停止時間追加リクエスト
+     * @return bool 成否
      */
     public function store(StorePlannedOutageRequest $request): bool
     {
@@ -48,9 +48,9 @@ class PlannedOutageService
     /**
      * 計画停止時間を更新する
      *
-     * @param UpdatePlannedOutageRequest $request 計画停止時間更新リクエスト
-     * @param PlannedOutage $plannedOutage 更新対象の計画停止時間
-     * @return boolean 成否
+     * @param  UpdatePlannedOutageRequest  $request  計画停止時間更新リクエスト
+     * @param  PlannedOutage  $plannedOutage  更新対象の計画停止時間
+     * @return bool 成否
      */
     public function update(UpdatePlannedOutageRequest $request, PlannedOutage $plannedOutage): bool
     {
@@ -60,8 +60,8 @@ class PlannedOutageService
     /**
      * 計画停止時間を削除する
      *
-     * @param PlannedOutage $plannedOutage 削除対象の計画停止時間
-     * @return boolean 成否
+     * @param  PlannedOutage  $plannedOutage  削除対象の計画停止時間
+     * @return bool 成否
      */
     public function destroy(PlannedOutage $plannedOutage): bool
     {

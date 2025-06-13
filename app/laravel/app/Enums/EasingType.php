@@ -19,8 +19,12 @@ use BenSampo\Enum\Enum;
 final class EasingType extends Enum implements LocalizedEnum
 {
     public const EASE = 'ease';
+
     public const LINEAR = 'linear';
+
     public const EASE_IN = 'ease-in';
+
     public const EASE_OUT = 'ease-out';
+
     public const EASE_IN_OUT = 'ease-in-out';
 }

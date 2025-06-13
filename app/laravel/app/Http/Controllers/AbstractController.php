@@ -19,10 +19,9 @@ abstract class AbstractController extends BaseController
     /**
      * モデル作成後のページリダイレクト
      *
-     * @param boolean $result 成功 or 失敗
-     * @param string $path リダイレクトパス
-     * @param array<string, mixed> $parameters リダイレクトパラメータ
-     * @return RedirectResponse
+     * @param  bool  $result  成功 or 失敗
+     * @param  string  $path  リダイレクトパス
+     * @param  array<string, mixed>  $parameters  リダイレクトパラメータ
      */
     protected function redirectWithStore(bool $result, string $path, array $parameters = []): RedirectResponse
     {
@@ -32,10 +31,9 @@ abstract class AbstractController extends BaseController
     /**
      * モデル更新後のページリダイレクト
      *
-     * @param boolean $result 成功 or 失敗
-     * @param string $path リダイレクトパス
-     * @param array<string, mixed> $parameters リダイレクトパラメータ
-     * @return RedirectResponse
+     * @param  bool  $result  成功 or 失敗
+     * @param  string  $path  リダイレクトパス
+     * @param  array<string, mixed>  $parameters  リダイレクトパラメータ
      */
     protected function redirectWithUpdate(bool $result, string $path, array $parameters = []): RedirectResponse
     {
@@ -45,10 +43,9 @@ abstract class AbstractController extends BaseController
     /**
      * モデル削除後のページリダイレクト
      *
-     * @param boolean $result 成功 or 失敗
-     * @param string $path リダイレクトパス
-     * @param array<string, mixed> $parameters リダイレクトパラメータ
-     * @return RedirectResponse
+     * @param  bool  $result  成功 or 失敗
+     * @param  string  $path  リダイレクトパス
+     * @param  array<string, mixed>  $parameters  リダイレクトパラメータ
      */
     protected function redirectWithDestroy(bool $result, string $path, array $parameters = []): RedirectResponse
     {
@@ -58,11 +55,10 @@ abstract class AbstractController extends BaseController
     /**
      * モデルのページリダイレクト
      *
-     * @param boolean $result 成功 or 失敗
-     * @param string $action 作業名称
-     * @param string $path リダイレクトパス
-     * @param array<string, mixed> $parameters リダイレクトパラメータ
-     * @return RedirectResponse
+     * @param  bool  $result  成功 or 失敗
+     * @param  string  $action  作業名称
+     * @param  string  $path  リダイレクトパス
+     * @param  array<string, mixed>  $parameters  リダイレクトパラメータ
      */
     protected function redirect(bool $result, string $action, string $path, array $parameters = []): RedirectResponse
     {
@@ -72,6 +68,7 @@ abstract class AbstractController extends BaseController
         } else {
             $route->with('toast_danger', __('pinkieit.failed_toast', ['target' => $this->name(), 'action' => $action]));
         }
+
         return $route;
     }
 }

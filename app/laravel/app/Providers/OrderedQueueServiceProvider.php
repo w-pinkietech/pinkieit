@@ -9,7 +9,9 @@ class OrderedQueueServiceProvider extends QueueServiceProvider
 {
     /**
      * Register the database queue connector.
+     *
      * @NOTE:-This will be called automatically. We override DatabaseConnector,registerRedisConnector method so that we can add custom code. Will add custom  as well
+     *
      * @param  \Illuminate\Queue\QueueManager  $manager
      * @return void
      */

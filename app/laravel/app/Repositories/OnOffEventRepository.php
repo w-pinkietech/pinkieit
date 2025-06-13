@@ -4,7 +4,6 @@ namespace App\Repositories;
 
 use App\Models\OnOff;
 use App\Models\OnOffEvent;
-use Illuminate\Support\Facades\Log;
 
 /**
  * ON-OFFメッセージイベントリポジトリ
@@ -26,8 +25,8 @@ class OnOffEventRepository extends AbstractRepository
     /**
      * ON-OFFメッセージイベントを追加する
      *
-     * @param OnOff $onOff ON-OFFメッセージ
-     * @param boolean $isOn ON or OFF
+     * @param  OnOff  $onOff  ON-OFFメッセージ
+     * @param  bool  $isOn  ON or OFF
      * @return OnOffEvent|null 追加されたON-OFFメッセージイベント (失敗時はnull)
      */
     public function save(OnOff $onOff, bool $isOn): ?OnOffEvent
@@ -40,6 +39,7 @@ class OnOffEventRepository extends AbstractRepository
             'on_off' => $isOn,
             'pin_number' => $onOff->pin_number,
         ]);
+
         return $this->storeModel($o) ? $o : null;
     }
 }

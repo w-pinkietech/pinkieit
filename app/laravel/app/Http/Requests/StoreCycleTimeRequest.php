@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Gate;
 /**
  * サイクルタイム追加リクエスト
  *
- * @property integer $process_id 工程ID
+ * @property int $process_id 工程ID
  */
 class StoreCycleTimeRequest extends FormRequest
 {

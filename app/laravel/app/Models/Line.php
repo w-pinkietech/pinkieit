@@ -12,16 +12,16 @@ use Illuminate\Database\Eloquent\Relations\Pivot;
 /**
  * ラインモデルクラス
  *
- * @property integer $line_id 主キー
- * @property integer $process_id 工程ID(外部キー)
- * @property integer $raspberry_pi_id ラズベリーパイID(外部キー)
- * @property integer|null $worker_id 作業者ID(外部キー)
- * @property integer|null $parent_id 親となる工程ID(外部キー)
+ * @property int $line_id 主キー
+ * @property int $process_id 工程ID(外部キー)
+ * @property int $raspberry_pi_id ラズベリーパイID(外部キー)
+ * @property int|null $worker_id 作業者ID(外部キー)
+ * @property int|null $parent_id 親となる工程ID(外部キー)
  * @property string $line_name ライン名
  * @property string $chart_color チャート色
- * @property integer $pin_number ピン番号
- * @property boolean $defective 不良品フラグ
- * @property integer $order 順序
+ * @property int $pin_number ピン番号
+ * @property bool $defective 不良品フラグ
+ * @property int $order 順序
  * @property Collection<int, Line> $defectiveLines 不良品ライン
  * @property RaspberryPi $raspberryPi ラズパイ
  */
@@ -88,8 +88,6 @@ class Line extends Pivot
 
     /**
      * ラインに関連する作業者を取得する
-     *
-     * @return BelongsTo
      */
     public function worker(): BelongsTo
     {
@@ -98,8 +96,6 @@ class Line extends Pivot
 
     /**
      * 不良品ライン(defective==true)に関連する加工数量ライン
-     *
-     * @return BelongsTo
      */
     public function parentLine(): BelongsTo
     {
@@ -108,8 +104,6 @@ class Line extends Pivot
 
     /**
      * 加工数量ライン(defective==false)に関連する不良品ライン
-     *
-     * @return HasMany
      */
     public function defectiveLines(): HasMany
     {
@@ -118,8 +112,6 @@ class Line extends Pivot
 
     /**
      * ラインに関連する工程を取得する
-     *
-     * @return BelongsTo
      */
     public function process(): BelongsTo
     {
@@ -128,8 +120,6 @@ class Line extends Pivot
 
     /**
      * ラインに関連するラズパイを取得する
-     *
-     * @return BelongsTo
      */
     public function raspberryPi(): BelongsTo
     {
@@ -138,8 +128,6 @@ class Line extends Pivot
 
     /**
      * ピン番号文字列
-     *
-     * @return string
      */
     public function pinNumber(): string
     {

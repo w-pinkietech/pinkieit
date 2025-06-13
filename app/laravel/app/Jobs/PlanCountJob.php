@@ -24,12 +24,6 @@ class PlanCountJob implements ShouldQueue
 
     /**
      * Create a new job instance.
-     *
-     * @param integer $productionLineId
-     * @param integer $cycleTimeMs
-     * @param Carbon $planDate
-     * @param boolean $isChangeover
-     * @param string $jobKey
      */
     public function __construct(
         private readonly int $productionLineId,

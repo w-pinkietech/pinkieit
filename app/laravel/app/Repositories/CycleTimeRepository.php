@@ -26,7 +26,7 @@ class CycleTimeRepository extends AbstractRepository
     /**
      * 稼働していない品番選択用のオプションを取得する
      *
-     * @param Process $process 対象の工程
+     * @param  Process  $process  対象の工程
      * @return array<int, string>
      */
     public function notRunningPartNumberOptions(Process $process): array
@@ -43,6 +43,7 @@ class CycleTimeRepository extends AbstractRepository
 
         return $cycleTimes->reduce(function (array $carry, CycleTime $cycleTime) {
             $carry[$cycleTime->part_number_id] = $cycleTime->partNumber->part_number_name;
+
             return $carry;
         }, []);
     }

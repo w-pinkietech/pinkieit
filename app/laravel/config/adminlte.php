@@ -16,7 +16,7 @@ return [
 
     'title' => '',
     'title_prefix' => '',
-    'title_postfix' => '- ' . env('APP_NAME'),
+    'title_postfix' => '- '.env('APP_NAME'),
 
     /*
     |--------------------------------------------------------------------------
@@ -255,7 +255,7 @@ return [
         //     'topnav_right' => true,
         // ],
         [
-            'type'         => 'fullscreen-widget',
+            'type' => 'fullscreen-widget',
             'topnav_right' => true,
         ],
 
@@ -295,7 +295,7 @@ return [
         [
             'text' => 'process',
             'route' => 'process.index',
-            'icon' => 'fa-solid fa-fw fa-industry'
+            'icon' => 'fa-solid fa-fw fa-industry',
         ],
         [
             'text' => 'part_number',

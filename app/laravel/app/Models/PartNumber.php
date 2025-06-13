@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 /**
  * 品番モデルクラス
  *
- * @property integer $part_number_id 主キー
+ * @property int $part_number_id 主キー
  * @property string $part_number_name 品番名
  * @property string|null $barcode バーコード
  * @property string|null $remark 備考

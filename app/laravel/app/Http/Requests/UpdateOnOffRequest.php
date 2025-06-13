@@ -10,8 +10,8 @@ use Illuminate\Support\Facades\Gate;
 /**
  * ON-OFFスイッチ更新リクエスト
  *
- * @property integer $on_off_id ON-OFFスイッチID
- * @property integer $process_id 工程ID
+ * @property int $on_off_id ON-OFFスイッチID
+ * @property int $process_id 工程ID
  */
 class UpdateOnOffRequest extends FormRequest
 {

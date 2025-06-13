@@ -42,8 +42,8 @@ class UserService
     /**
      * プロフィールを更新する
      *
-     * @param UpdateProfileRequest $request 作業者更新リクエスト
-     * @return boolean 成否
+     * @param  UpdateProfileRequest  $request  作業者更新リクエスト
+     * @return bool 成否
      */
     public function updateProfile(UpdateProfileRequest $request): bool
     {
@@ -53,8 +53,8 @@ class UserService
     /**
      * ユーザーを追加する
      *
-     * @param StoreUserRequest $request 工程追加リクエスト
-     * @return boolean 成否
+     * @param  StoreUserRequest  $request  工程追加リクエスト
+     * @return bool 成否
      */
     public function store(StoreUserRequest $request): bool
     {
@@ -62,14 +62,15 @@ class UserService
         $email = $request->email;
         $password = $request->password;
         $role = $request->role;
+
         return $this->user->create($name, $email, $password, $role);
     }
 
     /**
      * ユーザーを削除する
      *
-     * @param User $user 削除対象のユーザー
-     * @return boolean 成否
+     * @param  User  $user  削除対象のユーザー
+     * @return bool 成否
      */
     public function destroy(User $user): bool
     {
@@ -86,30 +87,32 @@ class UserService
         $user = $this->user();
         $user->tokens()->delete();
         $token = $user->createToken(config('app.name'));
-        return 'Bearer ' . $token->plainTextToken;
+
+        return 'Bearer '.$token->plainTextToken;
     }
 
     /**
      * パスワードを更新する
      *
-     * @param UpdatePasswordRequest $request 更新リクエスト
-     * @return boolean 成否
+     * @param  UpdatePasswordRequest  $request  更新リクエスト
+     * @return bool 成否
      */
     public function updatePassword(UpdatePasswordRequest $request): bool
     {
         $user = $this->user();
         $user->password = Hash::make($request->password);
+
         return $user->save();
     }
 
     /**
      * ユーザーを作成する
      *
-     * @param string $name ユーザー名
-     * @param string $email メールアドレス
-     * @param string $password パスワード (平文)
-     * @param RoleType $role 権限
-     * @return boolean 成否
+     * @param  string  $name  ユーザー名
+     * @param  string  $email  メールアドレス
+     * @param  string  $password  パスワード (平文)
+     * @param  RoleType  $role  権限
+     * @return bool 成否
      */
     public function create(string $name, string $email, string $password, RoleType $role): bool
     {
@@ -127,7 +130,7 @@ class UserService
         if ($user instanceof User) {
             return $user;
         } else {
-            throw new AuthorizationException();
+            throw new AuthorizationException;
         }
     }
 }

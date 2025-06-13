@@ -9,9 +9,9 @@ use Illuminate\Database\Eloquent\Model;
 /**
  * 不良品データモデルクラス
  *
- * @property integer $production_line_id 生産ラインID(外部キー)
+ * @property int $production_line_id 生産ラインID(外部キー)
  * @property Carbon $at 生産時刻
- * @property integer $count 生産数
+ * @property int $count 生産数
  */
 class DefectiveProduction extends Model
 {

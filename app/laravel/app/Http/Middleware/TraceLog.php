@@ -12,7 +12,6 @@ class TraceLog
     /**
      * Handle an incoming request.
      *
-     * @param Request $request
      * @param  \Closure(\Illuminate\Http\Request): (Response|\Illuminate\Http\RedirectResponse)  $next
      * @return Response|\Illuminate\Http\RedirectResponse
      */
@@ -22,6 +21,7 @@ class TraceLog
         Log::debug('start', $context);
         $response = $next($request);
         Log::debug('end', $context);
+
         return $response;
     }
 }

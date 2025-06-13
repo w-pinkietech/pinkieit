@@ -9,9 +9,9 @@ use Illuminate\Database\Eloquent\Model;
 /**
  * 生産者モデルクラス
  *
- * @property integer $producer_id 主キー
- * @property integer|null $worker_id 作業者ID(外部キー)
- * @property integer $production_line_id 生産ラインID(外部キー)
+ * @property int $producer_id 主キー
+ * @property int|null $worker_id 作業者ID(外部キー)
+ * @property int $production_line_id 生産ラインID(外部キー)
  * @property string $identification_number 識別番号
  * @property string $worker_name 作業者名
  * @property Carbon $start 開始時間

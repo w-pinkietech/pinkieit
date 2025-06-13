@@ -15,15 +15,15 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 /**
  * 生産履歴モデルクラス
  *
- * @property integer $production_history_id 主キー
- * @property integer|null $process_id 工程ID(外部キー)
- * @property integer|null $part_number_id 品番ID(外部キー)
+ * @property int $production_history_id 主キー
+ * @property int|null $process_id 工程ID(外部キー)
+ * @property int|null $part_number_id 品番ID(外部キー)
  * @property string $process_name 工程名
  * @property string $part_number_name 品番名
  * @property string $plan_color 計画値色
  * @property float $cycle_time サイクルタイム
  * @property float $over_time オーバータイム
- * @property integer|null $goal 目標値
+ * @property int|null $goal 目標値
  * @property Carbon $start 生産開始時刻
  * @property Carbon|null $stop 生産終了時刻
  * @property ProductionStatus $status ステータス
@@ -91,19 +91,15 @@ class ProductionHistory extends Model
 
     /**
      * 生産履歴と1対多で関連する生産ラインを取得する
-     *
-     * @return HasMany
      */
     public function productionLines(): HasMany
     {
         return $this->hasMany(ProductionLine::class, $this->primaryKey)
-            ->where('defective', '=', false);;
+            ->where('defective', '=', false);
     }
 
     /**
      * 生産履歴と1対1で関連する指標となる生産ラインを取得する
-     *
-     * @return HasOne
      */
     public function indicatorLine(): HasOne
     {
@@ -113,8 +109,6 @@ class ProductionHistory extends Model
 
     /**
      * 生産履歴と1対多で関連する計画停止時間を取得する
-     *
-     * @return HasMany
      */
     public function productionPlannedOutages(): HasMany
     {
@@ -123,8 +117,6 @@ class ProductionHistory extends Model
 
     /**
      * 生産履歴と1対1で関連する工程を取得する
-     *
-     * @return HasOne
      */
     public function process(): HasOne
     {
@@ -133,8 +125,6 @@ class ProductionHistory extends Model
 
     /**
      * ステータス名を取得する
-     *
-     * @return string
      */
     public function getStatusNameAttribute(): string
     {
@@ -144,7 +134,7 @@ class ProductionHistory extends Model
     /**
      * 生産が完了したかどうか
      *
-     * @return boolean trueであれば完了
+     * @return bool trueであれば完了
      */
     public function isComplete(): bool
     {
@@ -153,23 +143,22 @@ class ProductionHistory extends Model
 
     /**
      * 生産期間を文字列で取得する
-     *
-     * @return string
      */
     public function period(): string
     {
         $stop = $this->stop ?? Utility::now();
         $totalSeconds = $this->start->diffInSeconds($stop);
-        $s = str_pad((string)($totalSeconds % 60), 2, '0', STR_PAD_LEFT);
-        $i = str_pad((string)((int)($totalSeconds / 60) % 60), 2, '0', STR_PAD_LEFT);
-        $h = (int)($totalSeconds / 3600);
+        $s = str_pad((string) ($totalSeconds % 60), 2, '0', STR_PAD_LEFT);
+        $i = str_pad((string) ((int) ($totalSeconds / 60) % 60), 2, '0', STR_PAD_LEFT);
+        $h = (int) ($totalSeconds / 3600);
+
         return "{$h}:{$i}:{$s}";
     }
 
     /**
      * 最終生産数を取得する
      *
-     * @return integer 最終生産数
+     * @return int 最終生産数
      */
     public function lastProductCount(): int
     {
@@ -179,21 +168,21 @@ class ProductionHistory extends Model
     /**
      * サイクルタイム[ms]を取得する
      *
-     * @return integer サイクルタイム
+     * @return int サイクルタイム
      */
     public function cycleTimeMs(): int
     {
-        return (int)($this->cycle_time * 1000);
+        return (int) ($this->cycle_time * 1000);
     }
 
     /**
      * オーバータイム[ms]を取得する
      *
-     * @return integer オーバータイム
+     * @return int オーバータイム
      */
     public function overTimeMs(): int
     {
-        return (int)($this->over_time * 1000);
+        return (int) ($this->over_time * 1000);
     }
 
     /**
@@ -209,7 +198,7 @@ class ProductionHistory extends Model
     /**
      * 現在計画停止時間中かどうかを取得する
      *
-     * @return boolean trueなら計画停止時間中
+     * @return bool trueなら計画停止時間中
      */
     public function inPlannedOutage(): bool
     {
@@ -229,6 +218,7 @@ class ProductionHistory extends Model
         $data['breakdownCount'] = count($payloadData->breakdowns);
         $data['inPlannedOutage'] = $payloadData->inPlannedOutage();
         unset($data['jobKey']);
+
         return $data;
     }
 }

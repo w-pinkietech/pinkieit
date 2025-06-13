@@ -16,7 +16,7 @@ services:
         condition: service_started
     command: ["/usr/local/bin/app-entrypoint.sh"]
     volumes:
-      # - ./app/laravel:/var/www/html # for development only
+      - ./app/laravel:/var/www/html # for development only
       - ./docker/php/local.ini:/usr/local/etc/php/conf.d/local.ini
     ports:
       - 18080:80

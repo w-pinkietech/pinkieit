@@ -29,9 +29,9 @@ class ChangeoverJob implements ShouldQueue
     /**
      * 段取り替えの開始/終了ジョブインスタンスを作成する
      *
-     * @param integer $productionHistoryId 生産履歴ID
-     * @param Carbon $date 段取り替え開始/終了の時刻
-     * @param boolean $changeover trueの場合段取り替えの開始
+     * @param  int  $productionHistoryId  生産履歴ID
+     * @param  Carbon  $date  段取り替え開始/終了の時刻
+     * @param  bool  $changeover  trueの場合段取り替えの開始
      */
     public function __construct(
         private readonly int $productionHistoryId,
@@ -79,7 +79,7 @@ class ChangeoverJob implements ShouldQueue
                     // 段取り替えの開始/終了区間を追加
                     $x->addChangeover($this->date, $this->changeover);
                     // ジョブキーの更新
-                    $x->jobKey = (string)Str::uuid();
+                    $x->jobKey = (string) Str::uuid();
                 });
 
                 // 生産データを追加

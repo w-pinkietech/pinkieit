@@ -4,7 +4,6 @@ namespace App\Repositories;
 
 use App\Models\Sensor;
 use App\Models\SensorEvent;
-use Illuminate\Support\Facades\Log;
 
 /**
  * センサーイベントリポジトリ
@@ -26,10 +25,10 @@ class SensorEventRepository extends AbstractRepository
     /**
      * センサーイベントを登録する
      *
-     * @param Sensor $sensor センサー
-     * @param string $ipAddress IPアドレス
-     * @param boolean $signal ON-OFF信号
-     * @param integer|float $value センサー値
+     * @param  Sensor  $sensor  センサー
+     * @param  string  $ipAddress  IPアドレス
+     * @param  bool  $signal  ON-OFF信号
+     * @param  int|float  $value  センサー値
      * @return SensorEvent|null 登録されたイベント (失敗時はnull)
      */
     public function save(Sensor $sensor, string $ipAddress, bool $signal, int|float $value): ?SensorEvent

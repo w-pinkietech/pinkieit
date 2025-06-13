@@ -11,19 +11,19 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 /**
  * センサーイベントモデルクラス
  *
- * @property integer $sensor_event_id 主キー
- * @property integer $process_id 工程ID(外部キー)
- * @property integer $sensor_id センサーID(外部キー)
+ * @property int $sensor_event_id 主キー
+ * @property int $process_id 工程ID(外部キー)
+ * @property int $sensor_id センサーID(外部キー)
  * @property string $ip_address IPアドレス
- * @property integer $identification_number 識別番号
+ * @property int $identification_number 識別番号
  * @property SensorType $sensor_type センサー種別
  * @property string $alarm_text アラームテキスト
- * @property boolean $trigger トリガー
- * @property boolean $signal 信号
+ * @property bool $trigger トリガー
+ * @property bool $signal 信号
  * @property float $value センサー値
  * @property Carbon $at 時刻
  * @property string $sensor_name センサー名
- * @property boolean $is_start イベントの開始フラグ
+ * @property bool $is_start イベントの開始フラグ
  */
 class SensorEvent extends Model
 {
@@ -100,8 +100,6 @@ class SensorEvent extends Model
 
     /**
      * センサーイベントと関連する工程を取得する
-     *
-     * @return BelongsTo
      */
     public function process(): BelongsTo
     {
@@ -111,7 +109,7 @@ class SensorEvent extends Model
     /**
      * センサーイベントが開始されたかどうかを取得する
      *
-     * @return boolean trueであればイベントの開始
+     * @return bool trueであればイベントの開始
      */
     public function getIsStartAttribute(): bool
     {
@@ -120,8 +118,6 @@ class SensorEvent extends Model
 
     /**
      * センサー種別のキー名称を取得する
-     *
-     * @return string
      */
     public function getSensorNameAttribute(): string
     {

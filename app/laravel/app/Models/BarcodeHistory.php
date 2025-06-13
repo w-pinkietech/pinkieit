@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 /**
  * バーコード読み取り履歴モデルクラス
  *
- * @property integer $barcode_history_id 主キー
+ * @property int $barcode_history_id 主キー
  * @property string $ip_address IPアドレス
  * @property string $mac_address MACアドレス
  * @property string $barcode バーコード

@@ -23,7 +23,6 @@ class DataTablesLocaleController extends BaseController
     /**
      * Handle the incoming request.
      *
-     * @param Request $request
      * @return Response
      */
     public function __invoke(Request $request)
@@ -33,7 +32,7 @@ class DataTablesLocaleController extends BaseController
         if (array_key_exists($locale, $config)) {
             return $config[$locale];
         } else {
-            throw new NotFoundHttpException();
+            throw new NotFoundHttpException;
         }
     }
 }

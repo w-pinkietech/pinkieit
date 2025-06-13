@@ -17,6 +17,8 @@ use BenSampo\Enum\Enum;
 final class RoleType extends Enum implements LocalizedEnum
 {
     public const SYSTEM = 1;
+
     public const ADMIN = 5;
+
     public const USER = 10;
 }

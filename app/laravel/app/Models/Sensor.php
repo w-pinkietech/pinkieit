@@ -10,13 +10,13 @@ use Illuminate\Database\Eloquent\Relations\Pivot;
 /**
  * センサーモデルクラス
  *
- * @property integer $sensor_id 主キー
- * @property integer $process_id 工程ID(外部キー)
- * @property integer $raspberry_pi_id ラズパイID(外部キー)
- * @property integer $identification_number 識別番号
+ * @property int $sensor_id 主キー
+ * @property int $process_id 工程ID(外部キー)
+ * @property int $raspberry_pi_id ラズパイID(外部キー)
+ * @property int $identification_number 識別番号
  * @property SensorType $sensor_type センサー種別
  * @property string $alarm_text アラームテキスト
- * @property boolean $trigger トリガー
+ * @property bool $trigger トリガー
  */
 class Sensor extends Pivot
 {
@@ -79,8 +79,6 @@ class Sensor extends Pivot
 
     /**
      * センサーと関連するラズベリーパイを取得する
-     *
-     * @return BelongsTo
      */
     public function raspberryPi(): BelongsTo
     {
@@ -89,8 +87,6 @@ class Sensor extends Pivot
 
     /**
      * センサーイベントと関連する工程を取得する
-     *
-     * @return BelongsTo
      */
     public function process(): BelongsTo
     {

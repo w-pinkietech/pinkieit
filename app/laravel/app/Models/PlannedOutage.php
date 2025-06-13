@@ -2,8 +2,6 @@
 
 namespace App\Models;
 
-use App\Models\Process;
-use App\Models\ProcessPlannedOutage;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -12,7 +10,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 /**
  * 計画停止時間モデルクラス
  *
- * @property integer $planned_outage_id 主キー
+ * @property int $planned_outage_id 主キー
  * @property string $planned_outage_name 計画停止時間名
  * @property Carbon $start_time 開始時間
  * @property Carbon $end_time 終了時間
@@ -61,8 +59,6 @@ class PlannedOutage extends Model
 
     /**
      * 計画停止時間と多対多で関連する工程を取得する
-     *
-     * @return BelongsToMany
      */
     public function processes(): BelongsToMany
     {

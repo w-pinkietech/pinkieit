@@ -20,7 +20,9 @@ use Illuminate\Support\Facades\Log;
 class SensorService
 {
     private readonly RaspberryPiRepository $raspberryPi;
+
     private readonly SensorRepository $sensor;
+
     private readonly SensorEventRepository $sensorEvent;
 
     /**
@@ -52,14 +54,15 @@ class SensorService
     {
         $values = array_slice(SensorType::getValues(), 1);
         $descriptions = array_slice(array_map(fn (SensorType $x) => $x->description, SensorType::getInstances()), 1);
+
         return array_combine($values, $descriptions);
     }
 
     /**
      * センサーを追加する
      *
-     * @param StoreSensorRequest $request センサー追加リクエスト
-     * @return boolean 成否
+     * @param  StoreSensorRequest  $request  センサー追加リクエスト
+     * @return bool 成否
      */
     public function store(StoreSensorRequest $request): bool
     {
@@ -69,9 +72,9 @@ class SensorService
     /**
      * センサーを更新する
      *
-     * @param UpdateSensorRequest $request センサー更新リクエスト
-     * @param Sensor $sensor 更新対象のセンサー
-     * @return boolean 成否
+     * @param  UpdateSensorRequest  $request  センサー更新リクエスト
+     * @param  Sensor  $sensor  更新対象のセンサー
+     * @return bool 成否
      */
     public function update(UpdateSensorRequest $request, Sensor $sensor): bool
     {
@@ -81,8 +84,8 @@ class SensorService
     /**
      * センサーを削除する
      *
-     * @param Sensor $sensor 削除対象のセンサー
-     * @return boolean 成否
+     * @param  Sensor  $sensor  削除対象のセンサー
+     * @return bool 成否
      */
     public function destroy(Sensor $sensor): bool
     {
@@ -92,12 +95,11 @@ class SensorService
     /**
      * センサーイベントを登録する
      *
-     * @param int $identificationNumber 識別番号
-     * @param SensorType $sensorType センサー種別
-     * @param string $ipAddress IPアドレス
-     * @param boolean $signal 信号
-     * @param integer|float $value センサー値
-     * @return void
+     * @param  int  $identificationNumber  識別番号
+     * @param  SensorType  $sensorType  センサー種別
+     * @param  string  $ipAddress  IPアドレス
+     * @param  bool  $signal  信号
+     * @param  int|float  $value  センサー値
      */
     public function insert(int $identificationNumber, SensorType $sensorType, string $ipAddress, bool $signal, int|float $value): void
     {
@@ -107,6 +109,7 @@ class SensorService
         $raspi = $this->raspberryPi->first(['ip_address' => $ipAddress]);
         if (is_null($raspi)) {
             Log::warning('Raspberry pi not found', [$ipAddress]);
+
             return;
         }
         $sensor = $this->sensor->first([
@@ -115,10 +118,11 @@ class SensorService
         ], 'process');
         if (is_null($sensor)) {
             Log::warning('Sensor not found', [$identificationNumber]);
+
             return;
         }
         $sensorEvent = $this->sensorEvent->save($sensor, $ipAddress, $signal, $value);
-        if (!is_null($sensorEvent)) {
+        if (! is_null($sensorEvent)) {
             Slack::send(__($sensorEvent->is_start ? 'pinkieit.start_alarm_notification' : 'pinkieit.stop_alarm_notification', [
                 'process' => $sensor->process->process_name,
                 'event' => $sensorEvent->alarm_text,

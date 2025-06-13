@@ -11,9 +11,9 @@ use Illuminate\Validation\Rule;
 /**
  * ライン更新リクエスト
  *
- * @property integer $line_id ラインID
- * @property integer $process_id 工程ID
- * @property integer $raspberry_pi_id ラズパイID
+ * @property int $line_id ラインID
+ * @property int $process_id 工程ID
+ * @property int $raspberry_pi_id ラズパイID
  */
 class UpdateLineRequest extends FormRequest
 {
@@ -48,8 +48,8 @@ class UpdateLineRequest extends FormRequest
                 Rule::exists('lines', 'line_id')->where(function ($query) {
                     $query->where('process_id', $this->process_id);
                     $query->where('defective', false);
-                })
-            ]
+                }),
+            ],
         ];
 
         if ($this->defective === true) {
@@ -69,8 +69,8 @@ class UpdateLineRequest extends FormRequest
         /** @var Process */
         $process = $this->route('process');
         /** @var Line */
-        $line =  $this->route('line');
-        $defective = !is_null($this->defective);
+        $line = $this->route('line');
+        $defective = ! is_null($this->defective);
 
         // パラメータをマージ
         $this->merge([

@@ -9,13 +9,13 @@ use Illuminate\Database\Eloquent\Model;
 /**
  * ON-OFFメッセージイベントモデルクラス
  *
- * @property integer $on_off_event_id 主キー
- * @property integer $process_id 工程ID(外部キー)
- * @property integer $on_off_id ON/OFF ID(外部キー)
+ * @property int $on_off_event_id 主キー
+ * @property int $process_id 工程ID(外部キー)
+ * @property int $on_off_id ON/OFF ID(外部キー)
  * @property string $event_name イベント名
  * @property string|null $message メッセージ
- * @property boolean $on_off ON/OFFの状態
- * @property integer $pin_number ピン番号
+ * @property bool $on_off ON/OFFの状態
+ * @property int $pin_number ピン番号
  * @property Carbon $at イベント発生日時
  */
 class OnOffEvent extends Model

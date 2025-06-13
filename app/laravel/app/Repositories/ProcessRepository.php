@@ -24,9 +24,9 @@ class ProcessRepository extends AbstractRepository
     /**
      * 指定した工程の生産を開始する
      *
-     * @param Process $process 工程
-     * @param integer $productionHistoryId 工程履歴ID
-     * @return boolean 成否
+     * @param  Process  $process  工程
+     * @param  int  $productionHistoryId  工程履歴ID
+     * @return bool 成否
      */
     public function start(Process $process, int $productionHistoryId): bool
     {
@@ -36,8 +36,8 @@ class ProcessRepository extends AbstractRepository
     /**
      * 指定した工程の生産を停止する
      *
-     * @param Process $process 工程
-     * @return boolean 成否
+     * @param  Process  $process  工程
+     * @return bool 成否
      */
     public function stop(Process $process): bool
     {

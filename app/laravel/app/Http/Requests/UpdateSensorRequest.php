@@ -12,8 +12,8 @@ use Illuminate\Validation\Rule;
 /**
  * センサー更新リクエスト
  *
- * @property integer $sensor_id センサーID
- * @property integer $raspberry_pi_id ラズパイID
+ * @property int $sensor_id センサーID
+ * @property int $raspberry_pi_id ラズパイID
  */
 class UpdateSensorRequest extends FormRequest
 {
@@ -59,7 +59,7 @@ class UpdateSensorRequest extends FormRequest
         $this->merge([
             'process_id' => $process->process_id,
             'sensor_id' => $sensor->sensor_id,
-            'trigger' => !is_null($this->trigger),
+            'trigger' => ! is_null($this->trigger),
         ]);
     }
 }

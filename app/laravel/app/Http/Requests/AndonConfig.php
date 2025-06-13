@@ -8,28 +8,28 @@ use Illuminate\Database\Eloquent\Model;
 /**
  * アンドン設定モデルクラス
  *
- * @property integer $andon_config_id 主キー
- * @property integer $user_id ユーザーID(外部キー)
- * @property integer $row_count 行数
- * @property integer $column_count 列数
- * @property boolean $auto_play 自動再生フラグ
- * @property integer $auto_play_speed 自動再生速度[ms]
- * @property integer $slide_speed スライド速度[ms]
+ * @property int $andon_config_id 主キー
+ * @property int $user_id ユーザーID(外部キー)
+ * @property int $row_count 行数
+ * @property int $column_count 列数
+ * @property bool $auto_play 自動再生フラグ
+ * @property int $auto_play_speed 自動再生速度[ms]
+ * @property int $slide_speed スライド速度[ms]
  * @property string $easing スライドアニメーション
- * @property boolean $fade フェードフラグ
- * @property integer $item_column_count アイテム表示列数
- * @property boolean $is_show_part_number 品番表示フラグ
- * @property boolean $is_show_start 開始時間表示フラグ
- * @property boolean $is_show_good_count 良品数表示フラグ
- * @property boolean $is_show_good_rate 良品率表示フラグ
- * @property boolean $is_show_defective_count 不良品数表示フラグ
- * @property boolean $is_show_defective_rate 不良品率表示フラグ
- * @property boolean $is_show_plan_count 計画値表示フラグ
- * @property boolean $is_show_achievement_rate 達成率表示フラグ
- * @property boolean $is_show_cycle_time サイクルタイム表示フラグ
- * @property boolean $is_show_time_operating_rate 時間稼働率表示フラグ
- * @property boolean $is_show_performance_operating_rate 性能稼働率表示フラグ
- * @property boolean $is_show_overall_equipment_effectiveness 設備総合効率表示フラグ
+ * @property bool $fade フェードフラグ
+ * @property int $item_column_count アイテム表示列数
+ * @property bool $is_show_part_number 品番表示フラグ
+ * @property bool $is_show_start 開始時間表示フラグ
+ * @property bool $is_show_good_count 良品数表示フラグ
+ * @property bool $is_show_good_rate 良品率表示フラグ
+ * @property bool $is_show_defective_count 不良品数表示フラグ
+ * @property bool $is_show_defective_rate 不良品率表示フラグ
+ * @property bool $is_show_plan_count 計画値表示フラグ
+ * @property bool $is_show_achievement_rate 達成率表示フラグ
+ * @property bool $is_show_cycle_time サイクルタイム表示フラグ
+ * @property bool $is_show_time_operating_rate 時間稼働率表示フラグ
+ * @property bool $is_show_performance_operating_rate 性能稼働率表示フラグ
+ * @property bool $is_show_overall_equipment_effectiveness 設備総合効率表示フラグ
  */
 class AndonConfig extends Model
 {
@@ -133,8 +133,6 @@ class AndonConfig extends Model
 
     /**
      * 要素の分配数を返す
-     *
-     * @return integer
      */
     public function chunkLength(): int
     {

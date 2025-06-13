@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 /**
  * ラズベリーパイモデルクラス
  *
- * @property integer $raspberry_pi_id 主キー
+ * @property int $raspberry_pi_id 主キー
  * @property string $raspberry_pi_name ラズパイ名
  * @property string $ip_address IPアドレス
  * @property float|null $cpu_temperature CPU温度
@@ -52,8 +52,6 @@ class RaspberryPi extends Model
 
     /**
      * ラズベリーパイと多対多で関連する工程を取得する
-     *
-     * @return BelongsToMany
      */
     public function processes(): BelongsToMany
     {

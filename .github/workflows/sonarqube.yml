@@ -102,6 +102,12 @@ jobs:
         run: |
           sed -i 's@/home/runner/work/pinkieit/pinkieit/app/laravel/@/github/workspace/app/laravel/@g' app/laravel/coverage/clover.xml
 
+      - name: Run PHPStan analysis
+        run: |
+          mkdir -p reports
+          ./vendor/bin/phpstan analyse --memory-limit=512M --error-format=json > reports/phpstan.json || true
+        working-directory: app/laravel
+
       - name: SonarQube Scan
         uses: SonarSource/sonarqube-scan-action@master
         env:

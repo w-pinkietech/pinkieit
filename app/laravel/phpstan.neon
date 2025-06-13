@@ -20,3 +20,6 @@ parameters:
         - ./storage/*
         - ./bootstrap/cache/*
         - ./node_modules/*
+
+    # Generate reports for SonarQube integration
+    reportUnmatchedIgnoredErrors: false

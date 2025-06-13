@@ -35,6 +35,10 @@ npm run lint             # Run semistandard linter with snazzy output
 ./vendor/bin/phpstan analyse app/  # Analyze specific directory
 ./vendor/bin/phpstan analyse --level=max  # Run with maximum rule level
 
+# Generate reports for SonarQube integration
+mkdir -p reports
+./vendor/bin/phpstan analyse --memory-limit=512M --error-format=json > reports/phpstan.json
+
 # Note: When using Docker, prefix commands with:
 # docker compose exec web-app [command]
 

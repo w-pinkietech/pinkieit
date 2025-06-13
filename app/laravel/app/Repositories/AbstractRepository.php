@@ -48,19 +48,24 @@ abstract class AbstractRepository
      *
      * @param  string|array<int, string>|null  $with  関連して取得するモデル
      * @param  string|null  $order  順序
+     * @return Collection<int, TModel>
      */
     public function all(string|array|null $with = null, ?string $order = null): Collection
     {
         if (is_null($with)) {
             if (is_null($order)) {
+                /** @var Collection<int, TModel> */
                 return $this->model->all();
             } else {
+                /** @var Collection<int, TModel> */
                 return $this->model->orderBy($order)->get();
             }
         } else {
             if (is_null($order)) {
+                /** @var Collection<int, TModel> */
                 return $this->model->with($with)->get();
             } else {
+                /** @var Collection<int, TModel> */
                 return $this->model->with($with)->orderBy($order)->get();
             }
         }

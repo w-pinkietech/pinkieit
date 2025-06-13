@@ -49,7 +49,7 @@ class AndonService
                 'sensorEvents',
                 'productionHistory.indicatorLine.payload',
             ])
-            ->map(function (Process $p) {
+            ->map(function (Process $p): Process {
                 if (! is_null($p->productionHistory)) {
                     $payloadData = $p->productionHistory->indicatorLine->payload->getPayloadData();
                     $p->production_summary = $p->productionHistory->makeProductionSummary($payloadData);

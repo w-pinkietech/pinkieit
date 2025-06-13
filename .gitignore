@@ -8,6 +8,7 @@ app/laravel/storage/*.key
 app/laravel/vendor
 app/laravel/.phpunit.result.cache
 app/laravel/coverage/
+app/laravel/reports/
 app/laravel/Homestead.json
 app/laravel/Homestead.yaml
 app/laravel/auth.json

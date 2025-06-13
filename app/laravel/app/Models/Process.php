@@ -25,6 +25,7 @@ use Illuminate\Support\Facades\DB;
  * @property Collection<int, RaspberryPi> $raspberryPis ラズパイ
  * @property Collection<int, PlannedOutage> $plannedOutages 計画停止時間
  * @property ProductionHistory|null $productionHistory 生産履歴
+ * @property array<string, mixed>|null $production_summary 生産サマリー
  */
 class Process extends Model
 {

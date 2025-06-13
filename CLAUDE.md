@@ -30,7 +30,13 @@ npm run lint             # Run semistandard linter with snazzy output
 
 # Testing
 php artisan test         # Run PHPUnit tests (now available)
+php artisan test --coverage  # Run tests with coverage report
 php artisan dusk         # Run Laravel Dusk browser tests
+
+# SonarQube Analysis
+# Generate coverage report first, then run analysis
+php artisan test --coverage
+sonar-scanner -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=YOUR_TOKEN
 ```
 
 ### Database Operations
@@ -68,6 +74,7 @@ PinkieIT is a Production Management System (MES) designed for factory floor moni
 - **IoT Communication**: MQTT (Eclipse Mosquitto)
 - **Frontend**: Bootstrap 5, jQuery, Chart.js, AdminLTE 3 theme
 - **Asset Building**: Laravel Mix with Sass
+- **Code Quality**: PHPUnit with PCOV for coverage, SonarQube Cloud for analysis
 
 ### Core Architecture Patterns
 
@@ -102,4 +109,5 @@ PinkieIT is a Production Management System (MES) designed for factory floor moni
 - **Defect Tracking**: Quality control with defective product monitoring
 
 ## Updating this File
+
 If you think you need to update this file or the programmer ask to do so, update this rules to adapt to the new changes. This file is meant to be a living document that evolves with the project.

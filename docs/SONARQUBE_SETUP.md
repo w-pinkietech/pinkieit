@@ -42,6 +42,7 @@ This will create the `coverage/clover.xml` file that SonarQube will import.
 ### 3. Running SonarQube Analysis
 
 #### Local Analysis
+
 If you have SonarScanner installed locally:
 
 ```bash
@@ -52,11 +53,13 @@ sonar-scanner \
 ```
 
 #### CI/CD Integration
-The SonarQube analysis will be automatically run in CI/CD pipeline (to be configured in issue #19).
+
+The SonarQube analysis is automatically run via GitHub Actions workflow. See [CI/CD Workflow Documentation](CI_CD_WORKFLOW.md) for details.
 
 ## Quality Gates
 
 SonarQube Cloud will enforce quality gates based on:
+
 - Code coverage percentage
 - Code smells
 - Security vulnerabilities
@@ -66,12 +69,15 @@ SonarQube Cloud will enforce quality gates based on:
 ## Troubleshooting
 
 ### Coverage Not Showing
+
 1. Ensure coverage report exists: `app/laravel/coverage/clover.xml`
 2. Check that the path in `sonar.php.coverage.reportPaths` is correct
 3. Verify coverage report format is Clover XML
 
 ### Files Not Analyzed
+
 Check the exclusions in `sonar-project.properties`:
+
 - Vendor directories are excluded
 - Blade templates are excluded (not PHP files)
 - Migration files are excluded

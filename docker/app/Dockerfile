@@ -1,4 +1,4 @@
-FROM ghcr.io/w-pinkietech/pinkieit/base-image:latest
+FROM pinkieit-base:latest
 
 # Copy Apache configuration file
 COPY docker/app/apache/sites-available/000-default.conf /etc/apache2/sites-available/000-default.conf

@@ -14,10 +14,11 @@ jobs:
     
     services:
       mysql:
-        image: mysql:8.0
+        image: mariadb:10.11
         env:
           MYSQL_ROOT_PASSWORD: password
           MYSQL_DATABASE: pinkieittest
+          MYSQL_ALLOW_EMPTY_PASSWORD: false
         ports:
           - 3306:3306
         options: >-

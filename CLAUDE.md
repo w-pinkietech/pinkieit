@@ -25,6 +25,9 @@ npm run lint             # Run semistandard linter with snazzy output
 ./vendor/bin/pint        # Laravel Pint for code formatting
 ./vendor/bin/phpstan     # Larastan static analysis
 
+# Run pint to ensure coding styles
+./vendor/bin/pint
+
 # Testing
 php artisan test         # Run PHPUnit tests (now available)
 php artisan dusk         # Run Laravel Dusk browser tests

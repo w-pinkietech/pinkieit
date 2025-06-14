@@ -8,7 +8,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 ```bash
 # Frontend development (Laravel Mix)
 npm run dev              # Development build
-npm run prod             # Production build  
+npm run prod             # Production build
 npm run watch            # Watch for changes
 
 # PHP dependencies
@@ -126,9 +126,6 @@ PinkieIT is a Production Management System (MES) designed for factory floor moni
 
 If you think you need to update this file or the programmer ask to do so, update this rules to adapt to the new changes. This file is meant to be a living document that evolves with the project.
 
-## Development Guidelines
-- **Always read and follow editorconfig.**
-
 ## Additional Guidance
 - php related commands should run on docker env
-```
+- **Always read and follow editorconfig.**

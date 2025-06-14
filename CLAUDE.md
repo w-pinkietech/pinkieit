@@ -128,3 +128,7 @@ If you think you need to update this file or the programmer ask to do so, update
 
 ## Development Guidelines
 - **Always read and follow editorconfig.**
+
+## Additional Guidance
+- php related commands should run on docker env
+```

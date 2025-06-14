@@ -1,7 +1,6 @@
 @extends('adminlte::master')
 
 @inject('layoutHelper', 'JeroenNoten\LaravelAdminLte\Helpers\LayoutHelper')
-@inject('preloaderHelper', 'JeroenNoten\LaravelAdminLte\Helpers\PreloaderHelper')
 
 @section('adminlte_css')
     @stack('css')
@@ -16,7 +15,12 @@
     <div class="wrapper">
 
         {{-- Preloader Animation --}}
-        @if($preloaderHelper::isPreloaderEnabled())
+        @if(class_exists('JeroenNoten\LaravelAdminLte\Helpers\PreloaderHelper'))
+            @inject('preloaderHelper', 'JeroenNoten\LaravelAdminLte\Helpers\PreloaderHelper')
+            @if($preloaderHelper::isPreloaderEnabled())
+                @include('adminlte::partials.common.preloader')
+            @endif
+        @elseif(method_exists($layoutHelper, 'isPreloaderEnabled') && $layoutHelper->isPreloaderEnabled())
             @include('adminlte::partials.common.preloader')
         @endif
 

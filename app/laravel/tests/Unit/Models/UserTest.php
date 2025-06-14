@@ -5,8 +5,10 @@ namespace Tests\Unit\Models;
 use App\Enums\RoleType;
 use App\Models\User;
 use Carbon\Carbon;
+use App\Notifications\PasswordResetNotification;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Notification;
 use Laravel\Sanctum\HasApiTokens;
 use Tests\TestCase;
 
@@ -214,10 +216,17 @@ class UserTest extends TestCase
      */
     public function test_sends_password_reset_notification(): void
     {
+        Notification::fake();
+        
         $this->user->sendPasswordResetNotification('test-token');
 
-        // Check that the notification was sent (this would require mocking in a real test)
-        $this->assertTrue(method_exists($this->user, 'sendPasswordResetNotification'));
+        Notification::assertSentTo(
+            $this->user,
+            PasswordResetNotification::class,
+            function ($notification) {
+                return $notification->token === 'test-token';
+            }
+        );
     }
 
     /**

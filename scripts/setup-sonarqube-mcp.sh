@@ -26,11 +26,11 @@ if [ -z "$SONARQUBE_TOKEN" ]; then
     echo "   2. Generate a new token"
     echo "   3. Export it: export SONARQUBE_TOKEN='your_token_here'"
     echo ""
-    echo "📝 Or copy .mcp/.env.template to .mcp/.env and fill in your token"
+    echo "📝 Or copy .mcp/.env.example to .mcp/.env and fill in your token"
     
     if [ ! -f ".mcp/.env" ]; then
         echo "📄 Creating .env template..."
-        cp .mcp/.env.template .mcp/.env
+        cp .mcp/.env.example .mcp/.env
         echo "✅ Created .mcp/.env - please edit it with your SonarQube token"
     fi
     

@@ -14,7 +14,8 @@ if [ -z "$SONARQUBE_TOKEN" ]; then
         source .mcp/.env
     else
         echo "❌ SONARQUBE_TOKEN not set and .mcp/.env not found"
-        echo "   Please run ./scripts/setup-sonarqube-mcp.sh first"
+        echo "   Please copy .mcp/.env.example to .mcp/.env and fill in your token"
+        echo "   Or run ./scripts/setup-sonarqube-mcp.sh first"
         exit 1
     fi
 fi

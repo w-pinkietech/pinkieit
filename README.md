@@ -169,7 +169,7 @@ export SONARQUBE_TOKEN="your_sonarcloud_token"
 ### 詳細ドキュメント
 - [SonarQube MCP統合ガイド](docs/SONARQUBE_MCP_INTEGRATION.md)
 - [設定ファイル](.mcp/sonarqube-config.json)
-- [環境設定テンプレート](.mcp/.env.template)
+- [環境設定例](.mcp/.env.example)
 
 ## CI/CD & 品質管理
 

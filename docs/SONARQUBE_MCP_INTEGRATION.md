@@ -46,8 +46,8 @@ The SonarQube MCP integration enables Claude Code to:
 
 2. **Configure environment** (alternative to export):
    ```bash
-   # Copy template and edit
-   cp .mcp/.env.template .mcp/.env
+   # Copy example and edit
+   cp .mcp/.env.example .mcp/.env
    # Edit .mcp/.env with your SonarQube token
    ```
 

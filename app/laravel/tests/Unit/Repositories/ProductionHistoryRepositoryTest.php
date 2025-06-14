@@ -65,6 +65,7 @@ class ProductionHistoryRepositoryTest extends TestCase
         ]);
         
         $cycleTime = CycleTime::factory()->create([
+            'process_id' => $process->process_id,
             'part_number_id' => $partNumber->part_number_id,
             'cycle_time' => 30,
             'over_time' => 5
@@ -93,6 +94,7 @@ class ProductionHistoryRepositoryTest extends TestCase
         $process = Process::factory()->create();
         $partNumber = PartNumber::factory()->create();
         $cycleTime = CycleTime::factory()->create([
+            'process_id' => $process->process_id,
             'part_number_id' => $partNumber->part_number_id
         ]);
         $status = ProductionStatus::CHANGEOVER();
@@ -124,9 +126,7 @@ class ProductionHistoryRepositoryTest extends TestCase
 
     public function test_stop_returns_false_on_invalid_history(): void
     {
-        $history = new ProductionHistory();
-        $history->production_history_id = 99999; // Non-existent ID
-        
+        $history = ProductionHistory::factory()->make(['production_history_id' => 99999]);
         $stopTime = Carbon::now();
 
         $result = $this->repository->stop($history, $stopTime);
@@ -217,6 +217,7 @@ class ProductionHistoryRepositoryTest extends TestCase
         $process = Process::factory()->create();
         $partNumber = PartNumber::factory()->create();
         $cycleTime = CycleTime::factory()->create([
+            'process_id' => $process->process_id,
             'part_number_id' => $partNumber->part_number_id
         ]);
 
@@ -243,8 +244,9 @@ class ProductionHistoryRepositoryTest extends TestCase
 
         // Stop production
         $stopTime = Carbon::now()->addHours(8);
-        $this->repository->stop($history, $stopTime);
+        $result = $this->repository->stop($history, $stopTime);
         
+        $this->assertTrue($result);
         $history->refresh();
         $this->assertEquals(ProductionStatus::COMPLETE(), $history->status);
         $this->assertEquals($stopTime->format('Y-m-d H:i:s'), $history->stop->format('Y-m-d H:i:s'));

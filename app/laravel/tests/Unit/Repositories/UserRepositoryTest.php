@@ -2,6 +2,7 @@
 
 namespace Tests\Unit\Repositories;
 
+use App\Enums\RoleType;
 use App\Models\User;
 use App\Repositories\UserRepository;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -25,13 +26,13 @@ class UserRepositoryTest extends TestCase
         $this->assertEquals(User::class, $this->repository->model());
     }
 
-    public function test_create_user_with_string_role(): void
+    public function test_create_user_with_enum_role(): void
     {
         $result = $this->repository->create(
             'Test User',
             'test@example.com',
             'password123',
-            'admin'
+            RoleType::ADMIN
         );
 
         $this->assertTrue($result);
@@ -39,7 +40,7 @@ class UserRepositoryTest extends TestCase
         $user = User::where('email', 'test@example.com')->first();
         $this->assertNotNull($user);
         $this->assertEquals('Test User', $user->name);
-        $this->assertEquals('admin', $user->role);
+        $this->assertEquals(RoleType::ADMIN, $user->role->value);
         $this->assertTrue(Hash::check('password123', $user->password));
     }
 
@@ -49,7 +50,7 @@ class UserRepositoryTest extends TestCase
             'Another User',
             'another@example.com',
             'securepass',
-            1
+            RoleType::SYSTEM
         );
 
         $this->assertTrue($result);
@@ -57,7 +58,7 @@ class UserRepositoryTest extends TestCase
         $user = User::where('email', 'another@example.com')->first();
         $this->assertNotNull($user);
         $this->assertEquals('Another User', $user->name);
-        $this->assertEquals(1, $user->role);
+        $this->assertEquals(RoleType::SYSTEM, $user->role->value);
         $this->assertTrue(Hash::check('securepass', $user->password));
     }
 
@@ -69,7 +70,7 @@ class UserRepositoryTest extends TestCase
             'Password Test User',
             'passtest@example.com',
             $plainPassword,
-            'user'
+            RoleType::USER
         );
 
         $user = User::where('email', 'passtest@example.com')->first();
@@ -102,9 +103,9 @@ class UserRepositoryTest extends TestCase
     public function test_create_multiple_users(): void
     {
         $users = [
-            ['name' => 'User 1', 'email' => 'user1@test.com', 'password' => 'pass1', 'role' => 'admin'],
-            ['name' => 'User 2', 'email' => 'user2@test.com', 'password' => 'pass2', 'role' => 'user'],
-            ['name' => 'User 3', 'email' => 'user3@test.com', 'password' => 'pass3', 'role' => 2],
+            ['name' => 'User 1', 'email' => 'user1@test.com', 'password' => 'pass1', 'role' => RoleType::ADMIN],
+            ['name' => 'User 2', 'email' => 'user2@test.com', 'password' => 'pass2', 'role' => RoleType::USER],
+            ['name' => 'User 3', 'email' => 'user3@test.com', 'password' => 'pass3', 'role' => RoleType::SYSTEM],
         ];
 
         foreach ($users as $userData) {
@@ -124,7 +125,7 @@ class UserRepositoryTest extends TestCase
             $user = User::where('email', $userData['email'])->first();
             $this->assertNotNull($user);
             $this->assertEquals($userData['name'], $user->name);
-            $this->assertEquals($userData['role'], $user->role);
+            $this->assertEquals($userData['role'], $user->role->value);
             $this->assertTrue(Hash::check($userData['password'], $user->password));
         }
     }
@@ -135,7 +136,7 @@ class UserRepositoryTest extends TestCase
             "User O'Brien",
             'special.email+tag@example.com',
             'P@ssw0rd!#$%',
-            'admin'
+            RoleType::ADMIN
         );
 
         $this->assertTrue($result);
@@ -154,7 +155,7 @@ class UserRepositoryTest extends TestCase
             'Security Test',
             'security@test.com',
             $password,
-            'user'
+            RoleType::USER
         );
 
         $this->assertDatabaseMissing('users', [

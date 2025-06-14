@@ -111,7 +111,9 @@ class AndonServiceTest extends TestCase
 
         $result = $this->service->processes();
 
-        $this->assertEquals(['summary' => 'test summary'], $result->first()->production_summary);
+        $processResult = $result->first();
+        $this->assertObjectHasProperty('production_summary', $processResult);
+        $this->assertEquals(['summary' => 'test summary'], $processResult->production_summary);
     }
 
     public function test_processes_handles_null_production_history(): void

@@ -137,12 +137,13 @@ class AndonServiceIntegrationTest extends TestCase
         $this->assertTrue(true);
     }
 
-    public function test_processes_with_production_history_and_indicator_line(): void
+    public function test_processes_gracefully_handles_missing_indicator_line(): void
     {
         $user = User::factory()->create();
         $this->actingAs($user);
 
-        // Create a simple test that verifies production history relationship loading
+        // Test that the service doesn't crash when production history exists
+        // but lacks indicator line/payload data
         $productionHistory = ProductionHistory::factory()->create();
         $process = Process::factory()->create([
             'production_history_id' => $productionHistory->production_history_id
@@ -154,14 +155,17 @@ class AndonServiceIntegrationTest extends TestCase
             'order' => 1
         ]);
 
+        // Should not crash even with missing indicator line
         $result = $this->service->processes();
 
-        $this->assertCount(1, $result);
-        $this->assertNotNull($result->first()->productionHistory);
-        $this->assertEquals($productionHistory->production_history_id, $result->first()->productionHistory->production_history_id);
+        // Verify we get results back and the process is included
+        $this->assertNotEmpty($result);
+        $foundProcess = $result->where('process_id', $process->process_id)->first();
+        $this->assertNotNull($foundProcess);
+        $this->assertNotNull($foundProcess->productionHistory);
         
-        // Verify the relationship is properly loaded
-        $this->assertTrue($result->first()->relationLoaded('productionHistory'));
+        // Should not have production_summary when indicator line is missing
+        $this->assertFalse(isset($foundProcess->production_summary));
     }
 
     public function test_processes_loads_all_required_relationships(): void

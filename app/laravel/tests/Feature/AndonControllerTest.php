@@ -2,10 +2,13 @@
 
 namespace Tests\Feature;
 
+use App\Models\User;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
 class AndonControllerTest extends TestCase
 {
+    use RefreshDatabase;
     /**
      * Test home page redirects to login when unauthenticated
      *
@@ -25,8 +28,12 @@ class AndonControllerTest extends TestCase
      */
     public function test_home_page_accessible_when_authenticated()
     {
-        // Simplified test without database dependency
-        $this->markTestSkipped('Database factories not set up yet');
+        $user = User::factory()->create();
+
+        $response = $this->actingAs($user)->get('/home');
+
+        $response->assertStatus(200);
+        $response->assertViewIs('home');
     }
 
     /**
@@ -60,7 +67,11 @@ class AndonControllerTest extends TestCase
      */
     public function test_andon_edit_accessible_when_authenticated()
     {
-        // Simplified test without database dependency
-        $this->markTestSkipped('Database factories not set up yet');
+        $user = User::factory()->create();
+
+        $response = $this->actingAs($user)->get('/home/edit');
+
+        $response->assertStatus(200);
+        $response->assertViewIs('andon.config');
     }
 }

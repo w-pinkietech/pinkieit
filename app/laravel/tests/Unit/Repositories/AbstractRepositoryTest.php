@@ -86,26 +86,26 @@ class AbstractRepositoryTest extends TestCase
 
     public function test_all_with_order(): void
     {
-        Process::factory()->create(['process_name' => 'C']);
-        Process::factory()->create(['process_name' => 'A']);
-        Process::factory()->create(['process_name' => 'B']);
+        Process::factory()->create(['process_name' => 'C Order Test']);
+        Process::factory()->create(['process_name' => 'A Order Test']);
+        Process::factory()->create(['process_name' => 'B Order Test']);
 
         $result = $this->repository->all(null, 'process_name');
 
-        $this->assertEquals('A', $result->first()->process_name);
-        $this->assertEquals('B', $result->get(1)->process_name);
-        $this->assertEquals('C', $result->last()->process_name);
+        $this->assertEquals('A Order Test', $result->first()->process_name);
+        $this->assertEquals('B Order Test', $result->get(1)->process_name);
+        $this->assertEquals('C Order Test', $result->last()->process_name);
     }
 
     public function test_all_with_relationships_and_order(): void
     {
-        Process::factory()->create(['process_name' => 'B']);
-        Process::factory()->create(['process_name' => 'A']);
+        Process::factory()->create(['process_name' => 'B Rel Test']);
+        Process::factory()->create(['process_name' => 'A Rel Test']);
 
         $result = $this->repository->all(['andonLayout'], 'process_name');
 
-        $this->assertEquals('A', $result->first()->process_name);
-        $this->assertEquals('B', $result->last()->process_name);
+        $this->assertEquals('A Rel Test', $result->first()->process_name);
+        $this->assertEquals('B Rel Test', $result->last()->process_name);
         $this->assertTrue($result->first()->relationLoaded('andonLayout'));
     }
 
@@ -157,10 +157,10 @@ class AbstractRepositoryTest extends TestCase
 
     public function test_first_with_multiple_conditions(): void
     {
-        Process::factory()->create(['process_name' => 'Test', 'plan_color' => 'red']);
-        $blue = Process::factory()->create(['process_name' => 'Test', 'plan_color' => 'blue']);
+        Process::factory()->create(['process_name' => 'Test Red', 'plan_color' => 'red']);
+        $blue = Process::factory()->create(['process_name' => 'Test Blue', 'plan_color' => 'blue']);
 
-        $result = $this->repository->first(['process_name' => 'Test', 'plan_color' => 'blue']);
+        $result = $this->repository->first(['process_name' => 'Test Blue', 'plan_color' => 'blue']);
 
         $this->assertEquals($blue->process_id, $result->process_id);
         $this->assertEquals('blue', $result->plan_color);
@@ -199,13 +199,13 @@ class AbstractRepositoryTest extends TestCase
 
     public function test_get_with_order(): void
     {
-        Process::factory()->create(['process_name' => 'B', 'plan_color' => 'red']);
-        Process::factory()->create(['process_name' => 'A', 'plan_color' => 'red']);
+        Process::factory()->create(['process_name' => 'B Get Test', 'plan_color' => 'red']);
+        Process::factory()->create(['process_name' => 'A Get Test', 'plan_color' => 'red']);
 
         $result = $this->repository->get(['plan_color' => 'red'], null, ['*'], 'process_name');
 
-        $this->assertEquals('A', $result->first()->process_name);
-        $this->assertEquals('B', $result->last()->process_name);
+        $this->assertEquals('A Get Test', $result->first()->process_name);
+        $this->assertEquals('B Get Test', $result->last()->process_name);
     }
 
     public function test_store_creates_new_model(): void

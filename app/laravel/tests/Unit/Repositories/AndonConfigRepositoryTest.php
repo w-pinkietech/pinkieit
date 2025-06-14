@@ -18,7 +18,7 @@ class AndonConfigRepositoryTest extends TestCase
     protected function setUp(): void
     {
         parent::setUp();
-        $this->repository = new AndonConfigRepository();
+        $this->repository = new AndonConfigRepository;
     }
 
     public function test_model_returns_correct_class_string(): void
@@ -35,10 +35,10 @@ class AndonConfigRepositoryTest extends TestCase
 
         $this->assertInstanceOf(AndonConfig::class, $config);
         $this->assertEquals($user->id, $config->user_id);
-        
+
         // Verify it was saved to database
         $this->assertDatabaseHas('andon_configs', [
-            'user_id' => $user->id
+            'user_id' => $user->id,
         ]);
     }
 
@@ -48,7 +48,7 @@ class AndonConfigRepositoryTest extends TestCase
         $existingConfig = AndonConfig::factory()->create([
             'user_id' => $user->id,
             'row_count' => 4,
-            'column_count' => 5
+            'column_count' => 5,
         ]);
 
         $this->actingAs($user);
@@ -70,7 +70,7 @@ class AndonConfigRepositoryTest extends TestCase
         $this->actingAs($user1);
         $config1 = $this->repository->andonConfig();
 
-        // Create config for user2  
+        // Create config for user2
         $this->actingAs($user2);
         $config2 = $this->repository->andonConfig();
 
@@ -110,7 +110,7 @@ class AndonConfigRepositoryTest extends TestCase
 
         // First call creates with defaults
         $config = $this->repository->andonConfig();
-        
+
         // Update the config
         $config->update([
             'row_count' => 6,
@@ -123,7 +123,7 @@ class AndonConfigRepositoryTest extends TestCase
             'item_column_count' => 4,
             'is_show_part_number' => true,
             'is_show_start' => false,
-            'is_show_good_count' => true
+            'is_show_good_count' => true,
         ]);
 
         // Second call should return the updated config
@@ -151,7 +151,7 @@ class AndonConfigRepositoryTest extends TestCase
         $config2 = $this->repository->andonConfig();
 
         $this->assertEquals($config1->andon_config_id, $config2->andon_config_id);
-        
+
         // Should only have one config in database
         $this->assertEquals(1, AndonConfig::where('user_id', $user->id)->count());
     }
@@ -168,10 +168,10 @@ class AndonConfigRepositoryTest extends TestCase
 
         $this->assertInstanceOf(AndonConfig::class, $config);
         $this->assertEquals($user->id, $config->user_id);
-        
+
         // Verify it was saved correctly
         $this->assertDatabaseHas('andon_configs', [
-            'user_id' => $user->id
+            'user_id' => $user->id,
         ]);
     }
 }

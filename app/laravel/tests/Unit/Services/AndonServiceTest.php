@@ -6,7 +6,6 @@ use App\Http\Requests\UpdateAndonConfigRequest;
 use App\Models\AndonConfig;
 use App\Models\AndonLayout;
 use App\Models\Process;
-use App\Models\ProductionHistory;
 use App\Models\User;
 use App\Repositories\AndonConfigRepository;
 use App\Repositories\AndonLayoutRepository;
@@ -26,25 +25,28 @@ class AndonServiceTest extends TestCase
     use RefreshDatabase;
 
     protected AndonService $service;
+
     protected $mockAndonConfigRepo;
+
     protected $mockAndonLayoutRepo;
+
     protected $mockProcessRepo;
 
     protected function setUp(): void
     {
         parent::setUp();
-        
+
         // Create mocks for repositories
         $this->mockAndonConfigRepo = Mockery::mock(AndonConfigRepository::class);
         $this->mockAndonLayoutRepo = Mockery::mock(AndonLayoutRepository::class);
         $this->mockProcessRepo = Mockery::mock(ProcessRepository::class);
-        
+
         // Bind mocks to the container
         App::instance(AndonConfigRepository::class, $this->mockAndonConfigRepo);
         App::instance(AndonLayoutRepository::class, $this->mockAndonLayoutRepo);
         App::instance(ProcessRepository::class, $this->mockProcessRepo);
-        
-        $this->service = new AndonService();
+
+        $this->service = new AndonService;
     }
 
     protected function tearDown(): void
@@ -133,10 +135,10 @@ class AndonServiceTest extends TestCase
 
         $process1 = Process::factory()->make(['process_id' => 1]);
         $process1->setRelation('andonLayout', $andonLayout1);
-        
+
         $process2 = Process::factory()->make(['process_id' => 2]);
         $process2->setRelation('andonLayout', $andonLayout2);
-        
+
         $process3 = Process::factory()->make(['process_id' => 3]);
         $process3->setRelation('andonLayout', $andonLayout3);
 

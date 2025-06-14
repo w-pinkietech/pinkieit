@@ -21,7 +21,7 @@ class ProductionLineFactory extends Factory
             'production_history_id' => ProductionHistory::factory(),
             'line_id' => null,
             'parent_id' => null,
-            'line_name' => $this->faker->words(2, true) . ' Line',
+            'line_name' => $this->faker->words(2, true).' Line',
             'chart_color' => $this->faker->hexColor,
             'ip_address' => $this->faker->ipv4(),
             'pin_number' => $this->faker->numberBetween(2, 27),

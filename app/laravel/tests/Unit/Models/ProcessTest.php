@@ -92,7 +92,7 @@ class ProcessTest extends TestCase
     {
         $raspberryPi = RaspberryPi::factory()->create();
         $worker = Worker::factory()->create();
-        
+
         Line::factory()->create([
             'process_id' => $this->process->process_id,
             'raspberry_pi_id' => $raspberryPi->raspberry_pi_id,
@@ -108,7 +108,7 @@ class ProcessTest extends TestCase
     {
         $worker = Worker::factory()->create();
         $raspberryPi = RaspberryPi::factory()->create();
-        
+
         $line = Line::factory()->create([
             'process_id' => $this->process->process_id,
             'worker_id' => $worker->worker_id,
@@ -158,7 +158,7 @@ class ProcessTest extends TestCase
         $this->actingAs($user);
 
         $this->assertInstanceOf(\Illuminate\Database\Eloquent\Relations\HasOne::class, $this->process->andonLayout());
-        
+
         // Test default model creation
         $andonLayout = $this->process->andonLayout;
         $this->assertInstanceOf(AndonLayout::class, $andonLayout);
@@ -282,7 +282,7 @@ class ProcessTest extends TestCase
     public function test_sensor_events_relationship_filters_recent_and_triggered(): void
     {
         $sensor = Sensor::factory()->create(['process_id' => $this->process->process_id]);
-        
+
         // Create recent triggered event
         $recentEvent = SensorEvent::factory()->create([
             'process_id' => $this->process->process_id,

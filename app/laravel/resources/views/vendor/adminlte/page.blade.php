@@ -15,7 +15,12 @@
     <div class="wrapper">
 
         {{-- Preloader Animation --}}
-        @if($layoutHelper->isPreloaderEnabled())
+        @if(class_exists('JeroenNoten\LaravelAdminLte\Helpers\PreloaderHelper'))
+            @inject('preloaderHelper', 'JeroenNoten\LaravelAdminLte\Helpers\PreloaderHelper')
+            @if($preloaderHelper::isPreloaderEnabled())
+                @include('adminlte::partials.common.preloader')
+            @endif
+        @elseif(method_exists($layoutHelper, 'isPreloaderEnabled') && $layoutHelper->isPreloaderEnabled())
             @include('adminlte::partials.common.preloader')
         @endif
 

@@ -7,7 +7,6 @@ use App\Models\Process;
 use App\Models\ProductionHistory;
 use App\Models\ProductionLine;
 use App\Models\ProductionPlannedOutage;
-use App\Services\Utility;
 use Carbon\Carbon;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
@@ -177,7 +176,7 @@ class ProductionHistoryTest extends TestCase
         // Test that period() returns a string when stop is null
         $result = $this->productionHistory->period();
         $this->assertIsString($result);
-        
+
         // Test that the format matches expected pattern (H:MM:SS)
         $this->assertMatchesRegularExpression('/^\d+:\d{2}:\d{2}$/', $result);
     }
@@ -241,7 +240,7 @@ class ProductionHistoryTest extends TestCase
         // Test that the summary method exists and is callable
         $this->assertTrue(method_exists($indicatorLine, 'summary'));
         $this->assertTrue(is_callable([$indicatorLine, 'summary']));
-        
+
         // Test that the production history summary method works
         $result = $this->productionHistory->summary();
         $this->assertTrue(is_array($result) || is_null($result));
@@ -255,7 +254,7 @@ class ProductionHistoryTest extends TestCase
     public function test_start_and_stop_are_cast_to_carbon_instances(): void
     {
         $this->assertInstanceOf(Carbon::class, $this->productionHistory->start);
-        
+
         if ($this->productionHistory->stop) {
             $this->assertInstanceOf(Carbon::class, $this->productionHistory->stop);
         }

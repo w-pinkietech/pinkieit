@@ -30,7 +30,7 @@ class PayloadFactory extends Factory
             'payload' => [
                 'lineId' => $this->faker->numberBetween(1, 100),
                 'defectiveCounts' => [
-                    ['count' => $this->faker->numberBetween(0, 10), 'at' => now()->toISOString()]
+                    ['count' => $this->faker->numberBetween(0, 10), 'at' => now()->toISOString()],
                 ],
                 'start' => now()->subHours(2)->toISOString(),
                 'cycleTimeMs' => $this->faker->numberBetween(10000, 60000),

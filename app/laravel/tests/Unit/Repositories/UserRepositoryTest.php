@@ -18,7 +18,7 @@ class UserRepositoryTest extends TestCase
     protected function setUp(): void
     {
         parent::setUp();
-        $this->repository = new UserRepository();
+        $this->repository = new UserRepository;
     }
 
     public function test_model_returns_correct_class_string(): void
@@ -36,7 +36,7 @@ class UserRepositoryTest extends TestCase
         );
 
         $this->assertTrue($result);
-        
+
         $user = User::where('email', 'test@example.com')->first();
         $this->assertNotNull($user);
         $this->assertEquals('Test User', $user->name);
@@ -54,7 +54,7 @@ class UserRepositoryTest extends TestCase
         );
 
         $this->assertTrue($result);
-        
+
         $user = User::where('email', 'another@example.com')->first();
         $this->assertNotNull($user);
         $this->assertEquals('Another User', $user->name);
@@ -65,7 +65,7 @@ class UserRepositoryTest extends TestCase
     public function test_create_hashes_password(): void
     {
         $plainPassword = 'mySecretPassword';
-        
+
         $this->repository->create(
             'Password Test User',
             'passtest@example.com',
@@ -74,7 +74,7 @@ class UserRepositoryTest extends TestCase
         );
 
         $user = User::where('email', 'passtest@example.com')->first();
-        
+
         // Password should be hashed, not plain text
         $this->assertNotEquals($plainPassword, $user->password);
         $this->assertTrue(Hash::check($plainPassword, $user->password));
@@ -119,7 +119,7 @@ class UserRepositoryTest extends TestCase
         }
 
         $this->assertEquals(3, User::count());
-        
+
         // Verify each user
         foreach ($users as $userData) {
             $user = User::where('email', $userData['email'])->first();
@@ -140,7 +140,7 @@ class UserRepositoryTest extends TestCase
         );
 
         $this->assertTrue($result);
-        
+
         $user = User::where('email', 'special.email+tag@example.com')->first();
         $this->assertNotNull($user);
         $this->assertEquals("User O'Brien", $user->name);
@@ -150,7 +150,7 @@ class UserRepositoryTest extends TestCase
     public function test_password_is_not_stored_in_plain_text(): void
     {
         $password = 'supersecret';
-        
+
         $this->repository->create(
             'Security Test',
             'security@test.com',
@@ -159,12 +159,12 @@ class UserRepositoryTest extends TestCase
         );
 
         $this->assertDatabaseMissing('users', [
-            'password' => $password
+            'password' => $password,
         ]);
 
         $this->assertDatabaseHas('users', [
             'email' => 'security@test.com',
-            'name' => 'Security Test'
+            'name' => 'Security Test',
         ]);
     }
 }

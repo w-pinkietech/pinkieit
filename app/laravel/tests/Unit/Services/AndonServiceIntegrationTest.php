@@ -7,7 +7,6 @@ use App\Models\AndonConfig;
 use App\Models\AndonLayout;
 use App\Models\Process;
 use App\Models\ProductionHistory;
-use App\Models\ProductionLine;
 use App\Models\User;
 use App\Services\AndonService;
 use Illuminate\Database\Eloquent\Collection;
@@ -25,7 +24,7 @@ class AndonServiceIntegrationTest extends TestCase
     protected function setUp(): void
     {
         parent::setUp();
-        $this->service = new AndonService();
+        $this->service = new AndonService;
     }
 
     protected function tearDown(): void
@@ -58,17 +57,17 @@ class AndonServiceIntegrationTest extends TestCase
         AndonLayout::factory()->create([
             'process_id' => $process1->process_id,
             'user_id' => $user->id,
-            'order' => 3
+            'order' => 3,
         ]);
         AndonLayout::factory()->create([
             'process_id' => $process2->process_id,
             'user_id' => $user->id,
-            'order' => 1
+            'order' => 1,
         ]);
         AndonLayout::factory()->create([
             'process_id' => $process3->process_id,
             'user_id' => $user->id,
-            'order' => 2
+            'order' => 2,
         ]);
 
         $result = $this->service->processes();
@@ -88,7 +87,7 @@ class AndonServiceIntegrationTest extends TestCase
         AndonLayout::factory()->create([
             'process_id' => $process->process_id,
             'user_id' => $user->id,
-            'order' => 1
+            'order' => 1,
         ]);
 
         $result = $this->service->processes();
@@ -102,7 +101,7 @@ class AndonServiceIntegrationTest extends TestCase
     {
         $user = User::factory()->create();
         $config = AndonConfig::factory()->create(['user_id' => $user->id]);
-        
+
         $this->actingAs($user);
 
         $result = $this->service->andonConfig();
@@ -115,13 +114,13 @@ class AndonServiceIntegrationTest extends TestCase
     {
         $user = User::factory()->create();
         AndonConfig::factory()->create(['user_id' => $user->id]);
-        
+
         $this->actingAs($user);
 
         $request = Mockery::mock(UpdateAndonConfigRequest::class);
         $request->shouldReceive('all')->andReturn([
             'row_count' => 4,
-            'column_count' => 6
+            'column_count' => 6,
         ]);
         $request->layouts = null;
 
@@ -146,13 +145,13 @@ class AndonServiceIntegrationTest extends TestCase
         // but lacks indicator line/payload data
         $productionHistory = ProductionHistory::factory()->create();
         $process = Process::factory()->create([
-            'production_history_id' => $productionHistory->production_history_id
+            'production_history_id' => $productionHistory->production_history_id,
         ]);
 
         AndonLayout::factory()->create([
             'process_id' => $process->process_id,
             'user_id' => $user->id,
-            'order' => 1
+            'order' => 1,
         ]);
 
         // Should not crash even with missing indicator line
@@ -163,7 +162,7 @@ class AndonServiceIntegrationTest extends TestCase
         $foundProcess = $result->where('process_id', $process->process_id)->first();
         $this->assertNotNull($foundProcess);
         $this->assertNotNull($foundProcess->productionHistory);
-        
+
         // Should not have production_summary when indicator line is missing
         $this->assertFalse(isset($foundProcess->production_summary));
     }
@@ -177,13 +176,13 @@ class AndonServiceIntegrationTest extends TestCase
         AndonLayout::factory()->create([
             'process_id' => $process->process_id,
             'user_id' => $user->id,
-            'order' => 1
+            'order' => 1,
         ]);
 
         $result = $this->service->processes();
 
         $processResult = $result->first();
-        
+
         // Check that relationships are loaded
         $this->assertTrue($processResult->relationLoaded('andonLayout'));
         $this->assertTrue($processResult->relationLoaded('sensorEvents'));

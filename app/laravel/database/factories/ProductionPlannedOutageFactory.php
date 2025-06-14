@@ -17,7 +17,7 @@ class ProductionPlannedOutageFactory extends Factory
     public function definition()
     {
         $startTime = $this->faker->dateTimeThisYear();
-        $endTime = (clone $startTime)->modify('+' . $this->faker->numberBetween(10, 120) . ' minutes');
+        $endTime = (clone $startTime)->modify('+'.$this->faker->numberBetween(10, 120).' minutes');
 
         return [
             'production_history_id' => 1,

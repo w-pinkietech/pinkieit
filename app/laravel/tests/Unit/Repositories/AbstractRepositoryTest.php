@@ -4,9 +4,7 @@ namespace Tests\Unit\Repositories;
 
 use App\Models\Process;
 use App\Repositories\AbstractRepository;
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Log;
@@ -31,7 +29,7 @@ class AbstractRepositoryTest extends TestCase
     protected function setUp(): void
     {
         parent::setUp();
-        $this->repository = new TestRepository();
+        $this->repository = new TestRepository;
     }
 
     protected function tearDown(): void
@@ -42,12 +40,12 @@ class AbstractRepositoryTest extends TestCase
 
     public function test_constructor_creates_model_instance(): void
     {
-        $repository = new TestRepository();
-        
+        $repository = new TestRepository;
+
         $reflection = new \ReflectionClass($repository);
         $property = $reflection->getProperty('model');
         $property->setAccessible(true);
-        
+
         $this->assertInstanceOf(Process::class, $property->getValue($repository));
     }
 
@@ -55,11 +53,11 @@ class AbstractRepositoryTest extends TestCase
     {
         $process = Process::factory()->create();
         $repository = new TestRepository($process);
-        
+
         $reflection = new \ReflectionClass($repository);
         $property = $reflection->getProperty('model');
         $property->setAccessible(true);
-        
+
         $this->assertSame($process, $property->getValue($repository));
     }
 
@@ -214,7 +212,7 @@ class AbstractRepositoryTest extends TestCase
         $request->shouldReceive('all')->andReturn([
             'process_name' => 'New Process',
             'plan_color' => 'green',
-            'remark' => 'Test remark'
+            'remark' => 'Test remark',
         ]);
 
         Log::shouldReceive('debug')->once();
@@ -224,17 +222,17 @@ class AbstractRepositoryTest extends TestCase
         $this->assertTrue($result);
         $this->assertDatabaseHas('processes', [
             'process_name' => 'New Process',
-            'plan_color' => 'green'
+            'plan_color' => 'green',
         ]);
     }
 
     public function test_update_modifies_existing_model(): void
     {
         $process = Process::factory()->create(['process_name' => 'Old Name']);
-        
+
         $request = Mockery::mock(FormRequest::class);
         $request->shouldReceive('all')->andReturn([
-            'process_name' => 'New Name'
+            'process_name' => 'New Name',
         ]);
 
         Log::shouldReceive('debug')->once();
@@ -327,7 +325,7 @@ class AbstractRepositoryTest extends TestCase
     {
         $process = new Process([
             'process_name' => 'Test Process',
-            'plan_color' => 'yellow'
+            'plan_color' => 'yellow',
         ]);
 
         $reflection = new \ReflectionClass($this->repository);
@@ -341,7 +339,7 @@ class AbstractRepositoryTest extends TestCase
         $this->assertTrue($result);
         $this->assertDatabaseHas('processes', [
             'process_name' => 'Test Process',
-            'plan_color' => 'yellow'
+            'plan_color' => 'yellow',
         ]);
     }
 

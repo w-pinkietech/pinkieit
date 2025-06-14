@@ -8,7 +8,6 @@ use App\Models\PartNumber;
 use App\Models\Process;
 use App\Models\ProductionHistory;
 use App\Repositories\ProductionHistoryRepository;
-use App\Services\Utility;
 use Carbon\Carbon;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Pagination\LengthAwarePaginator;
@@ -23,7 +22,7 @@ class ProductionHistoryRepositoryTest extends TestCase
     protected function setUp(): void
     {
         parent::setUp();
-        $this->repository = new ProductionHistoryRepository();
+        $this->repository = new ProductionHistoryRepository;
     }
 
     public function test_model_returns_correct_class_string(): void
@@ -34,7 +33,7 @@ class ProductionHistoryRepositoryTest extends TestCase
     public function test_update_status_successfully_updates(): void
     {
         $history = ProductionHistory::factory()->create([
-            'status' => ProductionStatus::RUNNING()
+            'status' => ProductionStatus::RUNNING(),
         ]);
 
         $this->repository->updateStatus($history, ProductionStatus::BREAKDOWN());
@@ -45,7 +44,7 @@ class ProductionHistoryRepositoryTest extends TestCase
 
     public function test_update_status_throws_exception_on_failure(): void
     {
-        $history = new ProductionHistory();
+        $history = new ProductionHistory;
         $history->production_history_id = 99999; // Non-existent ID
 
         $this->expectException(\Exception::class);
@@ -57,20 +56,20 @@ class ProductionHistoryRepositoryTest extends TestCase
     {
         $process = Process::factory()->create([
             'process_name' => 'Test Process',
-            'plan_color' => 'blue'
+            'plan_color' => 'blue',
         ]);
-        
+
         $partNumber = PartNumber::factory()->create([
-            'part_number_name' => 'Test Part'
+            'part_number_name' => 'Test Part',
         ]);
-        
+
         $cycleTime = CycleTime::factory()->create([
             'process_id' => $process->process_id,
             'part_number_id' => $partNumber->part_number_id,
             'cycle_time' => 30,
-            'over_time' => 5
+            'over_time' => 5,
         ]);
-        
+
         $status = ProductionStatus::RUNNING();
         $goal = 100;
 
@@ -95,7 +94,7 @@ class ProductionHistoryRepositoryTest extends TestCase
         $partNumber = PartNumber::factory()->create();
         $cycleTime = CycleTime::factory()->create([
             'process_id' => $process->process_id,
-            'part_number_id' => $partNumber->part_number_id
+            'part_number_id' => $partNumber->part_number_id,
         ]);
         $status = ProductionStatus::CHANGEOVER();
 
@@ -110,15 +109,15 @@ class ProductionHistoryRepositoryTest extends TestCase
     {
         $history = ProductionHistory::factory()->create([
             'status' => ProductionStatus::RUNNING(),
-            'stop' => null
+            'stop' => null,
         ]);
-        
+
         $stopTime = Carbon::now()->addHours(2);
 
         $result = $this->repository->stop($history, $stopTime);
 
         $this->assertTrue($result);
-        
+
         $history->refresh();
         $this->assertEquals($stopTime->format('Y-m-d H:i:s'), $history->stop->format('Y-m-d H:i:s'));
         $this->assertEquals(ProductionStatus::COMPLETE(), $history->status);
@@ -137,13 +136,13 @@ class ProductionHistoryRepositoryTest extends TestCase
     public function test_histories_returns_paginated_results(): void
     {
         $process = Process::factory()->create();
-        
+
         // Create multiple production histories for the process
         ProductionHistory::factory()->count(15)->create([
             'process_id' => $process->process_id,
-            'start' => fn() => Carbon::now()->subHours(rand(1, 24))
+            'start' => fn () => Carbon::now()->subHours(rand(1, 24)),
         ]);
-        
+
         // Create some for other processes
         ProductionHistory::factory()->count(5)->create();
 
@@ -153,7 +152,7 @@ class ProductionHistoryRepositoryTest extends TestCase
         $this->assertEquals(10, $result->perPage());
         $this->assertEquals(15, $result->total());
         $this->assertCount(10, $result->items());
-        
+
         // Verify all items belong to the correct process
         foreach ($result->items() as $item) {
             $this->assertEquals($process->process_id, $item->process_id);
@@ -163,20 +162,20 @@ class ProductionHistoryRepositoryTest extends TestCase
     public function test_histories_orders_by_start_descending(): void
     {
         $process = Process::factory()->create();
-        
+
         $oldest = ProductionHistory::factory()->create([
             'process_id' => $process->process_id,
-            'start' => Carbon::now()->subDays(3)
+            'start' => Carbon::now()->subDays(3),
         ]);
-        
+
         $newest = ProductionHistory::factory()->create([
             'process_id' => $process->process_id,
-            'start' => Carbon::now()
+            'start' => Carbon::now(),
         ]);
-        
+
         $middle = ProductionHistory::factory()->create([
             'process_id' => $process->process_id,
-            'start' => Carbon::now()->subDay()
+            'start' => Carbon::now()->subDay(),
         ]);
 
         $result = $this->repository->histories($process->process_id, 10);
@@ -190,9 +189,9 @@ class ProductionHistoryRepositoryTest extends TestCase
     public function test_histories_loads_indicator_line_relationship(): void
     {
         $process = Process::factory()->create();
-        
+
         ProductionHistory::factory()->create([
-            'process_id' => $process->process_id
+            'process_id' => $process->process_id,
         ]);
 
         $result = $this->repository->histories($process->process_id, 10);
@@ -218,17 +217,17 @@ class ProductionHistoryRepositoryTest extends TestCase
         $partNumber = PartNumber::factory()->create();
         $cycleTime = CycleTime::factory()->create([
             'process_id' => $process->process_id,
-            'part_number_id' => $partNumber->part_number_id
+            'part_number_id' => $partNumber->part_number_id,
         ]);
 
         // Start production
         $history = $this->repository->storeHistory(
-            $process, 
-            $cycleTime, 
-            ProductionStatus::RUNNING(), 
+            $process,
+            $cycleTime,
+            ProductionStatus::RUNNING(),
             500
         );
-        
+
         $this->assertNotNull($history);
         $this->assertEquals(ProductionStatus::RUNNING(), $history->status);
 
@@ -245,7 +244,7 @@ class ProductionHistoryRepositoryTest extends TestCase
         // Stop production
         $stopTime = Carbon::now()->addHours(8);
         $result = $this->repository->stop($history, $stopTime);
-        
+
         $this->assertTrue($result);
         $history->refresh();
         $this->assertEquals(ProductionStatus::COMPLETE(), $history->status);

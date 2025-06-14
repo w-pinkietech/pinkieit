@@ -70,12 +70,12 @@ class HomeControllerTest extends TestCase
     public function test_user_can_login_with_correct_credentials()
     {
         $user = User::factory()->create([
-            'password' => bcrypt('password123')
+            'password' => bcrypt('password123'),
         ]);
 
         $response = $this->post('/login', [
             'email' => $user->email,
-            'password' => 'password123'
+            'password' => 'password123',
         ]);
 
         $response->assertRedirect('/home');
@@ -90,12 +90,12 @@ class HomeControllerTest extends TestCase
     public function test_user_cannot_login_with_incorrect_credentials()
     {
         $user = User::factory()->create([
-            'password' => bcrypt('password123')
+            'password' => bcrypt('password123'),
         ]);
 
         $response = $this->post('/login', [
             'email' => $user->email,
-            'password' => 'wrongpassword'
+            'password' => 'wrongpassword',
         ]);
 
         $response->assertSessionHasErrors('email');

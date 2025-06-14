@@ -20,7 +20,7 @@ class ProcessRepositoryTest extends TestCase
     protected function setUp(): void
     {
         parent::setUp();
-        $this->repository = new ProcessRepository();
+        $this->repository = new ProcessRepository;
     }
 
     public function test_model_returns_correct_class_string(): void
@@ -45,14 +45,14 @@ class ProcessRepositoryTest extends TestCase
         $process = Process::factory()->create();
         AndonLayout::factory()->create([
             'process_id' => $process->process_id,
-            'user_id' => $user->id
+            'user_id' => $user->id,
         ]);
-        
+
         // Create sensor for the process first
         $sensor = \App\Models\Sensor::factory()->create([
-            'process_id' => $process->process_id
+            'process_id' => $process->process_id,
         ]);
-        
+
         // Create sensor event that matches the complex query conditions
         SensorEvent::factory()->create([
             'process_id' => $process->process_id,
@@ -88,7 +88,7 @@ class ProcessRepositoryTest extends TestCase
 
     public function test_start_returns_false_on_invalid_process(): void
     {
-        $process = new Process();
+        $process = new Process;
         $process->process_id = 99999; // Non-existent ID
 
         $result = $this->repository->start($process, 1);
@@ -100,7 +100,7 @@ class ProcessRepositoryTest extends TestCase
     {
         $productionHistory = ProductionHistory::factory()->create();
         $process = Process::factory()->create([
-            'production_history_id' => $productionHistory->production_history_id
+            'production_history_id' => $productionHistory->production_history_id,
         ]);
 
         $result = $this->repository->stop($process);
@@ -112,7 +112,7 @@ class ProcessRepositoryTest extends TestCase
 
     public function test_stop_returns_false_on_invalid_process(): void
     {
-        $process = new Process();
+        $process = new Process;
         $process->process_id = 99999; // Non-existent ID
 
         $result = $this->repository->stop($process);
@@ -143,7 +143,7 @@ class ProcessRepositoryTest extends TestCase
         $process = Process::factory()->create();
         AndonLayout::factory()->create([
             'process_id' => $process->process_id,
-            'user_id' => $user->id
+            'user_id' => $user->id,
         ]);
 
         $result = $this->repository->find($process->process_id, 'andonLayout');
@@ -216,14 +216,14 @@ class ProcessRepositoryTest extends TestCase
         // Start production
         $startResult = $this->repository->start($process, $productionHistory->production_history_id);
         $this->assertTrue($startResult);
-        
+
         $process->refresh();
         $this->assertEquals($productionHistory->production_history_id, $process->production_history_id);
 
         // Stop production
         $stopResult = $this->repository->stop($process);
         $this->assertTrue($stopResult);
-        
+
         $process->refresh();
         $this->assertNull($process->production_history_id);
     }
@@ -256,7 +256,7 @@ class ProcessRepositoryTest extends TestCase
         // This test verifies that the repository works with regular deletion
         $process = Process::factory()->create();
         $processId = $process->process_id;
-        
+
         $process->delete();
 
         $result = $this->repository->find($processId);

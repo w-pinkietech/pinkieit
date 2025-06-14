@@ -4,8 +4,8 @@ namespace Tests\Unit\Models;
 
 use App\Enums\RoleType;
 use App\Models\User;
-use Carbon\Carbon;
 use App\Notifications\PasswordResetNotification;
+use Carbon\Carbon;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Notification;
@@ -217,7 +217,7 @@ class UserTest extends TestCase
     public function test_sends_password_reset_notification(): void
     {
         Notification::fake();
-        
+
         $this->user->sendPasswordResetNotification('test-token');
 
         Notification::assertSentTo(
@@ -236,7 +236,7 @@ class UserTest extends TestCase
     {
         // Test that AdminLTE profile URL method exists
         $this->assertTrue(method_exists($this->user, 'adminlte_profile_url'));
-        
+
         // Test that it returns a string
         $profileUrl = $this->user->adminlte_profile_url();
         $this->assertIsString($profileUrl);

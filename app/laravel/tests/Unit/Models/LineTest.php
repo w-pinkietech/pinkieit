@@ -94,16 +94,16 @@ class LineTest extends TestCase
     public function test_pin_number_method_integration(): void
     {
         $this->line->pin_number = 5;
-        
+
         // Test that the method exists and returns a string
         $result = $this->line->pinNumber();
         $this->assertIsString($result);
-        
+
         // Test with different pin numbers
         $this->line->pin_number = 18;
         $result2 = $this->line->pinNumber();
         $this->assertIsString($result2);
-        
+
         // Results should be different for different pin numbers
         $this->assertNotEquals($result, $result2);
     }

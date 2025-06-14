@@ -12,7 +12,6 @@ use App\Models\User;
 use App\Services\AndonService;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Mockery;
 use Tests\TestCase;
@@ -104,7 +103,7 @@ class AndonServiceIntegrationTest extends TestCase
         $user = User::factory()->create();
         $config = AndonConfig::factory()->create(['user_id' => $user->id]);
         
-        Auth::shouldReceive('id')->andReturn($user->id);
+        $this->actingAs($user);
 
         $result = $this->service->andonConfig();
 
@@ -117,12 +116,12 @@ class AndonServiceIntegrationTest extends TestCase
         $user = User::factory()->create();
         $config = AndonConfig::factory()->create(['user_id' => $user->id]);
         
-        Auth::shouldReceive('id')->andReturn($user->id);
+        $this->actingAs($user);
 
         $request = Mockery::mock(UpdateAndonConfigRequest::class);
         $request->shouldReceive('all')->andReturn([
-            'font_size_percentage' => 120,
-            'refresh_sec' => 30
+            'row_count' => 4,
+            'column_count' => 6
         ]);
         $request->layouts = null;
 
@@ -143,16 +142,10 @@ class AndonServiceIntegrationTest extends TestCase
         $user = User::factory()->create();
         $this->actingAs($user);
 
-        // Create process with production history
+        // Create a simple test that verifies production history relationship loading
         $productionHistory = ProductionHistory::factory()->create();
         $process = Process::factory()->create([
             'production_history_id' => $productionHistory->production_history_id
-        ]);
-
-        // Create production line as indicator line
-        $productionLine = ProductionLine::factory()->create([
-            'production_history_id' => $productionHistory->production_history_id,
-            'indicator' => true
         ]);
 
         AndonLayout::factory()->create([
@@ -166,6 +159,9 @@ class AndonServiceIntegrationTest extends TestCase
         $this->assertCount(1, $result);
         $this->assertNotNull($result->first()->productionHistory);
         $this->assertEquals($productionHistory->production_history_id, $result->first()->productionHistory->production_history_id);
+        
+        // Verify the relationship is properly loaded
+        $this->assertTrue($result->first()->relationLoaded('productionHistory'));
     }
 
     public function test_processes_loads_all_required_relationships(): void
@@ -204,7 +200,7 @@ class AndonServiceIntegrationTest extends TestCase
     public function test_andon_config_creates_new_when_not_exists(): void
     {
         $user = User::factory()->create();
-        Auth::shouldReceive('id')->andReturn($user->id);
+        $this->actingAs($user);
 
         $result = $this->service->andonConfig();
 

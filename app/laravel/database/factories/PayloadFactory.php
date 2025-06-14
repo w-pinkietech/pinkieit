@@ -28,12 +28,16 @@ class PayloadFactory extends Factory
         return [
             'production_line_id' => ProductionLine::factory(),
             'payload' => [
-                'production_count' => $this->faker->numberBetween(0, 1000),
-                'defective_count' => $this->faker->numberBetween(0, 50),
-                'cycle_time' => $this->faker->numberBetween(10, 60),
-                'efficiency' => $this->faker->randomFloat(2, 0, 100),
-                'downtime' => $this->faker->numberBetween(0, 3600),
-                'changeover_time' => $this->faker->numberBetween(0, 1800),
+                'lineId' => $this->faker->numberBetween(1, 100),
+                'defectiveCounts' => [
+                    ['count' => $this->faker->numberBetween(0, 10), 'at' => now()->toISOString()]
+                ],
+                'start' => now()->subHours(2)->toISOString(),
+                'cycleTimeMs' => $this->faker->numberBetween(10000, 60000),
+                'overTimeMs' => $this->faker->numberBetween(1000, 5000),
+                'plannedOutages' => [],
+                'changeovers' => [],
+                'indicator' => true,
             ],
         ];
     }

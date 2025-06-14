@@ -228,15 +228,16 @@ class ProcessRepositoryTest extends TestCase
         $this->assertNull($process->production_history_id);
     }
 
-    public function test_multiple_processes_with_same_production_history(): void
+    public function test_processes_with_different_production_histories(): void
     {
-        $productionHistory = ProductionHistory::factory()->create();
+        $productionHistory1 = ProductionHistory::factory()->create();
+        $productionHistory2 = ProductionHistory::factory()->create();
         $process1 = Process::factory()->create(['production_history_id' => null]);
         $process2 = Process::factory()->create(['production_history_id' => null]);
 
-        // Both processes can be started with the same production history
-        $result1 = $this->repository->start($process1, $productionHistory->production_history_id);
-        $result2 = $this->repository->start($process2, $productionHistory->production_history_id);
+        // Each process gets its own production history due to unique constraint
+        $result1 = $this->repository->start($process1, $productionHistory1->production_history_id);
+        $result2 = $this->repository->start($process2, $productionHistory2->production_history_id);
 
         $this->assertTrue($result1);
         $this->assertTrue($result2);
@@ -244,8 +245,9 @@ class ProcessRepositoryTest extends TestCase
         $process1->refresh();
         $process2->refresh();
 
-        $this->assertEquals($productionHistory->production_history_id, $process1->production_history_id);
-        $this->assertEquals($productionHistory->production_history_id, $process2->production_history_id);
+        $this->assertEquals($productionHistory1->production_history_id, $process1->production_history_id);
+        $this->assertEquals($productionHistory2->production_history_id, $process2->production_history_id);
+        $this->assertNotEquals($process1->production_history_id, $process2->production_history_id);
     }
 
     public function test_repository_handles_soft_deleted_processes(): void

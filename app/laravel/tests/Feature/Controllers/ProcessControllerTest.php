@@ -2,9 +2,9 @@
 
 namespace Tests\Feature\Controllers;
 
+use App\Enums\RoleType;
 use App\Models\Process;
 use App\Models\User;
-use App\Enums\RoleType;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class ProcessControllerTest extends BaseControllerTest

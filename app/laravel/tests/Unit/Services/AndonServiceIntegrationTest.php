@@ -114,7 +114,7 @@ class AndonServiceIntegrationTest extends TestCase
     public function test_update_successful_without_layouts(): void
     {
         $user = User::factory()->create();
-        $config = AndonConfig::factory()->create(['user_id' => $user->id]);
+        AndonConfig::factory()->create(['user_id' => $user->id]);
         
         $this->actingAs($user);
 

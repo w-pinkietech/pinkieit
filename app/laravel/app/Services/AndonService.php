@@ -43,15 +43,15 @@ class AndonService
     public function processes(): Collection
     {
         /** @var Collection<int, Process> */
-        $processes = $this->process
+        return $this->process
             ->all([
                 'andonLayout',
                 'sensorEvents',
                 'productionHistory.indicatorLine.payload',
             ])
             ->map(function (Process $p): Process {
-                if (! is_null($p->productionHistory) && 
-                    ! is_null($p->productionHistory->indicatorLine) && 
+                if (! is_null($p->productionHistory) &&
+                    ! is_null($p->productionHistory->indicatorLine) &&
                     ! is_null($p->productionHistory->indicatorLine->payload)) {
                     $payloadData = $p->productionHistory->indicatorLine->payload->getPayloadData();
                     $p->production_summary = $p->productionHistory->makeProductionSummary($payloadData);
@@ -64,8 +64,6 @@ class AndonService
                 ['process_id', 'asc'],
             ])
             ->values();
-
-        return $processes;
     }
 
     /**
@@ -87,10 +85,8 @@ class AndonService
             $config = $this->andonConfig();
             $result = $this->andonConfig->update($request, $config);
             Utility::throwIfException($config, $result);
-            if (! is_null($request->layouts)) {
-                if (! $this->andonLayout->updateLayouts($request->layouts, Auth::id())) {
-                    throw new ModelNotFoundException;
-                }
+            if (! is_null($request->layouts) && ! $this->andonLayout->updateLayouts($request->layouts, Auth::id())) {
+                throw new ModelNotFoundException;
             }
         });
     }

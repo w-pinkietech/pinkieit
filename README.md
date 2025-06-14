@@ -146,6 +146,31 @@ docker compose down -v --remove-orphans
 docker compose up -d --build
 ```
 
+## SonarQube MCP Integration 🔧
+
+このプロジェクトではSonarQube Model Context Protocol (MCP)統合により、Claude Codeが自動的にコード品質の問題を検出・修正できます。
+
+### セットアップ
+```bash
+# SonarQube MCPサーバーをセットアップ
+export SONARQUBE_TOKEN="your_sonarcloud_token"
+./scripts/setup-sonarqube-mcp.sh
+
+# 統合をテスト
+./scripts/test-sonarqube-mcp.sh
+```
+
+### 機能
+- 📊 **リアルタイム分析**: コード変更時に即座に品質チェック
+- 🔍 **問題検出**: セキュリティ、バグ、コードスメルの自動検出
+- 🛠️ **自動修正**: 一般的な問題の自動修正提案
+- 📈 **品質メトリクス**: プロジェクトの品質指標をリアルタイム取得
+
+### 詳細ドキュメント
+- [SonarQube MCP統合ガイド](docs/SONARQUBE_MCP_INTEGRATION.md)
+- [設定ファイル](.mcp/sonarqube-config.json)
+- [環境設定テンプレート](.mcp/.env.template)
+
 ## CI/CD & 品質管理
 
 このプロジェクトでは以下の自動化を実施しています：

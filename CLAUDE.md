@@ -51,6 +51,8 @@ php artisan dusk         # Run Laravel Dusk browser tests
 # Generate coverage report first, then run analysis
 php artisan test --coverage
 sonar-scanner -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=YOUR_TOKEN
+
+# IMPORTANT: Before pushing, run all tests to ensure passing. We require 100% pass rate on CI
 ```
 
 ### Database Operations

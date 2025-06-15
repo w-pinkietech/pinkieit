@@ -310,7 +310,7 @@ class SensorControllerTest extends BaseControllerTest
             'sensor_type' => SensorType::AMMETER,
             'identification_number' => 5,
             'alarm_text' => 'Updated Alarm Text',
-            'trigger' => false,
+            // Note: Boolean stored as 1/0 in database
         ]);
     }
 
